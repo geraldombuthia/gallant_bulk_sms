@@ -177,6 +177,8 @@ The following sub readme is what we will work with and use as our guide
 - ![#ffff00](https://via.placeholder.com/15/ffff00/000000?text=+) [ ] Feature updates
 
 ## Code Structure for the Monolith
+You're right to consider Redis, as it's often crucial for caching and as a message broker in systems like this. Let's add Redis to our structure. We'll implement it both as a configuration and a service:
+
 <pre>
 project-root/
 ├── src/                                 # Source code
@@ -194,6 +196,7 @@ project-root/
 │   │   ├── database.js                  # Database configuration
 │   │   ├── smsGateway.js                # SMS gateway configuration
 │   │   ├── paymentGateway.js            # Payment gateway configuration
+│   │   ├── redis.js                     # Redis configuration
 │   │   └── app.js                       # Main app configuration
 │   ├── controllers/                     # Request handlers
 │   │   ├── auth.controller.js           # Authentication logic
@@ -213,11 +216,15 @@ project-root/
 │   │   ├── message.service.js           # Message handling service
 │   │   ├── smsGateway.service.js        # SMS gateway integration
 │   │   ├── queue.service.js             # Message queue service
-│   │   └── payment.service.js           # Payment processing service
-│   ├── utils/                           # Utility functions
+│   │   ├── payment.service.js           # Payment processing service
+│   │   ├── redis.service.js             # Redis service for caching and messaging
+│   │   └── cache.service.js             # Caching service (uses Redis)
+│   ├── utils/                           # Utility functions and helpers
 │   │   ├── logger.js                    # Logging utility
 │   │   ├── validator.js                 # Input validation utility
-│   │   └── errorHandler.js              # Error handling utility
+│   │   ├── errorHandler.js              # Error handling utility
+│   │   ├── dateFormatter.js             # Date formatting helper
+│   │   └── stringUtils.js               # String manipulation helpers
 │   └── app.js                           # Main application entry point
 ├── tests/                               # Test files
 │   ├── unit/                            # Unit tests
