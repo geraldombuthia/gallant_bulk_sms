@@ -10,7 +10,9 @@
   },
   "scripts": {
     "start": "node app.js",
-    "devStart": "nodemon app.js"
+    "devStart": "nodemon app.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "type": "module",
   "keywords": [
@@ -22,6 +24,9 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@eslint/js": "^9.6.0",
+    "eslint": "^9.6.0",
+    "globals": "^15.8.0",
     "nodemon": "^3.1.4"
   }
 }

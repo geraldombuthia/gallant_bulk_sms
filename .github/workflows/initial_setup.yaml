@@ -1,0 +1,32 @@
+name: bulk-sms-setup
+run-name: ${{ github.actor }} setup the intial setup action
+on: 
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'f/implement_github_action'
+  pull_request:
+    branches:
+      - 'main'
+      - 'develop'
+jobs:
+  setup:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Setup Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.14.0'
+      - name: Install dependencies
+        run: npm install
+      - name: Run npm audit
+        run: npm audit || true # Prints the audit log if there are vulnerabilities and continue without fail
+      - name: Lint code
+        run: npm run lint
+
+
