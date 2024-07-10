@@ -7,21 +7,21 @@ on:
       - 'develop'
       - 'f/implement_github_action'
   pull_request:
-      branches:
-        - 'main'
-        - 'develop'
+    branches:
+      - 'main'
+      - 'develop'
 jobs:
   setup:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-      - uses: actions/checkout@v4
-      with:
-        fetch-depth: 1
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
       - name: Setup Nodejs
-      - uses: actions/setup-node@v4
-      with:
-        node-version: '20.14.0'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.14.0'
       - name: Install dependencies
-      - run: npm install
+        run: npm install
 
