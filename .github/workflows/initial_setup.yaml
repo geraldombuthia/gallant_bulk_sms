@@ -24,4 +24,6 @@ jobs:
           node-version: '20.14.0'
       - name: Install dependencies
         run: npm install
+      - name: Lint code
+        run: npm run lint
 
