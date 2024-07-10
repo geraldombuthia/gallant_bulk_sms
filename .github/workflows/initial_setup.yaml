@@ -24,6 +24,9 @@ jobs:
           node-version: '20.14.0'
       - name: Install dependencies
         run: npm install
+      - name: Run npm audit
+        run: npm audit || true # Prints the audit log if there are vulnerabilities and continue without fail
       - name: Lint code
         run: npm run lint
+
 
