@@ -1,0 +1,8 @@
+name: gallant-bulk-sms-setup
+run-name: {{ github.actor }} setup the intial setup action
+on: 
+  push:
+    branches:
+      - 'main'
+      - 'develop'
+      - 'f/implement_github_action'
