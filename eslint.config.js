@@ -1,18 +1,24 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
+import jestPlugin from "eslint-plugin-jest";
 
 export default [
     {
         languageOptions:
      { 
-         globals: globals.node, 
+         globals: {
+             ...globals.node,
+             ...globals.jest
+         }, 
          ecmaVersion: 2022, 
-         sourceType: "module" 
+         sourceType: "module" // Add jest globals
      }
     },
     pluginJs.configs.recommended, 
+    jestPlugin.configs["flat/recommended"], // Add jest recommended config
     {
         rules: {
+            ...jestPlugin.configs["flat/recommended"].rules, // Include Jest rules
             "strict": ["error", "global"],
             "indent": ["error", 4],
             "quotes": ["error", "double"],
@@ -34,6 +40,13 @@ export default [
             "prefer-destructuring": ["error", { "object": true, "array": false }],
             "no-duplicate-imports": "error",
             "spaced-comment": ["error", "always"],
+            // You can add or modify Jest-specific rules here
+            "jest/no-disabled-tests": "warn",
+            "jest/no-focused-tests": "error",
+            "jest/no-identical-title": "error",
+            "jest/prefer-to-have-length": "warn",
+            "jest/valid-expect": "error"
+            
         }
     }
 ];
