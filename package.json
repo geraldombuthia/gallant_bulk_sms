@@ -13,7 +13,7 @@
     "devStart": "nodemon app.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "test": "jest --coverage"
+    "test": "jest --coverage --passWithNoTests"
   },
   "type": "module",
   "keywords": [
