@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
       - 'develop'
-      - 'f/implement_github_action'
+      - 'f/implement_integrated_test_foundation'
   pull_request:
     branches:
       - 'main'
