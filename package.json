@@ -1,5 +1,5 @@
 {
-  "name": "Gallant_Bulk_SMS",
+  "name": "@gallant/bulk-sms",
   "version": "0.0.1",
   "main": "app.js",
   "dependencies": {
