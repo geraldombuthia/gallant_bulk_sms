@@ -28,7 +28,7 @@ jobs:
         run: npm audit || true # Prints the audit log if there are vulnerabilities and continue without fail
       - name: Lint code
         run: npm run lint
-      -name: Run tests
+      - name: Run tests
         run: npm run test
 
 
