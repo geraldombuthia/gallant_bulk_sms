@@ -9,7 +9,7 @@ export function userAgentParser() {
 
         req.userAgent = result;
 
-        console.log(result);
+        // console.log(result);
         next();
     };
 }
