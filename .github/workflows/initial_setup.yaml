@@ -3,9 +3,7 @@ run-name: ${{ github.actor }} setup the intial setup action
 on: 
   push:
     branches:
-      - 'main'
-      - 'develop'
-      - 'f/implement_integrated_test_foundation'
+      - '*'
   pull_request:
     branches:
       - 'main'
