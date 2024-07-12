@@ -6,7 +6,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "mysql2": "^3.10.2",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "ua-parser-js": "^1.0.38"
   },
   "scripts": {
     "start": "node app.js",

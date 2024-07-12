@@ -1,16 +1,20 @@
 import express from "express";
+import { userAgentParser } from "./src/middleware/userAgentParser.js";
 
 const app = express();
 const port = 3000;
 
-app.route("/").get((req, res) => {
-    // console.log(req.headers);
-    const {host, connection, "cache-control": cacheControl, "user-agent":userAgent} = req.headers;
-    // console.log(req.headers);
-    console.log(host, connection, cacheControl, userAgent);
+app.use(userAgentParser()); // userAgentParser middleware to extract browser information
 
-    console.log("\n\n" + userAgent);
+app.route("/").get((req, res) => {
+    // eslint-disable-next-line no-console
+    console.log(req.userAgent?.os?.name);
+
     res.status(200).json({msg:"Welcome to Gallant Byte SMS"});
+});
+
+app.route("/about").get((req, res) => {
+    res.status(200).json({msg:"About Gallant Byte SMS"});
 });
 
 app.listen(port, () => {
