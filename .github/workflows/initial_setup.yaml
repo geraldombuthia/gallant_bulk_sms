@@ -1,9 +1,11 @@
 name: bulk-sms-setup
-run-name: ${{ github.actor }} setup the initial setup action
-on:
+run-name: ${{ github.actor }} setup the intial setup action
+on: 
   push:
     branches:
-      - '*'
+      - 'main'
+      - 'develop'
+      - 'f/extract_headers_from_request'
   pull_request:
     branches:
       - 'main'
@@ -27,4 +29,7 @@ jobs:
       - name: Lint code
         run: npm run lint
       - name: Run tests
-        run: npm test
+        run: npm test 
+
+
+
