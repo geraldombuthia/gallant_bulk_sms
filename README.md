@@ -4,6 +4,10 @@
 This is the repo to my first product under the Gallant Byte software Umbrella.
 This is a platform that provides an API to handle bulk sms transfer for developers and businesses.
 
+## Version Control
+Develop will be the intermediary branch from which other branches are checked out from, developed and merged into before 
+merging into main as production ready releases
+
 ## Software Architecture, Tools, and Development Considerations
 
 The following sub readme is what we will work with and use as our guide
