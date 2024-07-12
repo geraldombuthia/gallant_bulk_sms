@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
       - 'develop'
-      - 'f/implement_integrated_test_foundation'
+      - 'f/extract_headers_from_request'
   pull_request:
     branches:
       - 'main'
