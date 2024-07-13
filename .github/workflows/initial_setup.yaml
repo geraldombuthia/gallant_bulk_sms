@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
       - 'develop'
-      - 'f/extract_headers_from_request'
+      - 'f/extract_ip_address'
   pull_request:
     branches:
       - 'main'

@@ -1,15 +1,20 @@
-import { UAParser } from "ua-parser-js";
+const UAParser = require("ua-parser-js");
+/**
+ * Parses for the user agent information from the request headers
+ * and stores it into the request object as userAgent
+ * @param {*} req 
+ * @param {*} res 
+ * @param {*} next 
+ */
+function userAgentParser(req, res, next) {
+    const parser = new UAParser();
+    const ua = req.headers?.["user-agent"];
+    const result = parser.setUA(ua).getResult();
 
-export function userAgentParser() {
-    return function(req, res, next) {
-    
-        const parser = new UAParser();
-        const ua = req.headers["user-agent"];
-        const result = parser.setUA(ua).getResult();
+    req.userAgent = result;
 
-        req.userAgent = result;
-
-        // console.log(result);
-        next();
-    };
+    // console.log(req.userAgent);
+    next();
 }
+
+module.exports = userAgentParser;
