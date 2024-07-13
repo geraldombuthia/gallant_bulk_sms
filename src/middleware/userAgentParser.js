@@ -13,7 +13,7 @@ function userAgentParser(req, res, next) {
 
     req.userAgent = result;
 
-    console.log(req.userAgent);
+    // console.log(req.userAgent);
     next();
 }
 

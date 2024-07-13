@@ -1,8 +1,8 @@
-import globals from "globals";
-import pluginJs from "@eslint/js";
-import jestPlugin from "eslint-plugin-jest";
+const globals = require("globals");
+const pluginJs = require("@eslint/js");
+const jestPlugin = require("eslint-plugin-jest");
 
-export default [
+module.exports =  [
     {
         languageOptions:
      { 
