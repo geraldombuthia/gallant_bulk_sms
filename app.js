@@ -1,11 +1,11 @@
 import express from "express";
 import { userAgentParser } from "./src/middleware/userAgentParser.js";
+import { extractIPAddress } from "./src/middleware/extractIPAddress.js";
 
 const app = express();
 const port = 3000;
 
-app.use(userAgentParser()); // userAgentParser middleware to extract browser information
-
+app.use(userAgentParser, extractIPAddress); // middleware to extract browser information
 app.route("/").get((req, res) => {
     // eslint-disable-next-line no-console
     console.log(req.userAgent?.os?.name);
