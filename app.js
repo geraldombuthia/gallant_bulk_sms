@@ -1,6 +1,6 @@
-import express from "express";
-import { userAgentParser } from "./src/middleware/userAgentParser.js";
-import { extractIPAddress } from "./src/middleware/extractIPAddress.js";
+const express = require("express");
+const userAgentParser = require("./src/middleware/userAgentParser.js");
+const extractIPAddress = require("./src/middleware/extractIPAddress.js");
 
 const app = express();
 const port = 3000;

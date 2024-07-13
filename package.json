@@ -16,7 +16,7 @@
     "lint:fix": "eslint . --fix",
     "test": "jest --coverage --passWithNoTests"
   },
-  "type": "module",
+  "type": "commonjs",
   "keywords": [
     "SMS",
     "Gallant",
