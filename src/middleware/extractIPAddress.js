@@ -1,5 +1,4 @@
 const parseIpAddress = require("../utils/parseIpAddress.js");
-
 /**
  * Extracts an IP address that is ipv6 mapped from req and attaches it to the request object
  * as an iPV4 address as ipAddress

@@ -1,14 +1,15 @@
 const express = require("express");
 const userAgentParser = require("./src/middleware/userAgentParser.js");
 const extractIPAddress = require("./src/middleware/extractIPAddress.js");
-
+const logDeviceAccess = require("./src/middleware/storeDeviceInfo.js");
+const {testConnection} = require("./src/config/database.js");
 const app = express();
 const port = 3000;
 
-app.use(userAgentParser, extractIPAddress); // middleware to extract browser information
+testConnection();
+
+app.use(userAgentParser, extractIPAddress, logDeviceAccess); // middleware 
 app.route("/").get((req, res) => {
-    // eslint-disable-next-line no-console
-    console.log(req.userAgent?.os?.name);
 
     res.status(200).json({msg:"Welcome to Gallant Byte SMS"});
 });
@@ -18,6 +19,6 @@ app.route("/about").get((req, res) => {
 });
 
 app.listen(port, () => {
-    // eslint-disable-next-line no-console
+     
     console.log(`Listening on port: ${port}`);
 });
