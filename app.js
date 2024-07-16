@@ -8,7 +8,17 @@ const port = 3000;
 
 testConnection();
 
-app.use(userAgentParser, extractIPAddress, logDeviceAccess); // middleware 
+const skipFaviconMiddleware = (req, res, next) => {
+    // Skips the favicon request from browsers
+    // It is a stand in solution
+    if (req.originalUrl === "/favicon.ico") {
+        res.status(204).end();
+    } else {
+        next();
+    }
+};
+
+app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess); // middleware 
 app.route("/").get((req, res) => {
 
     res.status(200).json({msg:"Welcome to Gallant Byte SMS"});
