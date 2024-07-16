@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
       - 'develop'
-      - 'f/extract_ip_address'
+      - 'f/implement_mysql_database'
   pull_request:
     branches:
       - 'main'
