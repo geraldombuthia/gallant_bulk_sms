@@ -1,0 +1,257 @@
+<!-- <%-include('partials/head')%>
+<%-include('partials/header')%>
+<main>
+    <h1>Hello there are you Index?</h1>
+</main>
+<%-include('partials/footer')%> -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GallantSMS - Affordable SMS API for the Kenyan Developers</title>
+    <meta
+      name="description"
+      content="GallantSMS provides affordable shared and dedicated shortcodes for SMS API integration. Perfect for testing and production environments."
+    />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "SoftwareApplication",
+          "name": "Gallant SMS",
+          "applicationCategory": "DeveloperApplication",
+          "offers": [
+            {
+              "@type": "Offer",
+              "name": "Shared Short Code",
+              "price": "100",
+              "priceCurrency": "KES",
+              "description": "Shared short code for Bulk SMS services"
+            },
+            {
+              "@type": "Offer",
+              "name": "Personal Short Code",
+              "price": "7500",
+              "priceCurrency": "KES",
+              "description": "Personal short code for Bulk SMS services"
+            }
+          ]
+        }
+      </script>
+  </head>
+  <body>
+    <header>
+      <nav aria-label="Main navigation">
+        <div class="logo" aria-label="Gallant SMS logo">
+          <a href="#" class="logo-text">
+            <span class="logo-gallant">Gallant</span><span class="logo-sms">SMS</span> <!-- Don't new line or space to this -->
+          </a>
+        </div>
+        <button class="nav-toggle" aria-label="Toggle navigation">
+            <span class="hamburger"></span>
+        </button>
+        <ul class="nav-menu">
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#docs">Docs</a></li>
+          <li><a href="#login">Login</a></li>
+          <li><a href="#signup" class="cta-button">Sign Up</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-heading">
+        <div class="hero-content">
+          <h1 id="hero-heading">Affordable SMS API for Developers</h1>
+          <p>
+            From shared shortcodes to dedicated numbers, we've got you covered
+          </p>
+          <div class="cta-group">
+            <a href="#signup" class="cta-button primary">Start Testing</a>
+            <a href="#pricing" class="cta-button secondary">View Pricing</a>
+          </div>
+          <!-- <p class="stats" aria-live="polite">Powering <span id="message-count">1000+</span> messages for <span id="developer-count">all</span> developers</p> -->
+        </div>
+        <div class="hero-graphic" aria-hidden="true">
+          <!-- SVG or canvas element for animated graphic -->
+        </div>
+      </section>
+
+      <section
+        id="features"
+        class="features"
+        aria-labelledby="features-heading"
+      >
+        <h2 id="features-heading">Key Features</h2>
+        <div class="feature-grid">
+          <article class="feature-item">
+            <i class="feature-icon" aria-hidden="true"></i>
+            <h3>Shared Shortcode Testing</h3>
+            <p>
+              Quickly test your integration with our affordable shared
+              shortcodes.
+            </p>
+            <a href="#shared-shortcode" class="learn-more">Learn More</a>
+          </article>
+          <!-- Repeat for other features -->
+        </div>
+      </section>
+
+      <section
+        id="how-it-works"
+        class="how-it-works"
+        aria-labelledby="how-it-works-heading"
+      >
+        <h2 id="how-it-works-heading">How It Works</h2>
+        <ol class="steps">
+          <li>
+            <h3>Sign Up</h3>
+            <p>Create your account and get API credentials.</p>
+            <div class="code-snippet" aria-label="Sign up code example">
+              <pre><code>
+curl -X POST https://api.devsms.com/signup \
+-H "Content-Type: application/json" \
+-d '{"email": "dev@example.com", "password": "securepass123"}'
+                        </code></pre>
+            </div>
+          </li>
+          <!-- Repeat for other steps -->
+        </ol>
+      </section>
+
+      <section
+        id="pricing"
+        class="pricing-calculator"
+        aria-labelledby="pricing-heading"
+      >
+        <h2 id="pricing-heading">Pricing Calculator</h2>
+        <form id="pricing-form" aria-label="Pricing calculator form">
+          <div class="form-group">
+            <label for="message-volume">Monthly Message Volume</label>
+            <input
+              type="range"
+              id="message-volume"
+              min="1000"
+              max="1000000"
+              step="1000"
+              value="10000"
+            />
+            <output for="message-volume" id="volume-output">10,000</output>
+          </div>
+          <div class="form-group">
+            <label for="shortcode-type">Shortcode Type</label>
+            <select id="shortcode-type">
+              <option value="shared">Shared Shortcode</option>
+              <option value="dedicated">Dedicated Shortcode</option>
+            </select>
+          </div>
+          <div id="pricing-result" aria-live="polite">
+            <p>
+              Estimated Monthly Cost:
+              <strong>$<span id="cost-output">50</span></strong>
+            </p>
+          </div>
+        </form>
+      </section>
+
+      <section class="trust-signals" aria-label="Trust and Security">
+        <div class="uptime-guarantee">
+          <img src="uptime-icon.svg" alt="" aria-hidden="true" />
+          <p>99.99% Uptime Guarantee</p>
+        </div>
+        <div class="security-cert">
+          <img src="security-icon.svg" alt="" aria-hidden="true" />
+          <p>ISO 27001 Certified</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#docs">Documentation</a></li>
+          </ul>
+        </div>
+        <!-- Repeat for other footer columns -->
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 DevSMS. All rights reserved.</p>
+        <ul class="social-links" aria-label="Social media links">
+          <li>
+            <a
+              href="https://twitter.com/devsms"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Twitter"
+              >Twitter</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://github.com/devsms"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              >GitHub</a
+            >
+          </li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- <script src="app.js" defer></script> -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const navToggle = document.querySelector(".nav-toggle");
+        const navMenu = document.querySelector(".nav-menu");
+        const navbarHeight = document.querySelector('header').offsetHeight;
+
+        console.log(navbarHeight);
+
+        // Smooth scroll to anchor links
+        document.querySelectorAll('.nav-menu a').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const targetId = this.getAttribute("href").substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+              const targetPosition = targetElement.offsetTop - navbarHeight;
+              window.scrollTo({
+                top: targetPosition,
+                behavior: "smooth",
+              });
+            }
+          });
+        });
+        navToggle.addEventListener("click", () => {
+            console.log("Clicked navToggle");
+          navToggle.classList.toggle("active");
+          navMenu.classList.toggle("active");
+        });
+
+        // Close menu when a link is clicked
+        document.querySelectorAll(".nav-menu a").forEach((link) => {
+          link.addEventListener("click", () => {
+            console.log("clicked");
+            navToggle.classList.remove("active");
+            navMenu.classList.remove("active");
+          });
+        });
+
+      });
+    </script>
+  </body>
+</html>

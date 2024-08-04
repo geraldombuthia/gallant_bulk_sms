@@ -1,0 +1,18 @@
+<footer class="sms-footer">
+  <div class="footer-content">
+    <p class="footer-text">
+      <% const features = ['API-driven bulk messaging', 'Real-time dashboard',
+      'Payment processing']; %> <% features.forEach((feature, index) => { %>
+      <span class="feature"><%= feature %></span>
+      <% if (index < features.length - 1) { %>
+      <span class="separator">|</span>
+      <% } %> <% }); %>
+    </p>
+    <p class="copyright">
+      Gallant Bulk SMS. All rights reserved. &copy; <%= new Date().getFullYear()
+      %>
+    </p>
+  </div>
+</footer>
+
+
