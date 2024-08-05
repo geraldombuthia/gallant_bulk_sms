@@ -1,0 +1,78 @@
+:root {
+    --primary-color: #1a2b3c;
+    --secondary-color: #00e5ff;
+    --accent-color: #ff6e40;
+    --background-dark: #121212;
+    --background-light: #ffffff;
+    --text-light: #e0e0e0;
+    --text-dark: #333333;
+  }
+.register{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 70vh;
+}
+
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-color);
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 60vh;
+}
+.register-form, .login-form {
+    background-color: var(--background-dark);
+    padding: 2.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    height: 100%;
+    max-width: 500px;
+}
+
+button {
+    background-color: var(--accent-color);
+    height: 3.5em;
+}
+
+.forgot-password {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.forgot-password a {
+    color: var(--text-light);
+    text-decoration: none;
+}
+
+.forgot-password a:hover {
+    color: var(--secondary-color);
+}
+
+.remember-group {
+    width: 50%;
+    margin: 0;
+    height: 2.5em;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 1em;
+}
+
+.remember > label, #remember {
+    margin: 0;
+    width: unset;
+}
+.remember > label {
+    width: 100%;
+}

@@ -1,70 +1,9 @@
-<!-- <%-include('partials/head')%>
-<%-include('partials/header')%>
-<main>
-    <h1>Hello there are you Index?</h1>
-</main>
-<%-include('partials/footer')%> -->
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GallantSMS - Affordable SMS API for the Kenyan Developers</title>
-    <meta
-      name="description"
-      content="GallantSMS provides affordable shared and dedicated shortcodes for SMS API integration. Perfect for testing and production environments."
-    />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto+Mono:wght@400;700&display=swap"
-      rel="stylesheet"
-    />
-    <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "SoftwareApplication",
-          "name": "Gallant SMS",
-          "applicationCategory": "DeveloperApplication",
-          "offers": [
-            {
-              "@type": "Offer",
-              "name": "Shared Short Code",
-              "price": "100",
-              "priceCurrency": "KES",
-              "description": "Shared short code for Bulk SMS services"
-            },
-            {
-              "@type": "Offer",
-              "name": "Personal Short Code",
-              "price": "7500",
-              "priceCurrency": "KES",
-              "description": "Personal short code for Bulk SMS services"
-            }
-          ]
-        }
-      </script>
-  </head>
+ 
+  <%-include('partials/head')%>
   <body>
-    <header>
-      <nav aria-label="Main navigation">
-        <div class="logo" aria-label="Gallant SMS logo">
-          <a href="#" class="logo-text">
-            <span class="logo-gallant">Gallant</span><span class="logo-sms">SMS</span> <!-- Don't new line or space to this -->
-          </a>
-        </div>
-        <button class="nav-toggle" aria-label="Toggle navigation">
-            <span class="hamburger"></span>
-        </button>
-        <ul class="nav-menu">
-          <li><a href="#features">Features</a></li>
-          <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#docs">Docs</a></li>
-          <li><a href="#login">Login</a></li>
-          <li><a href="#signup" class="cta-button">Sign Up</a></li>
-        </ul>
-      </nav>
-    </header>
+  <%-include('partials/header')%>
 
     <main>
       <section class="hero" aria-labelledby="hero-heading">
@@ -173,42 +112,7 @@ curl -X POST https://api.devsms.com/signup \
       </section>
     </main>
 
-    <footer>
-      <div class="footer-grid">
-        <div class="footer-column">
-          <h4>Product</h4>
-          <ul>
-            <li><a href="#features">Features</a></li>
-            <li><a href="#pricing">Pricing</a></li>
-            <li><a href="#docs">Documentation</a></li>
-          </ul>
-        </div>
-        <!-- Repeat for other footer columns -->
-      </div>
-      <div class="footer-bottom">
-        <p>&copy; 2024 DevSMS. All rights reserved.</p>
-        <ul class="social-links" aria-label="Social media links">
-          <li>
-            <a
-              href="https://twitter.com/devsms"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Twitter"
-              >Twitter</a
-            >
-          </li>
-          <li>
-            <a
-              href="https://github.com/devsms"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="GitHub"
-              >GitHub</a
-            >
-          </li>
-        </ul>
-      </div>
-    </footer>
+ <%-include('partials/footer')%>
 
     <!-- <script src="app.js" defer></script> -->
     <script>
@@ -222,11 +126,15 @@ curl -X POST https://api.devsms.com/signup \
         // Smooth scroll to anchor links
         document.querySelectorAll('.nav-menu a').forEach((anchor) => {
           anchor.addEventListener("click", function (e) {
+            if (this.getAttribute("href").substring(0, 1) != "#") {
+                return;
+            }
             e.preventDefault();
 
             const targetId = this.getAttribute("href").substring(1);
             const targetElement = document.getElementById(targetId);
             
+            console.log(targetElement);
             if (targetElement) {
               const targetPosition = targetElement.offsetTop - navbarHeight;
               window.scrollTo({

@@ -43,6 +43,33 @@ header {
 
 }
 
+button {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: none;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    width: 100%;
+    margin: 2em 0;
+    margin-bottom: 1rem;
+    padding: 0.7rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+}
+
 .header::before {
     content: "";
     display: block;
@@ -63,28 +90,33 @@ nav ul {
 }
 
 nav ul li {
-  margin-left: 1.5rem;
+  margin-left: 1em;
+  
 }
 
+nav ul li a {
+  margin: 0 0.5em;
+}
 nav a {
   color: var(--text-light);
+}
+
+#signup {
+    text-align: center;
+    height: 3em;
 }
 
 /* Navigation menu styles */
 /* Base navbar styles */
 .nav-menu {
   display: flex;
+  justify-items: center;
+  align-items: center;
   list-style-type: none;
   margin: 0;
   padding: 0;
   background-color: var(--primary-color);
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  transition: max-height 0.3s ease-in-out;
-  overflow: hidden;
-  max-height: 0; /* Initially hidden */
+  
 }
 
 /* Navbar items */
@@ -321,12 +353,24 @@ nav a {
 }
 
 .form-group {
-  margin-bottom: 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
+.form-group > label {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0; 
 
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
 }
 
 input[type="range"],
@@ -407,11 +451,13 @@ footer {
 
   .nav-menu {
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     max-height: 0;
+    transition: max-height 0.3s ease-in-out;
     overflow: hidden;
   }
 
