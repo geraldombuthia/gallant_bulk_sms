@@ -12,8 +12,13 @@
         <li><a href="#features">Features</a></li>
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#docs">Docs</a></li>
+        <% if (typeof user !== 'undefined' && user) {%>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li><a href="/auth/logout">Logout</a></li>
+        <% } else { %>
         <li><a href="/auth/login">Login</a></li>
         <li><a href="/auth/register" class="cta-button " id ="signup">Sign Up</a></li>
+        <% } %>
       </ul>
     </nav>
   </header>
