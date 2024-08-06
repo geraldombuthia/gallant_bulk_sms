@@ -10,6 +10,8 @@ const userAgentParser = require("./src/middleware/userAgentParser.js");
 const extractIPAddress = require("./src/middleware/extractIPAddress.js");
 const logDeviceAccess = require("./src/middleware/storeDeviceInfo.js");
 const {testConnection} = require("./src/config/database.js");
+const AuthController = require('./src/controllers/auth.controller.js');
+const {isAuthenticated} = require('./src/middleware/auth.middleware.js');
 
 const app = express();
 const port = 3000;
@@ -17,6 +19,8 @@ const port = 3000;
 testConnection();
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.set('view engine', 'ejs');
 
@@ -57,6 +61,10 @@ app.route("/").get((req, res) => {
 
 app.route("/about").get((req, res) => {
     res.status(200).json({msg:"About Gallant Byte SMS"});
+});
+
+app.route("/dashboard").get(isAuthenticated, (req, res) => {
+    res.render("dashboard.ejs");
 });
 
 app.listen(port, () => {

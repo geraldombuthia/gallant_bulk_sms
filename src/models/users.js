@@ -1,7 +1,16 @@
-const { DataTypes } = require("sequelize");
+const {Model, DataTypes } = require("sequelize");
 const { sequelize } = require("../config/database");
+const bcrypt = require("bcrypt");
 
-const User = sequelize.define("user", {
+
+class User extends Model {
+    async validatePassword(password) {
+        return password === this.password;
+        return await bcrypt.compare(password, this.password);
+    }
+}
+
+User.init({
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
@@ -9,18 +18,24 @@ const User = sequelize.define("user", {
     },
     name: {
         type: DataTypes.STRING(50),
+        allowNull:false
     },
     username: {
-        type: DataTypes. STRING(20)
+        type: DataTypes. STRING(50),
+        unique:true,
+        allowNull: false
     },
     email: {
-        type: DataTypes.STRING(30)
+        type: DataTypes.STRING(255),
+        unique: true,
+        allowNull: false
     },
     phone: {
         type: DataTypes.STRING(20),
+        allowNull: true
     },
     password: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(128),
     },
     created_at: {
         type: DataTypes.DATE,
@@ -32,9 +47,22 @@ const User = sequelize.define("user", {
         allowNull: false
     }
 }, {
+    sequelize,
+    modelname: 'user',
+    tableName: 'users',
     timestamps: true, // Disable Sequelize's automatic timestamp handling
     createdAt: 'created_at',
     updatedAt: 'updated_at'
+});
+
+User.beforeCreate(async (user, options) => {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
+});
+
+User.beforeUpdate(async (user, options) => {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    user.password = hashedPassword;
 });
 
 module.exports = User;
