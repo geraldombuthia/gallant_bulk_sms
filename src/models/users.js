@@ -2,10 +2,8 @@ const {Model, DataTypes } = require("sequelize");
 const { sequelize } = require("../config/database");
 const bcrypt = require("bcrypt");
 
-
 class User extends Model {
     async validatePassword(password) {
-        return password === this.password;
         return await bcrypt.compare(password, this.password);
     }
 }
@@ -48,19 +46,19 @@ User.init({
     }
 }, {
     sequelize,
-    modelname: 'user',
-    tableName: 'users',
+    modelname: "user",
+    tableName: "users",
     timestamps: true, // Disable Sequelize's automatic timestamp handling
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    createdAt: "created_at",
+    updatedAt: "updated_at"
 });
 
-User.beforeCreate(async (user, options) => {
+User.beforeCreate(async (user) => {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
 });
 
-User.beforeUpdate(async (user, options) => {
+User.beforeUpdate(async (user) => {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     user.password = hashedPassword;
 });

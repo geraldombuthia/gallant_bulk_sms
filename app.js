@@ -1,53 +1,52 @@
-require('dotenv').config();
+require("dotenv").config();
 
 const express = require("express");
 const path = require("path");
-const session = require('express-session');
-const passport = require('./src/config/passport.js');
+const session = require("express-session");
+const passport = require("./src/config/passport.js");
 
-const AuthRoutes = require("./src/routes/auth.routes.js")
-const userAgentParser = require("./src/middleware/userAgentParser.js");
-const extractIPAddress = require("./src/middleware/extractIPAddress.js");
-const logDeviceAccess = require("./src/middleware/storeDeviceInfo.js");
+const AuthRoutes = require("./src/routes/auth.routes.js");
+// const userAgentParser = require("./src/middleware/userAgentParser.js");
+// const extractIPAddress = require("./src/middleware/extractIPAddress.js");
+// const logDeviceAccess = require("./src/middleware/storeDeviceInfo.js");
 const {testConnection} = require("./src/config/database.js");
-const AuthController = require('./src/controllers/auth.controller.js');
-const {isAuthenticated} = require('./src/middleware/auth.middleware.js');
+const {isAuthenticated} = require("./src/middleware/auth.middleware.js");
 
 const app = express();
 const port = 3000;
 
 testConnection();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.set('view engine', 'ejs');
+app.set("view engine", "ejs");
 
-app.set('views', path.join(__dirname, '/src/views'));
+app.set("views", path.join(__dirname, "/src/views"));
 
-const skipFaviconMiddleware = (req, res, next) => {
-    // Skips the favicon request from browsers
-    // It is a stand in solution
-    if (req.originalUrl === "/favicon.ico") {
-        res.status(204).end();
-    } else {
-        next();
-    }
-};
+// const skipFaviconMiddleware = (req, res, next) => {
+//     // Skips the favicon request from browsers
+//     // It is a stand in solution
+//     if (req.originalUrl === "/favicon.ico") {
+//         res.status(204).end();
+//     } else {
+//         next();
+//     }
+// };
 
 app.use(session({
     secret: [process.env.SESSION_SECRET_PRIMARY, process.env.SESSION_SECRET_SECONDARY],
     resave: false,
     saveUninitialized: false,
-    name: 'sessionId',
+    name: "sessionId",
     cookie: {
         maxAge: 1000 * 60 * 60 * 24, // 1 day
-        secure: process.env.NODE_ENV === 'production', // only transmit over HTTPS
+        secure: process.env.NODE_ENV === "production", // only transmit over HTTPS
         httpOnly: true // prevents client-side JS from reading the cookie
     }
 
-}))
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use((req, res, next) => {
@@ -55,13 +54,12 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/auth', AuthRoutes);
+app.use("/auth", AuthRoutes);
 
-// app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess); // middleware 
+// app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess);
 app.route("/").get((req, res) => {
 
-    // res.status(200).json({msg:"Welcome to Gallant Byte SMS"});
-    res.render('index.ejs');
+    res.render("index.ejs");
 });
 
 app.route("/about").get((req, res) => {
@@ -69,7 +67,7 @@ app.route("/about").get((req, res) => {
 });
 
 app.route("/dashboard").get(isAuthenticated, (req, res) => {
-    res.render("dashboard.ejs");
+    res.render("dashboard.ejs", {user: req.user});
 });
 
 app.listen(port, () => {
