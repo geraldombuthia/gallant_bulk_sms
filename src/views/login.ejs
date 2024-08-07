@@ -1,0 +1,30 @@
+<%-include('partials/head')%>
+<%-include('partials/header')%>
+
+<body>
+    <section class="login">
+        <div class="login-form">
+            <form action="/auth/login" method="POST">
+                <h2>Login</h2>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="your_email@gmail.com" required />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required />
+                </div>
+                <div class="remember-group">
+                    <input type="checkbox" id="remember" name="remember" placeholder="password"/>
+                    <label for="remember">Remember me</label>
+                </div>
+                <button type="submit" class="cta-button">Login</button>
+            </form>
+            <div class="forgot-password">
+                <a href="#">Forgot Password?</a>
+            </div>
+        </div>
+    </section>
+</body>
+<%-include('partials/footer')%>
+<script src="/js/main.js"></script>

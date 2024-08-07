@@ -47,7 +47,9 @@ const DeviceAccess = sequelize.define("DeviceAccess", {
 
 }, {
     tableName: "device_access",
-    timestamps: false
+    timestamps: true,
+    createdAt: "access_time",
+    updatedAt: "updatedAt"
 });
 
 module.exports = DeviceAccess;
