@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
       - 'develop'
-      - 'f/implement_mysql_database'
+      - 'f/add-login-and-registration'
   pull_request:
     branches:
       - 'main'

@@ -5,12 +5,6 @@ class AuthController {
     static async register(req, res, next) {
         try {
             console.log("Request body: ", req.body);
-            const errors = validationResult(req);
-
-            if (!errors.isEmpty()) {
-                res.status(400).json({ errors: errors.array() });
-            }
-            // Implement validation and sanitazition of data on the request body
             const user = await AuthService.register(req.body);
             console.log("User: ", user);
             res.redirect(201, "/auth/login");
@@ -28,7 +22,7 @@ class AuthController {
             if (err) {
                 return next(err);
             }
-            res.redirect("/login"); // Redirect to the home page
+            res.redirect("/auth/login"); // Redirect to the home page
         });
     }
 }

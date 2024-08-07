@@ -3,6 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+const EventEmitter = require("events");
+
 const passport = require("./src/config/passport.js");
 
 const AuthRoutes = require("./src/routes/auth.routes.js");
@@ -14,7 +16,7 @@ const {isAuthenticated} = require("./src/middleware/auth.middleware.js");
 
 const app = express();
 const port = 3000;
-
+EventEmitter.defaultMaxListeners = 20;
 testConnection();
 
 app.use(express.static(path.join(__dirname, "public")));
