@@ -1,5 +1,4 @@
 const AuthService = require("../service/auth.service");
-const { validationResult } = require("../utils/validate");
 
 class AuthController {
     static async register(req, res, next) {
