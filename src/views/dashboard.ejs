@@ -1,6 +1,127 @@
 <%-include('partials/head')%>
-<%-include('partials/header')%>
+<head>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+<div class="dashboard">
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <h2>Dashboard</h2>
+    <ul>
+      <li><a href="#" data-section="overview">Account Overview</a></li>
+      <li><a href="#" data-section="api">API Management</a></li>
+      <li><a href="#" data-section="short-codes">Short Code Management</a></li>
+      <li><a href="#" data-section="billing">Billing & Payments</a></li>
+      <li><a href="#" data-section="support">Support & Documentation</a></li>
+      <li><a href="#" data-section="profile">User Profile</a></li>
+    </ul>
+  </nav>
 
-<h1>Hello <%=user.name%>!</h1>
-<h2>Welcome to the world of Great fun</h2>
-<%-include('partials/footer')%>
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Account Overview -->
+    <section id="overview" class="content-section">
+      <h2>Account Overview</h2>
+      <div class="overview-grid">
+        <div class="overview-card">
+          <h3>SMS Credit Balance</h3>
+          <p>10,000 credits</p>
+          <button>Top Up</button>
+        </div>
+        <div class="overview-card">
+          <h3>Active Short Codes</h3>
+          <p>2 Active Codes</p>
+          <button>Manage Short Codes</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Management -->
+    <section id="api" class="content-section">
+      <h2>API Management</h2>
+      <div class="api-grid">
+        <div class="api-card">
+          <h3>API Keys</h3>
+          <button>Generate New API Key</button>
+          <ul>
+            <li>Key 1: ********1234</li>
+            <li>Key 2: ********5678</li>
+          </ul>
+        </div>
+        <div class="api-card">
+          <h3>API Usage Statistics</h3>
+          <p>Last 24 Hours: 5,000 SMS sent</p>
+        </div>
+        <div class="api-card">
+          <h3>Webhook Configuration</h3>
+          <button>Setup Webhooks</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Short Code Management -->
+    <section id="short-codes" class="content-section">
+      <h2>Short Code Management</h2>
+      <div class="short-codes-grid">
+        <div class="short-code-card">
+          <h3>Your Short Codes</h3>
+          <ul>
+            <li>Short Code 1: Active</li>
+            <li>Short Code 2: Active</li>
+          </ul>
+          <button>Renew Codes</button>
+        </div>
+        <div class="short-code-card">
+          <h3>Purchase New Short Code</h3>
+          <button>Buy Now</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Billing & Payments -->
+    <section id="billing" class="content-section">
+      <h2>Billing & Payments</h2>
+      <div class="billing-grid">
+        <div class="billing-card">
+          <h3>Transaction History</h3>
+          <button>View Transactions</button>
+        </div>
+        <div class="billing-card">
+          <h3>Payment Methods</h3>
+          <button>Manage Payment Methods</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support & Documentation -->
+    <section id="support" class="content-section">
+      <h2>Support & Documentation</h2>
+      <div class="support-grid">
+        <div class="support-card">
+          <h3>API Documentation</h3>
+          <button>View Documentation</button>
+        </div>
+        <div class="support-card">
+          <h3>Contact Support</h3>
+          <button>Get Help</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- User Profile -->
+    <section id="profile" class="content-section">
+      <h2>User Profile</h2>
+      <div class="profile-grid">
+        <div class="profile-card">
+          <h3>Profile Information</h3>
+          <button>Edit Profile</button>
+        </div>
+        <div class="profile-card">
+          <h3>Security Settings</h3>
+          <button>Update Security</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="/js/dashboard.js"></script>

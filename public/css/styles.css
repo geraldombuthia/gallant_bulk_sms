@@ -87,27 +87,27 @@ input {
     margin-top: -80px;
 }
 
-nav {
+.header_nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-nav ul {
+.header_nav ul {
   display: flex;
   list-style-type: none;
   padding: 0;
 }
 
-nav ul li {
+.header_nav ul li {
   margin-left: 1em;
   
 }
 
-nav ul li a {
+.header_nav ul li a {
   margin: 0 0.5em;
 }
-nav a {
+.header_nav a {
   color: var(--text-light);
 }
 
