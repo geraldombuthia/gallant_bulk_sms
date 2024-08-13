@@ -13,6 +13,7 @@ class AuthController {
     }
 
     static async login(req, res) {
+        console.log("Logged in");
         res.redirect("/dashboard");
     }
 
