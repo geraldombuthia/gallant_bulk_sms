@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
       - 'develop'
-      - 'f/add-login-and-registration'
+      - 'f/implement-basic-dashboard'
   pull_request:
     branches:
       - 'main'

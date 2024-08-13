@@ -23,8 +23,8 @@ router.get("/login", (req, res) => {
 });
 router.post(
     "/login",
-    // validateLogin,
-    // validationHandler,
+    validateLogin,
+    validationHandler,
     passport.authenticate("local"),
     AuthController.login
 );
