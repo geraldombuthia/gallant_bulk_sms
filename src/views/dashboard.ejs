@@ -1,7 +1,7 @@
 <%-include('partials/head')%>
 <head>
-    <link rel="stylesheet" href="/css/dashboard.css" />
-  </head>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
 <div class="dashboard">
   <!-- Sidebar -->
   <nav class="sidebar">
@@ -113,14 +113,94 @@
       <div class="profile-grid">
         <div class="profile-card">
           <h3>Profile Information</h3>
-          <button>Edit Profile</button>
+          <button id="edit-profile-btn">Edit Profile</button>
         </div>
         <div class="profile-card">
           <h3>Security Settings</h3>
-          <button>Update Security</button>
+          <button id="update-security-btn">Update Security</button>
         </div>
       </div>
     </section>
+
+    <!-- Profile Edit Form Overlay -->
+    <div id="profile-edit-overlay" class="overlay">
+      <div class="overlay-content">
+        <span class="close-button">&times;</span>
+        <h2>Edit Profile</h2>
+        <form id="profile-edit-form">
+          <div class="profile-form-group">
+            <label for="full-name">Full Name</label>
+            <input
+              class="profile-input"
+              type="text"
+              id="full-name"
+              name="full-name"
+              required
+            />
+          </div>
+          <div class="profile-form-group">
+            <label for="full-name">Username</label>
+            <input
+              class="profile-input"
+              type="text"
+              id="username"
+              name="username"
+              required
+            />
+          </div>
+          <div class="profile-form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div class="profile-form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" />
+          </div>
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Security Settings Form Overlay -->
+    <div id="security-overlay" class="overlay">
+      <div class="overlay-content">
+        <span class="close-button">&times;</span>
+        <h2>Update Security Settings</h2>
+        <form id="security-form">
+          <div class="profile-form-group">
+            <label for="current-password">Current Password</label>
+            <input
+              class="profile-input"
+              type="password"
+              id="current-password"
+              name="current-password"
+              required
+            />
+          </div>
+          <div class="profile-form-group">
+            <label for="new-password">New Password</label>
+            <input
+              class="profile-input"
+              type="password"
+              id="new-password"
+              name="new-password"
+              required
+            />
+          </div>
+          <div class="profile-form-group">
+            <label for="confirm-password">Confirm Password</label>
+            <input
+              class="profile-input"
+              type="password"
+              id="confirm-password"
+              name="confirm-password"
+              required
+            />
+          </div>
+          <button type="submit">Update Password</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 
