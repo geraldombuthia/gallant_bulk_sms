@@ -57,7 +57,7 @@ app.use(flash()); // Enable flash messages
 app.use((req, res, next) => {
     res.locals.messages = req.flash(); // Makes flash available in views
     next();
-})
+});
 app.use((req, res, next) => {
     res.locals.user = req.user;
     next();

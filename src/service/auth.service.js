@@ -10,9 +10,6 @@ class AuthService {
         }
     }
 
-    static async login(username, password) {
-
-    }
 }
 
 module.exports = AuthService;

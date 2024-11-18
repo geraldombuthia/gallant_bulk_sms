@@ -18,9 +18,9 @@ class AuthController {
             //     res.locals.message = 'Registration successful. Please login.'
             //     return res.redirect(201, "/auth/login");
             // }
-            res.locals.message = 'Registration succesful. Please login';
+            res.locals.message = "Registration succesful. Please login";
             res.redirect(201, "/auth/login");
-            AuthController.redirect
+            AuthController.redirect;
         } catch (error) {
             next(error);
         }
@@ -45,9 +45,9 @@ class AuthController {
     }
 
     static redirectMessage(req, res, path, statusCode, message) {
-        if (req.accepts('json')) {
+        if (req.accepts("json")) {
             return res.status(statusCode).json({
-                message: message
+                message
             });
         } else {
             res.locals.message = message; // Set message for SSR (flash messaging)
