@@ -9,6 +9,7 @@ class AuthService {
             console.log("Error: ", error);
         }
     }
+
 }
 
 module.exports = AuthService;

@@ -1,0 +1,37 @@
+CREATE IF NOT EXIST DATABASE gallantbulksms;
+
+--@block
+SELECT * FROM device_access
+
+--@block
+CREATE TABLE device_access (
+    id SERIAL PRIMARY KEY,
+    device_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+
+    access_level INTEGER NOT NULL,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+--@block
+SELECT * FROM device_access
+
+--@block
+CREATE TABLE IF NOT EXISTS users(
+    id INT AUTO_INCREMENT PRIMARY KEY UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(30) NOT NULL,
+    password VARCHAR(128) NOT NULL,    
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+--@block
+SELECT * FROM users
+
+--@BLOCK
+DROP TABLE IF EXISTS users;
+

@@ -1,11 +1,18 @@
-const {Sequelize} = require("sequelize");
+require("dotenv").config();
 
-const sequelize = new Sequelize("gallantbulksms", "myuser", "new_password69", {
-    host:"localhost",
-    dialect: "mysql",
-     
-    logging: (msg) => console.log("Sequelize Log:", msg)
-});
+const { Sequelize } = require("sequelize");
+
+const sequelize = new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USERNAME,
+    process.env.DB_PASSWORD,
+    {
+        host: process.env.DB_HOST,
+        dialect: process.env.DB_DIALECT,
+
+        logging: (msg) => console.log("Sequelize Log:", msg),
+    }
+);
 
 // Test the connection
 async function testConnection() {
@@ -14,9 +21,9 @@ async function testConnection() {
         // es-lint-disable-next-line no-console
         console.log("Connection Established Successfully");
     } catch (error) {
-        // es-lint-disable-next-line no-console
+    // es-lint-disable-next-line no-console
         console.error("Unable to connect to the database:", error);
     }
 }
 
-module.exports = {sequelize, testConnection};
+module.exports = { sequelize, testConnection };
