@@ -22,6 +22,7 @@ passport.use(
                 }
                 return done(null, user);
             } catch (error) {
+                console.log("No such user");
                 return done(error);
             }
         }

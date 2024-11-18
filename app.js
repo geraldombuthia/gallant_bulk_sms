@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const session = require("express-session");
+const flash = require("connect-flash");
 const EventEmitter = require("events");
 
 const passport = require("./src/config/passport.js");
@@ -51,6 +52,12 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(flash()); // Enable flash messages
+app.use((req, res, next) => {
+    res.locals.messages = req.flash(); // Makes flash available in views
+    next();
+})
 app.use((req, res, next) => {
     res.locals.user = req.user;
     next();

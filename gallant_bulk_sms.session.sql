@@ -1,3 +1,5 @@
+CREATE IF NOT EXIST DATABASE gallantbulksms;
+
 --@block
 SELECT * FROM device_access
 

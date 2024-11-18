@@ -9,6 +9,10 @@ class AuthService {
             console.log("Error: ", error);
         }
     }
+
+    static async login(username, password) {
+
+    }
 }
 
 module.exports = AuthService;
