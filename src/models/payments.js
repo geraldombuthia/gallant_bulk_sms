@@ -1,19 +1,18 @@
-const {Model, DataTypes} = require("sequelize");
-const { Sequelize } = require("../config/database");
-const bcrypt = require("bcrypt");
+const {DataTypes} = require("sequelize");
+const { sequelize } = require("../config/database");
 
-const Payments =  Sequelize.define("Payments",{
+const Payment =  sequelize.define("Payment",{
     id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
         allowNull: false
     },
-    user_id: {
+    userId: {
         type: DataTypes.INTEGER,
         references: {
-            model: 'users',
-            key: 'id'
+            model: "users",
+            key: "id"
         },
         required: true
     },
@@ -21,48 +20,58 @@ const Payments =  Sequelize.define("Payments",{
         type: DataTypes.INTEGER,
         allowNull: false, 
     },
-    transaction_code: { // Transaction code
+    transaction_code: { // Transaction code// Receipt Number
         type: DataTypes.STRING(50),
-        allowNull: false
     },
     payment_method: { // Mpesa? Airtel? paypal? e.t.c
         type: DataTypes.STRING(50),
         allowNull: false,
-        enum: ['mpesa', 'airtelmoney', 'paypal', 'google_pay'],
-        default_value: 'mpesa'
+        enum: ["mpesa", "airtelmoney", "paypal", "google_pay"],
+        default_value: "mpesa"
     }, 
     transaction_status: { // pending, completed, failed, refunded
         type: DataTypes.STRING(50),
-        enum: ['pending', 'completed', 'failed', 'refunded'],
-        defaultValue: 'pending',
+        enum: ["pending", "success", "failed", "refunded"],
+        defaultValue: "pending",
         allowNull: false,
     },
     currency: {
         type: DataTypes.STRING(50),
-        enum: ['USD', 'KE'],
-        defaultValue: 'KE'
+        enum: ["USD", "KE"],
+        defaultValue: "KE"
     },
-    merchant_request_id: {
+    merchantRequestID: {
         type: DataTypes.STRING(50)
     },
     checkoutRequestID: {
         type: DataTypes.STRING(50),
     }, 
-    ResponseCode: {
+    responseCode: {
         type: DataTypes.STRING(10),
-        enum: ['0', '1032']
+        enum: ["0", "1032"]
     },
-    ResponseDesctiption: {
-        type: DataTypes.STRING(50);
+    responseDescription: {
+        type: DataTypes.STRING(50),
+    },
+    transactionDate: {
+        type: DataTypes.STRING(20)
+    },
+    phone: {
+        type: DataTypes.STRING(15),
+    },
+    purchaseType: {
+        type: DataTypes.STRING(20),
+        enum: ["registration", "purchase"],
+        defaultValue: "purchase"
     }
 
 }, {
     sequelize, 
-    modelname: 'payment',
-    tablename: 'Payments',
+    modelname: "Payment",
+    tablename: "Payments",
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "lastmodified",
 });
 
-module.exports = Payments;
+module.exports = Payment;

@@ -4,11 +4,13 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
+const morgan = require("morgan");
 const EventEmitter = require("events");
 
 const passport = require("./src/config/passport.js");
 
 const AuthRoutes = require("./src/routes/auth.routes.js");
+const PayRoutes = require("./src/routes/payment.routes.js");
 // const userAgentParser = require("./src/middleware/userAgentParser.js");
 // const extractIPAddress = require("./src/middleware/extractIPAddress.js");
 // const logDeviceAccess = require("./src/middleware/storeDeviceInfo.js");
@@ -20,6 +22,8 @@ const port = 3000;
 EventEmitter.defaultMaxListeners = 20;
 testConnection();
 
+app.use(morgan("dev", { immediate: false}));
+// app.use(morgan('combined', { immediate: true}));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -64,6 +68,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/auth", AuthRoutes);
+app.use("/pay", PayRoutes);
 
 // app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess);
 app.route("/").get((req, res) => {
