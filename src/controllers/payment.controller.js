@@ -78,8 +78,9 @@ class PaymentController {
             if (!paymentData) {
                 throw new Error("HandlePaymentCallback failed");
             }
+            console.log(paymentData);
             if (paymentData.ResultCode === 0) {
-                res.status(200).json("Success");
+                return res.status(200).json("Success");
             }
 
             return res.json("success");

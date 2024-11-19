@@ -13,20 +13,20 @@ merging into main as production ready releases
 The following sub readme is what we will work with and use as our guide
 ## Core System Architecture
 
-- [ ] Monolithic architecture (for rapid development, can be broken into microservices later)
-- [ ] RESTful API for client interactions
+- [X] Monolithic architecture (for rapid development, can be broken into microservices later)
+- [X] RESTful API for client interactions and use of Frameworks
 - [ ] Basic event-driven design for message processing
 
 ## Data Management
 
-- [ ] MySQL for relational data (users, messages, analytics)
-- [ ] Sequelize.js ORM
+- [X] MySQL for relational data (users, messages, analytics)
+- [X] Sequelize.js ORM
 - [ ] Redis for caching and rate limiting
 
 ## Development Stack
 
 ### Backend
-- [ ] Node.js with Express for API services
+- [X] Node.js with Express for API services
 - [ ] TypeScript for type safety
 
 ### Frontend
@@ -64,7 +64,7 @@ The following sub readme is what we will work with and use as our guide
 
 ## Development Practices
 
-- [ ] Use Git for version control
+- [X] Use Git for version control
 - [ ] Implement code reviews
 - [ ] Maintain basic API documentation
 
