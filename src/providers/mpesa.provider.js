@@ -97,7 +97,6 @@ class MpesaProvider {
         try {
             const response = await axios.post(process.env.STK_PUSH_URL, requestBody, { headers });
 
-
             return response.data;
         } catch (error) {
             throw new Error(`STK_PUSH: ${ error.message}`);
