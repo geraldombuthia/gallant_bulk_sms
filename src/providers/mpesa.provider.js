@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const axios = require("axios");
+const { genTimeStamp } = require("../utils/parseMpesaTime");
 
 /**
  * @brief Implements the Mpesa payment strategy here
@@ -11,6 +12,10 @@ class MpesaProvider {
      * @brief Gets access token from DARAJA API Authorization endpoint
      * @returns access_token
      */
+    shortCode = process.env.SHORT_CODE;
+    passkey = process.env.PASS_KEY;
+    callBackURL = process.env.MPESA_CALLBACK_URL;
+
     async getAccessToken() {
         const consumerKey = process.env.CONSUMER_KEY;
         const consumerSecret = process.env.CONSUMER_SECRET;
@@ -63,12 +68,9 @@ class MpesaProvider {
       (`0${  date.getMinutes()}`).slice(-2) +
       (`0${  date.getSeconds()}`).slice(-2);
 
-        const shortCode = process.env.SHORT_CODE;
-        const passkey = process.env.PASS_KEY;
-        const callBackURL = process.env.MPESA_CALLBACK_URL;
 
         const stk_password = new Buffer.from(
-            shortCode + passkey + timeStamp
+            this.shortCode + this.passkey + timeStamp
         ).toString("base64");
 
         const headers = {
@@ -77,13 +79,13 @@ class MpesaProvider {
         };
         
         const requestBody = {
-            BusinessShortCode: shortCode,
+            BusinessShortCode: this.shortCode,
             Password: stk_password,
             Timestamp: timeStamp,
             TransactionType: transaction_type, // till "CustomerBuyGoodsOnline"
             Amount: amount,      // Numeric
             PartyA: phoneNumber, // Phone number sending money (Numeric) (12 digits)
-            PartyB: shortCode,
+            PartyB: this.shortCode,
             PhoneNumber: phoneNumber, // Phone number to receive the prompt (Numeric) (12 digits)
             CallBackURL: callBackURL,
             AccountReference: "Geralds", 
@@ -139,11 +141,22 @@ class MpesaProvider {
         return obj;
     }
 
-    // async checkPaymentStatus(requestID) {
-    // // @TODO implement the method that queries mpesa to get status
-    // // of a method using an endpoint
+    async checkPaymentStatus(requestID) {
+    // @TODO implement the method that queries mpesa to get status
+    // of a method using an endpoint
+    try {
+        const date = new Date();
 
-    // }
+        const timeStamp = genTimeStamp();
+
+        const password =  new Buffer.from(
+            short
+        )
+    } catch (error) {
+
+    }
+
+    }
 }
 
 module.exports = MpesaProvider;
