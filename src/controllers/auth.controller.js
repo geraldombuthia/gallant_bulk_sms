@@ -3,7 +3,6 @@ const AuthService = require("../service/auth.service");
 class AuthController {
     static async register(req, res, next) {
         try {
-            console.log("Request body: ", req.body);
             const user = await AuthService.register(req.body);
             console.log("User registered: ", user);
 

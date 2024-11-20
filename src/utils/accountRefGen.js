@@ -1,3 +1,4 @@
+require("dotenv").config();
 const serviceID = "GBSMS";
 /**
  * Function to generate User account names to allow for offline Mpesa payments
@@ -7,8 +8,8 @@ const serviceID = "GBSMS";
  * //@TODO introduce a hashing algorithm to hide user ids or use of them
  */
 
-function accountRefGen(serviceID, userId) {
-    return `${serviceID}${userId}`;
+function accountRefGen() {
+    return process.env.ACCOUNT_REF;
 }
 
 function getUserIdFromRef(accountRef) {

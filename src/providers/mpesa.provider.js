@@ -56,7 +56,7 @@ class MpesaProvider {
             phoneNumber, 
             account_ref, 
             transaction_type = "CustomerPayBillOnline"} = paymentData;
-        console.log(account_ref);
+
         const token = await this.getAccessToken();
 
         const date = new Date();
@@ -88,7 +88,7 @@ class MpesaProvider {
             PartyB: this.shortCode,
             PhoneNumber: phoneNumber, // Phone number to receive the prompt (Numeric) (12 digits)
             CallBackURL: this.callBackURL,
-            AccountReference: "Geralds", 
+            AccountReference: account_ref, 
             // Account no. Identifies transaction in your system (12 char)
             TransactionDesc: "Gallant Bulk sms subscriptions" 
             // Additional info sent along with the request from your system (13 char)
@@ -97,7 +97,6 @@ class MpesaProvider {
         try {
             const response = await axios.post(process.env.STK_PUSH_URL, requestBody, { headers });
 
-            console.log(response.data);
 
             return response.data;
         } catch (error) {
@@ -113,8 +112,6 @@ class MpesaProvider {
    */
     async callbackHandler(request) {
         const callback = request?.Body?.stkCallback;
-        console.log(callback);
-        console.log(callback.CallbackMetadata);
 
         if (!callback) {
             throw new Error("Invalid callback data");
@@ -171,7 +168,6 @@ class MpesaProvider {
                 {headers},
             );
 
-            console.log(response.data);
             return response.data;
         } catch (error) {
             console.log(error.message);

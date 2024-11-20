@@ -7,7 +7,6 @@ const MpesaProvider = require("./mpesa.provider");
  */
 class PaymentProviderFactory {
     constructor() {
-        console.log("Payment started");
         this.providers = {
             mpesa: new MpesaProvider(),
         };

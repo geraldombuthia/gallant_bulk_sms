@@ -9,20 +9,16 @@ passport.use(
             try {
                 const user = await User.findOne({ where: { email } });
 
-                console.log("User: ", user);
                 if (!user) {
-                    console.log("Incorrect email");
                     return done(null, false, { message: "Incorrect email." });
 
                 }
                 const isMatch = await user.validatePassword(password);
                 if (!isMatch) {
-                    console.log("Incorrect password");
                     return done(null, false, { message: "Incorrect password" });
                 }
                 return done(null, user);
             } catch (error) {
-                console.log("No such user");
                 return done(error);
             }
         }

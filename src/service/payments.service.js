@@ -17,11 +17,10 @@ class PaymentsService {
 
         try {
             const provider = this.providerFactory.getProvider("mpesa");
-            const account_ref = accountRefGen(serviceID, paymentData.userId);
+            const account_ref = accountRefGen(serviceID, paymentData.userId); 
             
-            paymentData.accountRef = account_ref;
+            paymentData.account_ref = account_ref;
 
-            console.log(account_ref, paymentData);
             const providerPayment = await provider.sendStkPush(paymentData);
 
             const payment = new Payment({

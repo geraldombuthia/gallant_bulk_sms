@@ -36,16 +36,12 @@ class PaymentController {
             purchaseType, // Whether its a registration fee or purchase
             transaction_type, // Whether its a paybill or buy goods for safaricom use
         };
-        console.log(paymentData);
+
         try {
-            // console.log(this.paymentService);
+
             const payment = await this.paymentService.createPayment(paymentData);
 
-            console.log(`Raw Payment response ${  payment}`);
-
             const paymentJSON= payment.toJSON? payment.toJSON(): payment;
-
-            console.log("Payment Response as an Object", paymentJSON);
 
             if ( paymentJSON.responseCode === 0) {
                 
@@ -79,7 +75,7 @@ class PaymentController {
                 console.log("Payment Data is null");
                 return res.status(500).json("Payment Data is null");
             }
-            console.log(paymentData);
+            
             if (paymentData.ResultCode === 0) {
                 return res.status(200).json("Success");
             }
