@@ -43,9 +43,10 @@ class PaymentController {
 
             const paymentJSON= payment.toJSON? payment.toJSON(): payment;
 
-            if ( paymentJSON.responseCode === 0) {
-                
-                return res.status(201).json({payment});
+            console.log(paymentJSON);
+            if ( paymentJSON.responseCode === 0 || paymentJSON.responseCode === '0') {
+                const {merchantRequestID, checkoutRequestID, ...newPayment} = paymentJSON;
+                return res.status(201).json({newPayment});
             } else {
                 return res.status(500).json({
                     message: payment?.message || "payment failed",
