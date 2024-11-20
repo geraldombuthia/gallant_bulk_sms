@@ -29,7 +29,7 @@ const Payment =  sequelize.define("Payment",{
         enum: ["mpesa", "airtelmoney", "paypal", "google_pay"],
         default_value: "mpesa"
     }, 
-    transaction_status: { // pending, completed, failed, refunded
+    transaction_status: { // pending, success, failed, refunded
         type: DataTypes.STRING(50),
         enum: ["pending", "success", "failed", "refunded"],
         defaultValue: "pending",
@@ -48,7 +48,8 @@ const Payment =  sequelize.define("Payment",{
     }, 
     responseCode: {
         type: DataTypes.STRING(10),
-        enum: ["0", "1032"]
+        enum: ["0", "1032"],
+        defaultValue: "0"
     },
     responseDescription: {
         type: DataTypes.STRING(50),

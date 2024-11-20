@@ -76,7 +76,8 @@ class PaymentController {
                 pay_provider
             );
             if (!paymentData) {
-                throw new Error("HandlePaymentCallback failed");
+                console.log("Payment Data is null");
+                return res.status(500).json("Payment Data is null");
             }
             console.log(paymentData);
             if (paymentData.ResultCode === 0) {

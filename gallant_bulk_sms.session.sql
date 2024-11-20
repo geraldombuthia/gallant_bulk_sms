@@ -46,9 +46,9 @@ CREATE TABLE IF NOT EXISTS Payments (
     currency ENUM('USD', 'KE') DEFAULT 'KE',
     merchantRequestID VARCHAR(50),
     checkoutRequestID VARCHAR(50),
-    responseCode ENUM('0', '1032'),
+    responseCode VARCHAR(10),
     responseDescription VARCHAR(50),
-    transactionDate VARCHAR(20),
+    transactionDate VARCHAR(50),
     phone VARCHAR(15),
     purchaseType ENUM('registration', 'purchase') DEFAULT 'purchase',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -60,4 +60,10 @@ CREATE TABLE IF NOT EXISTS Payments (
 SELECT * FROM Payments
 
 --@BLOCK
+SELECT * FROM Payments WHERE merchantRequestID = "60e4-4f14-997e-f04c8c4f586d172807285"
+
+--@BLOCK
 DROP TABLE IF EXISTS Payments;
+
+--@BLOCK
+DESCRIBE Payments;

@@ -15,6 +15,7 @@ class MpesaProvider {
     shortCode = process.env.SHORT_CODE;
     passkey = process.env.PASS_KEY;
     callBackURL = process.env.MPESA_CALLBACK_URL;
+    stkQueryURL = process.env.STK_QUERY_URL;
 
     async getAccessToken() {
         const consumerKey = process.env.CONSUMER_KEY;
@@ -68,7 +69,6 @@ class MpesaProvider {
       (`0${  date.getMinutes()}`).slice(-2) +
       (`0${  date.getSeconds()}`).slice(-2);
 
-
         const stk_password = new Buffer.from(
             this.shortCode + this.passkey + timeStamp
         ).toString("base64");
@@ -87,7 +87,7 @@ class MpesaProvider {
             PartyA: phoneNumber, // Phone number sending money (Numeric) (12 digits)
             PartyB: this.shortCode,
             PhoneNumber: phoneNumber, // Phone number to receive the prompt (Numeric) (12 digits)
-            CallBackURL: callBackURL,
+            CallBackURL: this.callBackURL,
             AccountReference: "Geralds", 
             // Account no. Identifies transaction in your system (12 char)
             TransactionDesc: "Gallant Bulk sms subscriptions" 
@@ -114,6 +114,7 @@ class MpesaProvider {
     async callbackHandler(request) {
         const callback = request?.Body?.stkCallback;
         console.log(callback);
+        console.log(callback.CallbackMetadata);
 
         if (!callback) {
             throw new Error("Invalid callback data");
@@ -141,20 +142,41 @@ class MpesaProvider {
         return obj;
     }
 
-    async checkPaymentStatus(requestID) {
+    async checkPaymentStatus(CheckoutRequestID) {
     // @TODO implement the method that queries mpesa to get status
     // of a method using an endpoint
-    try {
-        const date = new Date();
+        try {
 
-        const timeStamp = genTimeStamp();
+            const timeStamp = genTimeStamp();
 
-        const password =  new Buffer.from(
-            short
-        )
-    } catch (error) {
+            const query_password =  new Buffer.from(
+                this.shortCode + this.passkey + timeStamp
+            ).toString("base64");
 
-    }
+            const token = await this.getAccessToken();
+
+            const queryBody = {
+                BusinessShortCode: this.shortcode,
+                Password: query_password,
+                Timestamp: timeStamp,
+                CheckoutRequestID,
+            };
+
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            };
+            const response = await axios.post(
+                this.stkQueryURL, 
+                queryBody, 
+                {headers},
+            );
+
+            console.log(response.data);
+            return response.data;
+        } catch (error) {
+            console.log(error.message);
+            throw new Error(error.message);
+        }
 
     }
 }
