@@ -73,7 +73,6 @@ class PaymentsService {
         try {
             const provider = this.providerFactory.getProvider(pay_provider);
 
-            console.log(callbackData);
             if (!provider) {
                 throw new Error("Payment provider not initiated");
             }
@@ -100,7 +99,7 @@ class PaymentsService {
                 return existingTransaction.dataValues;
             }
             if (paymentData.ResultCode === 0) {
-
+                // Handle successfull payment
                 existingTransaction.transaction_status = "success",
                 existingTransaction.transaction_code = paymentData.MpesaReceiptNumber,
                 existingTransaction.transactionDate = String(paymentData.TransactionDate),
@@ -110,64 +109,19 @@ class PaymentsService {
 
                 const savedTransaction = await existingTransaction.save();
 
-                console.log("Successfully updated transaction:", {
-                    id: savedTransaction.id,
-                    transaction_status: savedTransaction.transaction_status,
-                    transaction_code: savedTransaction.transaction_code,
-                    amount: savedTransaction.amount
-                });
-
-                // await savedTransaction.reload();
-                // console.log('Reloaded transaction:', savedTransaction);
                 return savedTransaction.dataValues;
-                // const [affectedCount, [updateResult]] = await Payment.update(
-                //     {
-                //         transaction_status: 'success',
-                //         transaction_code: paymentData.MpesaReceiptNumber,
-                //         transactionDate: String(paymentData.TransactionDate),
-                //         responseDescription: paymentData.ResultDesc,
-                //         responseCode: "0",
-                //         amount: Number(paymentData.Amount)
-                //     },
-                //     {
-                //         where: {
-                //             merchantRequestID: paymentData.MerchantRequestID,
-                //             checkoutRequestID: paymentData.CheckoutRequestID
-                //         },
-                //         returning: true,
-                //         raw: true
-                //     });
                 // @TODO introduce the SMS count service to update the number of SMS's 
                 // or registration status here
-                // console.log("Successful update", updateResult);
-                // return updateResult; // Return the update transaction details
-
+                
             } else {
-                // Handle failed payment scenario
+                // Handle failed payment
                 // ResponseCode is always 1032 if failed
                 existingTransaction.transaction_status = "failed";
                 existingTransaction.responseDescription = paymentData.ResultDesc;
                 existingTransaction.responseCode = "1032";
 
                 const failedTransactions = await existingTransaction.save();
-                console.log("Failed Transaction", failedTransactions);
-                return failedTransactions.defaultValues;
-                //     const failedResult = await Payment.update(
-                //         {
-                //             transaction_status: "failed",
-                //             responseDescription: paymentData.ResultDesc,
-                //             responseCode: "1032"
-                //         }, 
-                //         {
-                //             where: {
-                //                 merchantRequestID: paymentData.MerchantRequestID,
-                //                 checkoutRequestID: paymentData.CheckoutRequestID,
-                //             },
-                //             returning: true,
-                //         });
-
-            //     console.log("Failed transactions", failedResult[1]);
-            //     return failedResult; // Returns the updated failed transaction details
+                return failedTransactions.dataValues;
             }
 
         } catch (error) {
