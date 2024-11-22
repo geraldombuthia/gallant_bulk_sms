@@ -35,7 +35,6 @@ class MpesaProvider {
 
             const response = await axios.get(auth_url, { headers });
 
-            console.log(response.data)
             return response.data.access_token;
         } catch (error) {
             throw new Error(`Failed to get Access token: ${  error.message}` );
@@ -95,12 +94,9 @@ class MpesaProvider {
             // Additional info sent along with the request from your system (13 char)
         };
 
-        console.log(requestBody)
-
         try {
             const response = await axios.post(process.env.STK_PUSH_URL, requestBody, { headers });
 
-            console.log(response.data)
             return response.data;
         } catch (error) {
             throw new Error(`STK_PUSH: ${ error.message}`);
@@ -173,7 +169,7 @@ class MpesaProvider {
 
             return response.data;
         } catch (error) {
-            console.log(error.message);
+            console.error(error.message);
             throw new Error(error.message);
         }
 

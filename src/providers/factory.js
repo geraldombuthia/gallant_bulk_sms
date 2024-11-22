@@ -20,7 +20,6 @@ class PaymentProviderFactory {
     getProvider(providerName) {
         const provider = this.providers[providerName.toLowerCase()];
 
-        // console.log(provider);
         if (!provider) {
             throw new Error(`Payment provider ${providerName} not supported`);
         }

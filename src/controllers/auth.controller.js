@@ -4,7 +4,7 @@ class AuthController {
     static async register(req, res, next) {
         try {
             const user = await AuthService.register(req.body);
-            console.log("User registered: ", user);
+            console.error("User registered: ", user);
 
             // if (req.accepts('json')) {
             //     // If it's an API request, return JSON

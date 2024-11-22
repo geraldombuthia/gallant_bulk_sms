@@ -1,5 +1,4 @@
-const { 
-    isValidPhoneNumber, 
+const {
     parsePhoneNumberWithError,
     ParseError
 } = require("libphonenumber-js");
@@ -37,17 +36,17 @@ class PaymentController {
         try {
             
             const validateNumber = parsePhoneNumberWithError(String(phoneNumber), {
-                defaultCountry: 'KE'
+                defaultCountry: "KE"
             });
-            // const validPhone = isValidPhoneNumber(validateNumber);
-
-            console.log(phoneNumber, validateNumber, validateNumber.isValid());
+            
             if (!validateNumber.isValid()) {
                 throw new ParseError("Invalid phone number format");
             }
-            let formatNumber = validateNumber.formatInternational().replace(/^(\+)/, '').replace(/\s+/g, '');
+            const formatNumber = validateNumber.formatInternational()
+                .replace(/^(\+)/, "")
+                .replace(/\s+/g, "");
+            
             // format
-            console.log(formatNumber);
             if (purchaseType !== "register" && purchaseType !== "purchase") {
                 throw new ParseError("Invalid purchase type");
             }
@@ -92,7 +91,6 @@ class PaymentController {
         } catch (error) {
             if (error instanceof ParseError) {
                 console.error("Phone number validation failed:", error.message);
-                // throw new ParseError("Invalid phone number format"); // You can throw a custom error or return an error response here
             } else {
                 console.error("Unexpected error in phone number validation:", {
                     message: error.message,
@@ -116,7 +114,7 @@ class PaymentController {
                 pay_provider
             );
             if (!paymentData) {
-                console.log("Payment Data is null");
+                console.error("Payment Data is null");
                 return res.status(500).json("Payment Data is null");
             }
 

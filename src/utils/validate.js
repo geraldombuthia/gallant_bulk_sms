@@ -76,11 +76,10 @@ const validatePayment = [
 
 const validationHandler = (req, res, next) => {
     const errors = validationResult(req);
-    console.log("Calling validator");
     const data = matchedData(req);
 
-    console.log(data);
     if (!errors.isEmpty()) {
+        console.log(data);
         return res.status(400).json({ errors: errors.array() });
     }
     next();

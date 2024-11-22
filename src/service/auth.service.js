@@ -6,7 +6,7 @@ class AuthService {
             const user = await User.create(userData);
             return user;
         } catch (error) {
-            console.log("Error: ", error);
+            console.error("Error: ", error);
         }
     }
 
