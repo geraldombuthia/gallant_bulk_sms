@@ -10,7 +10,7 @@ function extractIPAddress(req, res, next){
     const ip = req?.connection?.remoteAddress;
     const extract = parseIpAddress(ip);
     req.ipAddress = extract;
-    // console.log(extract);
+    // console.error(extract);
     next();
 }
 
