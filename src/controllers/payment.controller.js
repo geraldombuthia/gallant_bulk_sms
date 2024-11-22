@@ -1,3 +1,8 @@
+const { 
+    isValidPhoneNumber, 
+    parsePhoneNumberWithError,
+    ParseError
+} = require("libphonenumber-js");
 const PaymentService = require("../service/payments.service");
 
 class PaymentController {
@@ -16,6 +21,7 @@ class PaymentController {
             currency, 
             purchaseType 
         } = req.body; // Contains phonenumber, provider and amount
+
         const userId = 1; // To be confirmed
         const transaction_type = "CustomerPayBillOnline";
 
@@ -27,40 +33,77 @@ class PaymentController {
      * * Account_ref is well generated and set
      *   - this will be a unique identifier of a user
      */
-        const paymentData = {
-            phoneNumber, // Phone to send prompt to
-            amount, // Amount to be paid
-            userId, // UserId of user requesting to pay
-            provider, // payment provider i.e 'Mpesa'
-            currency, // Currency in use i.e Kenya
-            purchaseType, // Whether its a registration fee or purchase
-            transaction_type, // Whether its a paybill or buy goods for safaricom use
-        };
-
+    
         try {
+            
+            const validateNumber = parsePhoneNumberWithError(String(phoneNumber), {
+                defaultCountry: 'KE'
+            });
+            // const validPhone = isValidPhoneNumber(validateNumber);
+
+            console.log(phoneNumber, validateNumber, validateNumber.isValid());
+            if (!validateNumber.isValid()) {
+                throw new ParseError("Invalid phone number format");
+            }
+            let formatNumber = validateNumber.formatInternational().replace(/^(\+)/, '').replace(/\s+/g, '');
+            // format
+            console.log(formatNumber);
+            if (purchaseType !== "register" && purchaseType !== "purchase") {
+                throw new ParseError("Invalid purchase type");
+            }
+
+            if (typeof parseInt(amount) !== "number") {
+                throw new ParseError("Invalid amount");
+            }
+
+            const providerList = this.paymentService.getSupportedProviders();
+            if (!providerList.includes(provider)) {
+                throw new ParseError("Unsupported provider");
+            }
+
+            if (currency !== "KE") {
+                throw new ParseError("Unsupported currency");
+            }
+            const paymentData = {
+                phoneNumber: formatNumber, // Phone to send prompt to
+                amount, // Amount to be paid
+                userId, // UserId of user requesting to pay
+                provider, // payment provider i.e 'Mpesa'
+                currency, // Currency in use i.e Kenya
+                purchaseType, // Whether its a registration fee or purchase
+                transaction_type, // Whether its a paybill or buy goods for safaricom use
+            };
 
             const payment = await this.paymentService.createPayment(paymentData);
 
-            const paymentJSON= payment.toJSON? payment.toJSON(): payment;
+            const paymentJSON = payment.toJSON ? payment.toJSON() : payment;
 
-            console.log(paymentJSON);
-            if ( paymentJSON.responseCode === 0 || paymentJSON.responseCode === '0') {
-                const {merchantRequestID, checkoutRequestID, ...newPayment} = paymentJSON;
-                return res.status(201).json({newPayment});
+            if (paymentJSON.responseCode === 0 || paymentJSON.responseCode === "0") {
+                
+                // eslint-disable-next-line no-unused-vars
+                const {  merchantRequestID, checkoutRequestID, ...newPayment } = paymentJSON;
+
+                return res.status(201).json({ newPayment });
             } else {
                 return res.status(500).json({
                     message: payment?.message || "payment failed",
                 });
             }
         } catch (error) {
-            console.error("Error in createPayment:", {
-                message: error.message,
-                stack: error.stack,
-                timestamp: new Date().toISOString(),
-            });
+            if (error instanceof ParseError) {
+                console.error("Phone number validation failed:", error.message);
+                // throw new ParseError("Invalid phone number format"); // You can throw a custom error or return an error response here
+            } else {
+                console.error("Unexpected error in phone number validation:", {
+                    message: error.message,
+                    stack: error.stack,
+                    timestamp: new Date().toISOString(),
+                });
+                // throw error; // Re-throw unexpected errors
+            }
             return res.status(500).json({
                 message: "Internal Server Error",
-                error: error.message
+                error: error.message,
             });
         }
     }
@@ -76,7 +119,7 @@ class PaymentController {
                 console.log("Payment Data is null");
                 return res.status(500).json("Payment Data is null");
             }
-            
+
             if (paymentData.ResultCode === 0) {
                 return res.status(200).json("Success");
             }
@@ -84,10 +127,10 @@ class PaymentController {
             return res.json("success");
         } catch (error) {
             // @TODO implement the following way of error logging
-            console.error("Callback Error:",  {
+            console.error("Callback Error:", {
                 message: error.message,
                 stack: error.stack,
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
             });
             throw new Error(`Failed to get data appropriately ${error.message}`);
         }

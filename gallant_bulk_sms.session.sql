@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Payments (
     responseDescription VARCHAR(50),
     transactionDate VARCHAR(50),
     phone VARCHAR(15),
-    purchaseType ENUM('registration', 'purchase') DEFAULT 'purchase',
+    purchaseType ENUM('register', 'purchase') DEFAULT 'purchase',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     lastmodified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(id)

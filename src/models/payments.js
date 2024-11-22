@@ -62,7 +62,7 @@ const Payment =  sequelize.define("Payment",{
     },
     purchaseType: {
         type: DataTypes.STRING(20),
-        enum: ["registration", "purchase"],
+        enum: ["register", "purchase"],
         defaultValue: "purchase"
     }
 

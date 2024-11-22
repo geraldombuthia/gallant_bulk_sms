@@ -16,7 +16,7 @@ class PaymentsService {
         // provider, transactional information
 
         try {
-            const provider = this.providerFactory.getProvider("mpesa");
+            const provider = this.providerFactory.getProvider(paymentData.provider);
             const account_ref = accountRefGen(serviceID, paymentData.userId); 
             
             paymentData.account_ref = account_ref;
