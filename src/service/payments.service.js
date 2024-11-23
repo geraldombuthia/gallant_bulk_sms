@@ -135,7 +135,7 @@ class PaymentsService {
                     paymentId: existingTransaction.id,
                     value: existingTransaction.amount,
                     product: existingTransaction.purchaseType,
-                }
+                };
                 await credit.createTransaction(credited);
                 return failedTransactions.dataValues;
             }

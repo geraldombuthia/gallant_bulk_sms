@@ -4,7 +4,7 @@ module.exports = (sequelize) => {
   
     // Define relationships
     User.hasMany(Credit);
-    Credit.belongsTo(User, { foreignKey: 'userId'});
+    Credit.belongsTo(User, { foreignKey: "userId"});
     Credit.belongsTo(Payment, {foreignKey: "paymentId"});
   
     User.hasMany(Payment);
@@ -12,6 +12,5 @@ module.exports = (sequelize) => {
 
     User.hasOne(SMSCredit, { foreignKey: "userId"});
     SMSCredit.belongsTo(User, { foreignKey: "userId"});
-
 
 };

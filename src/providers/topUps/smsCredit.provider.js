@@ -91,7 +91,7 @@ class SMSCreditService {
 
             return {
                 userId, 
-                creditBalance? creditBalance: 0
+                creditBalance: creditBalance ?? 0
             }; // Return just value or obj
         } catch(error) {
             console.error("Failed to fetch credit balance",{

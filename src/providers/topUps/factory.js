@@ -6,7 +6,7 @@ class CreditHandlerFactory {
             sms: new SMSCreditService(),
             email: new EmailCreditService(),
             // register: new RegisterCreditService()
-        }
+        };
     }
 
     getProvider(providerName) {

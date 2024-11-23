@@ -52,6 +52,17 @@ class CreditService {
 
     }
 
+    async getBalance(userId, productType) {
+        const creditProvider = new CreditHandlerFactory();
+
+        const provider = creditProvider.getProvider(productType);
+
+        const balance =  await provider.checkSMSBalance(userId);
+
+        console.log(balance);
+        return balance;
+    }
+
 }
 
 module.exports = CreditService;
