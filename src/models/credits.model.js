@@ -20,7 +20,7 @@ const Credit = sequelize.define("Credits", {
         }, 
         allowNull: false
     },
-    payment_id: {
+    paymentId: {
         type: DataTypes.INTEGER,
         references: {
             model: "Payments",
@@ -28,16 +28,17 @@ const Credit = sequelize.define("Credits", {
         },
         allowNull: false
     },
-    credits_purchased:{
+    creditsValue:{ // Value in currency
+        type: DataTypes.DECIMAL(10, 2),
+        defaultValue: 0,
+        allowNull: false,
+    },
+    creditUnit: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        defaultValue: 0,
+        allowNull: false
     },
-    purchase_date: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW
-    },
-    channel: {
+    productType: { // SMS, Emails, Registration, e.t.c
         type: DataTypes.STRING(20),
         defaultValue: "sms",
         allowNull: false

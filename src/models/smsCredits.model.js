@@ -17,7 +17,7 @@ const SMSCredit = sequelize.define("SMSCredits", {
         unique: true,
         allowNull: false
     },
-    current_credits: {
+    creditBalance: {
         type:DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0

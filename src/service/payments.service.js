@@ -1,5 +1,6 @@
 const Payment = require("../models/payments");
 const PaymentProviderFactory = require("../providers/factory");
+const CreditService = require("./credit.service");
 const {accountRefGen, serviceID} = require("../utils/accountRefGen");
 
 /**
@@ -45,6 +46,8 @@ class PaymentsService {
              *  * New Response Codes and Descriptions
              */
             await payment.save();
+
+            console.log(Payment);
             return payment;
         } catch (error) {
             throw new Error(`Payment Service Error: ${ error.message}`);
@@ -70,6 +73,7 @@ class PaymentsService {
 
     async handlePaymentCallback(callbackData, pay_provider) {
         try {
+            console.log("Testing callback");
             const provider = this.providerFactory.getProvider(pay_provider);
 
             if (!provider) {
@@ -107,7 +111,11 @@ class PaymentsService {
                 existingTransaction.amount = Number(paymentData.Amount);
 
                 const savedTransaction = await existingTransaction.save();
+                // Call the CreditService
+                const credit = await CreditService();
 
+                await credit.createTransaction(savedTransaction.dataValues);
+                console.log("Here are the savedTransactions", savedTransaction.dataValues);
                 return savedTransaction.dataValues;
                 // @TODO introduce the SMS count service to update the number of SMS's 
                 // or registration status here
@@ -120,6 +128,15 @@ class PaymentsService {
                 existingTransaction.responseCode = "1032";
 
                 const failedTransactions = await existingTransaction.save();
+
+                const credit = new CreditService();
+                const credited = {
+                    userId: existingTransaction.userId,
+                    paymentId: existingTransaction.id,
+                    value: existingTransaction.amount,
+                    product: existingTransaction.purchaseType,
+                }
+                await credit.createTransaction(credited);
                 return failedTransactions.dataValues;
             }
 

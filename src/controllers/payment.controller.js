@@ -77,6 +77,7 @@ class PaymentController {
 
             const paymentJSON = payment.toJSON ? payment.toJSON() : payment;
 
+            console.log(paymentJSON);
             if (paymentJSON.responseCode === 0 || paymentJSON.responseCode === "0") {
                 
                 // eslint-disable-next-line no-unused-vars
@@ -121,7 +122,7 @@ class PaymentController {
             if (paymentData.ResultCode === 0) {
                 return res.status(200).json("Success");
             }
-
+            console.log("Payment Data", paymentData);
             return res.json("success");
         } catch (error) {
             // @TODO implement the following way of error logging
