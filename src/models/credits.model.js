@@ -34,7 +34,7 @@ const Credit = sequelize.define("Credits", {
         allowNull: false,
     },
     creditUnit: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         defaultValue: 0,
         allowNull: false
     },

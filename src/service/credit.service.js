@@ -1,8 +1,17 @@
 const Credit = require("../models/credits.model");
-const SMSCreditService = require("../service/smsCredits.service");
 const CreditHandlerFactory = require("../providers/topUps/factory");
 
+const RoundDownUtil = require("../utils/roundDown");
+
+/**
+ * @brief This class handles Crediting services
+ * Will handle conversion of payments into Credit units
+ */
 class CreditService {
+
+    constructor() {
+
+    }
     pricePerUnit = 0.7;
     /**
      * @brief Creates a transaction to be stored to 
@@ -12,29 +21,41 @@ class CreditService {
      * @returns 
      */
     async createTransaction(purchaseObj) {
+        console.log("PurchaseObj",purchaseObj)
         try {
             const transaction = new Credit({
                 userId: purchaseObj.userId,
                 paymentId: purchaseObj.paymentId,
-                creditsValue: purchaseObj.value,
+                creditsValue: purchaseObj.creditsValue,
                 productType: purchaseObj.product,
-                creditUnit: (purchaseObj.creditsValue / this.pricePerUnit)
+                creditUnit: RoundDownUtil(purchaseObj.creditsValue / this.pricePerUnit)
             });
     
             const saved = await transaction.save(); // Check for errors?
-
+            console.log("Transaction values", saved);
             // Handle the various products
-            const creditProvider = new CreditHandlerFactory().getProvider("sms");
+            const creditProvider = new CreditHandlerFactory().getProvider(purchaseObj.product);
 
             const productTopUp = await creditProvider.topUpCredit(
                 saved.userId, 
-                saved.creditsValue
+                saved.creditUnit
             );
 
             console.log("Product Top Up", productTopUp);
             // Handle and Object.assign() to update saved information
-            console.log("Transaction on the CreateTransaction", saved.id);
-            return saved;
+            console.log("Transaction on the CreateTransaction", saved);
+            let creditObj = {};
+
+            Object.assign(creditObj, {
+                userId: productTopUp.userId,
+                creditBalance: productTopUp.creditBalance,
+                paymentId: saved.paymentId,
+                productType: saved.productType,
+                creditsValue: saved.creditsValue
+            });
+
+            console.log(creditObj);
+            return creditObj;
         } catch (error) {
             console.error("Transaction Error", {
                 message: error.message,

@@ -5,13 +5,15 @@ class CreditHandlerFactory {
         this.providers = {
             sms: new SMSCreditService(),
             email: new EmailCreditService(),
-            // register: new RegisterCreditService()
+            // register: new RegisterCreditService(),
+            // donate: new DonateCreditService()
         };
     }
 
     getProvider(providerName) {
         const provider = this.providers[providerName];
-
+        
+        console.log(`Provider Name is ${providerName}`);
         if (!provider) {
             throw new Error("The product ${providerName} is not supported");
         }

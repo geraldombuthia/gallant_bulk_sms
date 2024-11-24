@@ -119,7 +119,7 @@ class PaymentsService {
                 await credit.createTransaction({
                     userId: existingTransaction.userId,
                     paymentId: existingTransaction.id,
-                    value: existingTransaction.amount,
+                    creditsValue: existingTransaction.amount,
                     product: existingTransaction.purchaseType,
                 });
 

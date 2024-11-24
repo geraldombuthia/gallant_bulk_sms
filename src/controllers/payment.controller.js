@@ -9,6 +9,7 @@ class PaymentController {
         this.paymentService = new PaymentService();
         this.createPayment = this.createPayment.bind(this);
         this.handleCallback = this.handleCallback.bind(this);
+        this.purchaseTypes = ["register", "sms", "email", "donate"]
     }
 
     async createPayment(req, res) {
@@ -45,11 +46,10 @@ class PaymentController {
             const formatNumber = validateNumber.formatInternational()
                 .replace(/^(\+)/, "")
                 .replace(/\s+/g, "");
-            
-            // format
-            // if (purchaseType !== "register" && purchaseType !== "purchase") {
-            //     throw new ParseError("Invalid purchase type");
-            // }
+
+            if (!this.purchaseTypes.includes(purchaseType)) {
+                throw new ParseError("Invalid purchase type");
+            }
 
             if (typeof parseInt(amount) !== "number") {
                 throw new ParseError("Invalid amount");
@@ -69,7 +69,7 @@ class PaymentController {
                 userId, // UserId of user requesting to pay
                 provider, // payment provider i.e 'Mpesa'
                 currency, // Currency in use i.e Kenya
-                purchaseType, // Whether its a registration fee or purchase
+                purchaseType, // Whether its a registration fee or product purchase
                 transaction_type, // Whether its a paybill or buy goods for safaricom use
             };
 
@@ -77,7 +77,7 @@ class PaymentController {
 
             const paymentJSON = payment.toJSON ? payment.toJSON() : payment;
 
-            console.log(paymentJSON);
+            // console.log(paymentJSON);
             if (paymentJSON.responseCode === 0 || paymentJSON.responseCode === "0") {
                 
                 // eslint-disable-next-line no-unused-vars
@@ -91,7 +91,7 @@ class PaymentController {
             }
         } catch (error) {
             if (error instanceof ParseError) {
-                console.error("Phone number validation failed:", error.message);
+                console.error("Payment Controller validation failed:", error.message);
             } else {
                 console.error("Unexpected error in phone number validation:", {
                     message: error.message,

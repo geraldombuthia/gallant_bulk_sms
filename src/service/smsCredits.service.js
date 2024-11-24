@@ -3,8 +3,6 @@ const SMSCredit = require("../models/smsCredits.model");
 
 class SMSCreditService {
     async topUpCredit(userId, newCredits) {
-
-        console.log("Value of new Credits",newCredits);
         
         const transaction =  await sequelize.transaction();
         try {
@@ -42,7 +40,7 @@ class SMSCreditService {
      * @param {number} userId 
      * @returns credit object
      */
-    async spentSMSCredit(usedCredit, userId) {
+    async spentCredit(usedCredit, userId) {
         const transaction = await sequelize.transaction();
 
         try {
@@ -51,8 +49,6 @@ class SMSCreditService {
                 lock: transaction.LOCK.UPDATE,
                 transaction
             });
-
-            console.log("First Credit value", credit);
 
             if (!credit || credit.creditBalance < usedCredit ) {
                 throw new Error("Insufficient credits");
@@ -78,11 +74,11 @@ class SMSCreditService {
         }
     }
 
-    async checkSMSBalance(userId) {
+    async checkBalance(userId) {
         try {
             const creditBalance = await SMSCredit.findOne({
                 where: { userId },
-                attributes: ["balance"], // Only fetch the balance field
+                attributes: ["creditBalance"], // Only fetch the balance field
                 lock: true // Consider not using for less critical checks
             });
 

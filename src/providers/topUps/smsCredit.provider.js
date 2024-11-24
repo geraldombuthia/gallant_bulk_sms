@@ -22,11 +22,8 @@ class SMSCreditService {
 
             await transaction.commit();
             await updatedCredit.reload();
-
-            console.log("Updated Credits", updatedCredit.dataValues);
-
+            // console.log("Updated Credits", updatedCredit.dataValues);
             return updatedCredit.dataValues;
-
         } catch (error) {
             await transaction.rollback();
             console.error("Failed to topup credit",  {
@@ -53,8 +50,6 @@ class SMSCreditService {
                 transaction
             });
 
-            console.log("First Credit value", credit);
-
             if (!credit || credit.creditBalance < usedCredit ) {
                 throw new Error("Insufficient credits");
             }
@@ -67,7 +62,7 @@ class SMSCreditService {
 
             await transaction.commit();
             await updatedCredit.reload();
-            console.log("Second", credit);
+            console.log("Successful credit", credit);
             return credit;
 
         } catch (error) {
