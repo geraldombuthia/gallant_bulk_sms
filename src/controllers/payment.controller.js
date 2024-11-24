@@ -126,7 +126,7 @@ class PaymentController {
                     amount: paymentData.amount,
                     transactionCode: paymentData.transaction_code,
                     phoneNumber: paymentData.phone,
-                    responseDesc: paymentData.ResultDesc,
+                    responseDescription: paymentData.responseDescription,
                 });
                 // @TODO initiate a Notification Service here
                 // Email, SMS, Sockets, HTTP Req
