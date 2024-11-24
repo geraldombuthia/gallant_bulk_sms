@@ -85,13 +85,13 @@ class SMSCreditService {
         try {
             const creditBalance = await SMSCredit.findOne({
                 where: { userId },
-                attributes: ["balance"], // Only fetch the balance field
+                attributes: ["creditBalance"], // Only fetch the balance field
                 lock: true // Consider not using for less critical checks
             });
 
             return {
                 userId, 
-                creditBalance: creditBalance ?? 0
+                creditBalance: creditBalance.creditBalance ?? 0
             }; // Return just value or obj
         } catch(error) {
             console.error("Failed to fetch credit balance",{

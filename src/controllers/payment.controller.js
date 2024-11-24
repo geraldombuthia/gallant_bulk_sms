@@ -47,9 +47,9 @@ class PaymentController {
                 .replace(/\s+/g, "");
             
             // format
-            if (purchaseType !== "register" && purchaseType !== "purchase") {
-                throw new ParseError("Invalid purchase type");
-            }
+            // if (purchaseType !== "register" && purchaseType !== "purchase") {
+            //     throw new ParseError("Invalid purchase type");
+            // }
 
             if (typeof parseInt(amount) !== "number") {
                 throw new ParseError("Invalid amount");
@@ -119,10 +119,24 @@ class PaymentController {
                 return res.status(500).json("Payment Data is null");
             }
 
-            if (paymentData.ResultCode === 0) {
+            if (paymentData.responseCode === '0') {
+                console.log("Payment processed successfully in check", {
+                    paymentId: paymentData.id,
+                    userId: paymentData.amount,
+                    amount: paymentData.amount,
+                    transactionCode: paymentData.transaction_code,
+                    phoneNumber: paymentData.phone,
+                });
                 return res.status(200).json("Success");
             }
-            console.log("Payment Data", paymentData);
+            console.log("Payment processed successfully but failed", {
+                paymentId: paymentData.id,
+                userId: paymentData.userId,
+                amount: paymentData.amount,
+                transactionCode: paymentData.transaction_code,
+                responseDescription: paymentData.responseDescription,
+                phoneNumber: paymentData.phone,
+            });
             return res.json("success");
         } catch (error) {
             // @TODO implement the following way of error logging

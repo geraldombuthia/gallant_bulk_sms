@@ -11,6 +11,8 @@ const passport = require("./src/config/passport.js");
 
 const AuthRoutes = require("./src/routes/auth.routes.js");
 const PayRoutes = require("./src/routes/payment.routes.js");
+const CreditRoutes = require("./src/routes/credit.routes.js");
+
 // const userAgentParser = require("./src/middleware/userAgentParser.js");
 // const extractIPAddress = require("./src/middleware/extractIPAddress.js");
 // const logDeviceAccess = require("./src/middleware/storeDeviceInfo.js");
@@ -69,6 +71,7 @@ app.use((req, res, next) => {
 
 app.use("/auth", AuthRoutes);
 app.use("/pay", PayRoutes);
+app.use("/credit", CreditRoutes);
 
 // app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess);
 app.route("/").get((req, res) => {

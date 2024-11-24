@@ -31,8 +31,8 @@ class CreditService {
                 saved.creditsValue
             );
 
-            console.log("Product Top Up", productTopUp.dataValues);
-
+            console.log("Product Top Up", productTopUp);
+            // Handle and Object.assign() to update saved information
             console.log("Transaction on the CreateTransaction", saved.id);
             return saved;
         } catch (error) {
