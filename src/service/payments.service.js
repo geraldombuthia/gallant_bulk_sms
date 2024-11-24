@@ -103,11 +103,11 @@ class PaymentsService {
             if (paymentData.ResultCode === 0) {
                 // Handle successfull payment
                 Object.assign(existingTransaction, {
-                    transaction_status: 'success',
+                    transaction_status: "success",
                     transaction_code: paymentData.MpesaReceiptNumber,
                     transactionDate: String(paymentData.TransactionDate),
                     responseDescription: paymentData.ResultDesc,
-                    responseCode: '0',
+                    responseCode: "0",
                     amount: Number(paymentData.Amount)
                 });
 
@@ -116,21 +116,22 @@ class PaymentsService {
                 // Process Credits
                 const credit = await new CreditService();
 
-                await credit.createTransaction({
+                const creditData = await credit.createTransaction({
                     userId: existingTransaction.userId,
                     paymentId: existingTransaction.id,
                     creditsValue: existingTransaction.amount,
                     product: existingTransaction.purchaseType,
                 });
+                console.log(creditData);
 
                 return savedTransaction.dataValues;
             } else {
                 // Process Failed payment
                 Object.assign(existingTransaction, {
-                    transaction_status: 'failed',
+                    transaction_status: "failed",
                     responseDescription: paymentData.ResultDesc,
-                    responseCode: '1032'
-                })
+                    responseCode: "1032"
+                });
 
                 const failedTransactions = await existingTransaction.save();
 

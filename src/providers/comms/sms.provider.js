@@ -34,3 +34,5 @@ class SMSProvider {
     }
     
 }
+
+module.exports = SMSProvider;

@@ -21,7 +21,6 @@ class CreditService {
      * @returns 
      */
     async createTransaction(purchaseObj) {
-        console.log("PurchaseObj",purchaseObj)
         try {
             const transaction = new Credit({
                 userId: purchaseObj.userId,
@@ -32,7 +31,6 @@ class CreditService {
             });
     
             const saved = await transaction.save(); // Check for errors?
-            console.log("Transaction values", saved);
             // Handle the various products
             const creditProvider = new CreditHandlerFactory().getProvider(purchaseObj.product);
 
@@ -41,10 +39,8 @@ class CreditService {
                 saved.creditUnit
             );
 
-            console.log("Product Top Up", productTopUp);
             // Handle and Object.assign() to update saved information
-            console.log("Transaction on the CreateTransaction", saved);
-            let creditObj = {};
+            const creditObj = {};
 
             Object.assign(creditObj, {
                 userId: productTopUp.userId,
@@ -54,7 +50,7 @@ class CreditService {
                 creditsValue: saved.creditsValue
             });
 
-            console.log(creditObj);
+            console.log("Credit Obj",creditObj);
             return creditObj;
         } catch (error) {
             console.error("Transaction Error", {
@@ -69,7 +65,7 @@ class CreditService {
         // Unsure what to do
     }
 
-    async spentMsgCredit(usedCredit, userId, product) {
+    async spentMsgCredit() {
 
     }
 

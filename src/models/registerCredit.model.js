@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/database");
 
-
 /**
  * @brief Keeps track of whether a user is Registered
  */

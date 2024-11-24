@@ -33,3 +33,5 @@ class EmailProvider {
         };
     }
 }
+
+module.exports = EmailProvider;

@@ -9,7 +9,7 @@ class PaymentController {
         this.paymentService = new PaymentService();
         this.createPayment = this.createPayment.bind(this);
         this.handleCallback = this.handleCallback.bind(this);
-        this.purchaseTypes = ["register", "sms", "email", "donate"]
+        this.purchaseTypes = ["register", "sms", "email", "donate"];
     }
 
     async createPayment(req, res) {
@@ -119,14 +119,18 @@ class PaymentController {
                 return res.status(500).json("Payment Data is null");
             }
 
-            if (paymentData.responseCode === '0') {
+            if (paymentData.responseCode === "0") {
                 console.log("Payment processed successfully in check", {
                     paymentId: paymentData.id,
                     userId: paymentData.amount,
                     amount: paymentData.amount,
                     transactionCode: paymentData.transaction_code,
                     phoneNumber: paymentData.phone,
+                    responseDesc: paymentData.ResultDesc,
                 });
+                // @TODO initiate a Notification Service here
+                // Email, SMS, Sockets, HTTP Req
+                // Send out PaymentData
                 return res.status(200).json("Success");
             }
             console.log("Payment processed successfully but failed", {

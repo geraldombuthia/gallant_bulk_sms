@@ -8,9 +8,9 @@ class SMSCreditService {
         
         const transaction =  await sequelize.transaction();
         try {
-            const [credit, wasCreated] = await SMSCredit.findOrCreate({
+            const [credit] = await SMSCredit.findOrCreate({
                 where: { userId },
-                defaults: { creditBalance: 0 },
+                defaults: { creditBalance: 0 }, // Remove the unused variable assignment
                 lock: transaction.LOCK.UPDATE,
                 transaction
             });

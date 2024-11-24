@@ -38,3 +38,5 @@ class CommsProviderFactory{
         return Object.keys(this.providers);
     }
 }
+
+module.exports = CommsProviderFactory;

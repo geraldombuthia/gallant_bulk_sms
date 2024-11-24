@@ -19,17 +19,17 @@ class CreditsController {
             return res.status(200).json({
                 message: "Balance fetched successfully",
                 balance
-            })
+            });
 
         } catch (error) {
             console.log("Failed to get Balance", {
                 message: error.message,
                 stack: error.stack,
                 timestamp: new Date().toISOString(),
-            })
+            });
             return res.status(500).json({
                 message: "Failed to get balance",
-            })
+            });
         }
     }
 }

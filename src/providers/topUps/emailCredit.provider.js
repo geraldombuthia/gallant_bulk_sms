@@ -5,7 +5,7 @@ class EmailCreditService {
     async topUpCredit(userId, newCredits) {
         const transaction = await sequelize.transaction();
         try {
-            const [credit, wasCreated] = await EmailCredit.findOrCreate({
+            const [credit] = await EmailCredit.findOrCreate({
                 where: { userId },
                 defaults: { creditBalance: 0},
                 lock: transaction.LOCK.UPDATE,
@@ -35,30 +35,30 @@ class EmailCreditService {
     }
 
     async spentCredit(usedCredit, userId) {
-       const transaction = await sequelize.transaction();
+        const transaction = await sequelize.transaction();
 
-       try {
-        const credit = await EmailCredit.findOne({
-            where: { userId },
-            lock: transaction.LOCK.UPDATE,
-            transaction
-        });
-        const balance = parseFloat(credit.creditBalance);
+        try {
+            const credit = await EmailCredit.findOne({
+                where: { userId },
+                lock: transaction.LOCK.UPDATE,
+                transaction
+            });
+            const balance = parseFloat(credit.creditBalance);
         
-        if (!credit || isNaN(balance) || credit.creditBalance < usedCredit) {
-            throw new Error("Insufficient credits");
-        }
+            if (!credit || isNaN(balance) || credit.creditBalance < usedCredit) {
+                throw new Error("Insufficient credits");
+            }
 
-        await credit.decrement("creditBalance", {
-            by: usedCredit,
-            transaction
-        });
+            await credit.decrement("creditBalance", {
+                by: usedCredit,
+                transaction
+            });
 
-        await transaction.commit();
+            await transaction.commit();
 
-        return credit;
+            return credit;
 
-       } catch (error) {
+        } catch (error) {
             await transaction.rollback();
             console.error("Failed to topup credit",  {
                 message: error.message,
@@ -66,7 +66,7 @@ class EmailCreditService {
                 timestamp: new Date().toISOString(),
             });
             throw error;
-       }
+        }
     }
 
     async checkBalance(userId) {
