@@ -97,6 +97,7 @@ class PaymentsService {
                 return null;
             }
 
+            // Prevent overwrite on completion of the transaction
             if (this.finalStatuses.includes(existingTransaction.transaction_status)) {
                 return existingTransaction.dataValues;
             }
