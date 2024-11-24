@@ -76,6 +76,8 @@ class EmailCreditService {
                 attributes: ["creditBalance"],
                 lock: true
             });
+
+            return creditBalance;
         } catch(error) {
             console.error("Failed to fetch credit balance",{
                 message: error.message,
