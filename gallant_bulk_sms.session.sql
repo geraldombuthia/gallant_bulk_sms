@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS Payments (
     userId INT NOT NULL,
     amount INT NOT NULL,
     transaction_code VARCHAR(50),
-    payment_method ENUM('mpesa', 'airtelmoney', 'paypal', 'google_pay') NOT NULL DEFAULT 'mpesa',
+    payment_method VARCHAR(20) NOT NULL DEFAULT 'mpesa',
     transaction_status ENUM('pending', 'success', 'failed', 'refunded') NOT NULL DEFAULT 'pending',
     currency ENUM('USD', 'KE') DEFAULT 'KE',
     merchantRequestID VARCHAR(50),
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS Payments (
     responseDescription VARCHAR(50),
     transactionDate VARCHAR(50),
     phone VARCHAR(15),
-    purchaseType ENUM('register', 'purchase') DEFAULT 'purchase',
+    purchaseType VARCHAR(20) DEFAULT 'sms',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     lastmodified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(id)
@@ -67,3 +67,57 @@ DROP TABLE IF EXISTS Payments;
 
 --@BLOCK
 DESCRIBE Payments;
+
+--@BLOCK
+CREATE TABLE IF NOT EXISTS Credits (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    userId INTEGER NOT NULL,
+    paymentId INTEGER NOT NULL,
+    creditsValue DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+    creditUnit DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    productType VARCHAR(20) NOT NULL DEFAULT 'sms',
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(id),
+    FOREIGN KEY (paymentId) REFERENCES Payments(id)
+);
+
+--@BLOCK
+SELECT * FROM Credits;
+
+--@BLOCK
+--DROP TABLE IF EXISTS Credits;
+
+--@BLOCK
+CREATE TABLE IF NOT EXISTS SMSCredits (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    userId INTEGER NOT NULL,
+    creditBalance DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastmodified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_user (userId),
+    FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+--@BLOCK
+SELECT * FROM SMSCredits;
+
+--@BLOCK
+--DROP TABLE IF EXISTS SMSCredits;
+
+--@BLOCK
+CREATE TABLE IF NOT EXISTS EmailCredits (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    userId INTEGER NOT NULL,
+    creditBalance DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    lastmodified TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_user (userId),
+    FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+--@BLOCK
+SELECT * FROM EmailCredits;
+
+--@BLOCK
+--DROP TABLE IF EXISTS EmailCredits;

@@ -1,5 +1,6 @@
 const Payment = require("../models/payments");
 const PaymentProviderFactory = require("../providers/factory");
+const CreditService = require("./credit.service");
 const {accountRefGen, serviceID} = require("../utils/accountRefGen");
 
 /**
@@ -10,6 +11,7 @@ const {accountRefGen, serviceID} = require("../utils/accountRefGen");
 class PaymentsService {
     constructor() {
         this.providerFactory = new PaymentProviderFactory();
+        this.finalStatuses = ["success", "failed"];
     }
 
     async createPayment(paymentData) {
@@ -45,6 +47,8 @@ class PaymentsService {
              *  * New Response Codes and Descriptions
              */
             await payment.save();
+
+            console.log("Payment Created successfully", Payment);
             return payment;
         } catch (error) {
             throw new Error(`Payment Service Error: ${ error.message}`);
@@ -86,45 +90,68 @@ class PaymentsService {
             });
 
             if (!existingTransaction) {
-                console.error("No matching transaction found");
+                console.error("No matching transaction found", {
+                    merchantRequestID: paymentData.MerchantRequestID,
+                    checkoutRequestID: paymentData.CheckoutRequestID
+                });
                 return null;
             }
-            // @TODO
-            // If "success" or "failed" status do not update prevents overwriting
-            // If already finalized code
-            if (existingTransaction.transaction_status === "success" ||
-                existingTransaction.transaction_status === "failed"
-            ) {
+
+            // Prevent overwrite on completion of the transaction
+            if (this.finalStatuses.includes(existingTransaction.transaction_status)) {
                 return existingTransaction.dataValues;
             }
             if (paymentData.ResultCode === 0) {
                 // Handle successfull payment
-                existingTransaction.transaction_status = "success",
-                existingTransaction.transaction_code = paymentData.MpesaReceiptNumber,
-                existingTransaction.transactionDate = String(paymentData.TransactionDate),
-                existingTransaction.responseDescription = paymentData.ResultDesc,
-                existingTransaction.responseCode = "0",
-                existingTransaction.amount = Number(paymentData.Amount);
+                Object.assign(existingTransaction, {
+                    transaction_status: "success",
+                    transaction_code: paymentData.MpesaReceiptNumber,
+                    transactionDate: String(paymentData.TransactionDate),
+                    responseDescription: paymentData.ResultDesc,
+                    responseCode: "0",
+                    amount: Number(paymentData.Amount)
+                });
 
                 const savedTransaction = await existingTransaction.save();
 
+                // Process Credits
+                const credit = await new CreditService();
+
+                const creditData = await credit.createTransaction({
+                    userId: existingTransaction.userId,
+                    paymentId: existingTransaction.id,
+                    creditsValue: existingTransaction.amount,
+                    product: existingTransaction.purchaseType,
+                });
+                console.log(creditData);
+
                 return savedTransaction.dataValues;
-                // @TODO introduce the SMS count service to update the number of SMS's 
-                // or registration status here
-                
             } else {
-                // Handle failed payment
-                // ResponseCode is always 1032 if failed
-                existingTransaction.transaction_status = "failed";
-                existingTransaction.responseDescription = paymentData.ResultDesc;
-                existingTransaction.responseCode = "1032";
+                // Process Failed payment
+                Object.assign(existingTransaction, {
+                    transaction_status: "failed",
+                    responseDescription: paymentData.ResultDesc,
+                    responseCode: "1032"
+                });
 
                 const failedTransactions = await existingTransaction.save();
+
+                console.log("Payment failed", {
+                    transactionId: failedTransactions.id,
+                    reason: paymentData.ResultDesc
+                });
+
                 return failedTransactions.dataValues;
             }
 
         } catch (error) {
-            throw new Error(`Error processing Mpesa callback: ${  error.message}`);
+            console.log("Payment callback processing failed", {
+                error: error.message,
+                provider: pay_provider,
+                stack: error.stack
+            });
+
+            throw new Error(`Error processing ${pay_provider} callback: ${  error.message}`);
         }
     }
 }
