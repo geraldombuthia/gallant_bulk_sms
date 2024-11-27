@@ -40,7 +40,7 @@ class SMSCreditService {
      * @param {number} userId 
      * @returns credit object
      */
-    async spentSMSCredit(usedCredit, userId) {
+    async spentCredit(usedCredit, userId) {
         const transaction = await sequelize.transaction();
 
         try {
@@ -76,7 +76,7 @@ class SMSCreditService {
         }
     }
 
-    async checkSMSBalance(userId) {
+    async checkBalance(userId) {
         try {
             const creditBalance = await SMSCredit.findOne({
                 where: { userId },
