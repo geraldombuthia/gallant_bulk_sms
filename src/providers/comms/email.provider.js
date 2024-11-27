@@ -16,7 +16,7 @@ class EmailProvider {
      * @param {*} msgPayload Contains all information 
      * required to send out a successful message
      */
-    sendEmail(msgPayload) {
+    sendMessage(msgPayload) {
         console.log(msgPayload);
         return {
             message: "Successfully added to queue",
@@ -25,7 +25,7 @@ class EmailProvider {
         };
     }
 
-    handleEmailCallback() {
+    handleMSGCallback() {
 
         return {
             status: "success",

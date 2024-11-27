@@ -16,7 +16,7 @@ class SMSProvider {
      * @param {*} msgPayload Contains all information 
      * required to send out a successful message
      */
-    sendSMS(msgPayload) {
+    async sendMessage(msgPayload) {
         console.log(msgPayload);
         return {
             message: "Successfully added to queue",
@@ -25,7 +25,7 @@ class SMSProvider {
         };
     }
 
-    handleSMSCallback() {
+    handleMSGCallback() {
 
         return {
             status: "success",
