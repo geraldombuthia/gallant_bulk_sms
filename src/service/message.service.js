@@ -21,7 +21,7 @@ class MessageService {
                 throw new Error ("Message provider ${providerName} not supported");
             }
             // Consider sending a message with a callback attached to store and bill
-            // Or do it here
+            // useful while working with other similar services i.e notifications
             const providerResponse = await provider.sendMessage(msgPayload);
             // Message store will happen in the provider layer
             console.log(providerResponse);
