@@ -1,5 +1,5 @@
 const { sequelize } = require("../config/database");
-const { DataTypes, Models } = require("sequelize");
+const { DataTypes, Model } = require("sequelize");
 
 
 class SMS extends Model {
@@ -15,16 +15,16 @@ SMS.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: "Users",
+            model: "users",
             key: 'id'
         },
     },
-    senderId: {
+    senderId: {         // shortcode used to send
         type: DataTypes.STRING,
         allowNull: false,
     },
     phoneNumber: {
-        types:DataTypes.STRING,
+        type:DataTypes.STRING,
         allowNull:  false,
     },
     message: {
@@ -39,7 +39,7 @@ SMS.init({
         type: DataTypes.INTEGER,
         defaultValue: 0,
     },
-    provideId: {
+    providerId: {
         type: DataTypes.STRING,
         allowNull: true
     },
@@ -49,7 +49,7 @@ SMS.init({
     },
     cost: {
         type: DataTypes.DECIMAL(10, 2),
-        allwNull: true
+        allowNull: true
     }
 }, {
     sequelize,
@@ -58,4 +58,4 @@ SMS.init({
     timestamps: true,
 });
 
-model.exports = SMS;
+module.exports = SMS;

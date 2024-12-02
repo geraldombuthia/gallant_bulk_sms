@@ -17,7 +17,7 @@ class SMSProvider {
      * required to send out a successful message
      */
     async sendMessage(msgPayload) {
-        console.log(msgPayload);
+        console.log("SMS provider",msgPayload);
         return {
             message: "Successfully added to queue",
             status: "Pending",

@@ -1,7 +1,7 @@
 const { sequelize } = require("../config/database");
-const { DataTypes, Models } = require("sequelize");
+const { DataTypes, Model } = require("sequelize");
 
-class Email extends Models {}
+class Email extends Model {}
 
 Email.init({
     id: {
@@ -14,7 +14,7 @@ Email.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'Users',
+            model: 'users',
             key: "id"
         },
     },
@@ -27,7 +27,7 @@ Email.init({
         allowNull: true
     },
     htmlBody: { // Optional if Text provided
-        types: DataTypes.TEXT, // Optional
+        type: DataTypes.TEXT, // Optional
         allowNull: true,
     },
     isHTML: {
@@ -35,23 +35,23 @@ Email.init({
         defaultValue: true, 
     },
     recipient: {
-        type: DataTypes.JSONB,
+        type: DataTypes.TEXT,
         allowNull: false,
-        defaultValue: {
+        defaultValue: JSON.stringify({
             to: [],
             cc: [],
             bcc: []
-        },
+        }),
         get() {
             // Parse JSON when retrieving
-            return this.getDataValue('recipients');
+            return JSON.parse(this.getDataValue('recipients'));
         },
         set(value) {
             // Validate and set JSON
-            this.setDataValue('recipients', value);
+            this.setDataValue('recipients', JSON.stringify(value));
         }
     },
-    sender: {
+    sender: {   // Senders email
         type: DataTypes.STRING,
         allowNull: false
     },
@@ -65,7 +65,7 @@ Email.init({
     },
     providerResponse: {
         type: DataTypes.STRING,
-        allowNUll: true,
+        allowNull: true,
     },
     sentAt: {
         type: DataTypes.DATE

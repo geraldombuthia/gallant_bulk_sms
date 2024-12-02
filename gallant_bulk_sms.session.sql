@@ -121,3 +121,48 @@ SELECT * FROM EmailCredits;
 
 --@BLOCK
 --DROP TABLE IF EXISTS EmailCredits;
+
+
+--@BLOCK
+CREATE TABLE IF NOT EXISTS SMSMsg (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    senderId VARCHAR(20) NOT NULL, 
+    phoneNumber VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    deliveryStatus VARCHAR(20) DEFAULT 'pending',
+    retryAttempts INT DEFAULT 0,
+    providerId VARCHAR(255) NULL,
+    providerResponse TEXT NULL,
+    cost DECIMAL(10, 2) NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+--@BLOCK 
+SELECT * FROM SMSMsg;
+
+
+--@BLOCK
+CREATE TABLE Emails (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    userId INT NOT NULL,
+    subject VARCHAR(255) NOT NULL,
+    textBody TEXT NULL,
+    htmlBody TEXT NULL,
+    isHTML BOOLEAN DEFAULT TRUE,
+    recipient JSON NOT NULL DEFAULT (JSON_OBJECT('to', JSON_ARRAY(), 'cc', JSON_ARRAY(), 'bcc', JSON_ARRAY())),
+    sender VARCHAR(255) NOT NULL,
+    deliveryStatus VARCHAR(20) NOT NULL,
+    providerId VARCHAR(255) NULL,
+    providerResponse VARCHAR(255) NULL,
+    sentAt DATETIME NULL,
+    trackingID VARCHAR(255) NULL,
+    createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+--@BLOCK
+SELECT * FROM Emails;

@@ -1,0 +1,161 @@
+const {parsePhoneNumberWithError} = require("libphonenumber-js");
+const MessageService = require("../service/message.service");
+
+class MessageController {
+    constructor() {
+        this.MessageService = new MessageService();
+        this.sendMessage = this.sendMessage.bind(this);
+        this.sendEmail = this.sendEmail.bind(this);
+        this.validateEmailInput = this.validateEmailInput.bind(this);
+    }
+    // validate phone number
+    // Create SMS record
+
+    async sendMessage(req, res) {
+        try {
+            // Extract channel from request route
+            const { phoneNumber, message } = req.body;
+
+            // Input validation methods
+            this.validateSMSInput(phoneNumber, message);
+
+            const validateNumber = parsePhoneNumberWithError(String(phoneNumber), {
+                defaultCountry: "KE"
+            });
+            
+            if (!validateNumber.isValid()) {
+                throw new ParseError("Invalid phone number format");
+            }
+
+            const formatNumber = validateNumber.formatInternational()
+                .replace(/^(\+)/, "")
+                .replace(/\s+/g, "");
+
+
+            const userId = 1; // implement with API key
+
+            const result = await this.MessageService.sendMessage({
+                phoneNumber: formatNumber, 
+                country: 'KE',
+                message,
+                userId,
+                channel: 'sms'
+            });
+
+            return res.status(201).json(result);
+        } catch (error) {
+            return res.status(500).json({
+                error: 'Failed to send SMS',
+                message: error.message
+            });
+        }
+    }
+
+    async sendBulkMSG() {
+        // To be implemented
+
+        return res.json(404).json({
+            message: "Service not available",
+        });
+    }
+
+    async sendEmail(req, res) {
+        const { 
+            subject, 
+            recipient, 
+            sender, 
+            textBody, 
+            isHTML 
+        } = req.body;
+        const url = req;
+
+        console.log();
+        try {
+
+            let msgPayload = {
+                subject,
+                recipient,
+                sender,
+                textBody,
+                isHTML,
+                channel: url._parsedUrl.pathname.replace("/", "")
+            };
+
+            this.validateEmailInput(msgPayload);
+            const response = await this.MessageService.sendMessage(msgPayload);
+            return res.status(200).json({
+                message: "Successfully sends Email"
+            });
+
+        } catch (error) {
+            console.error("Sending Mail failed:" , error);
+
+            return res.status(500).json({
+                message: "Sending mail failed",
+            })
+        }
+
+    }
+    async getSMSHistory(req, res) {
+        try {
+            const userId = req.user.id;
+
+            const {
+                status,
+                startDate,
+                endDate,
+                page = 1,
+                limit = 50
+            } = req.query;
+            
+            const result = await this.MessageService.getMessageHistory({
+                userId,
+                status,
+                startDate,
+                endDate,
+                page,
+                limit
+            });
+
+            return res.status(200).json(result);
+
+        } catch (error) {
+            return res.status(500).json({
+                error: 'Failed to retrieve SMS history',
+                message: error.message
+            });
+        }   
+    }
+
+    validateSMSInput(phone, message) {
+        if (!phone) {
+            throw new Error("Phone number is required");
+        }
+
+        if (!message) {
+            throw new Error('Message is required');
+        }
+    }
+
+    validateEmailInput(emailObj) {
+        if (!emailObj.subject) {
+            throw new Error("Please add a subject");
+        }
+
+        if (!emailObj.recipient) {
+            throw new Error("You need to have atleast one recipient");
+        }
+
+        if (!emailObj.sender) {
+            throw new Error("Please add the sender email");
+        }
+
+        if (!emailObj.textBody && !emailObj.htmlBody) {
+            throw new Error("Please add an email body");
+        }
+
+    }
+
+}
+
+module.exports = new MessageController();
