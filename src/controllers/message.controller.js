@@ -67,7 +67,6 @@ class MessageController {
             textBody, 
             isHTML 
         } = req.body;
-        const url = req;
 
         console.log();
         try {
@@ -78,7 +77,8 @@ class MessageController {
                 sender,
                 textBody,
                 isHTML,
-                channel: url._parsedUrl.pathname.replace("/", "")
+                channel: 'email',
+                userId: 1
             };
 
             this.validateEmailInput(msgPayload);

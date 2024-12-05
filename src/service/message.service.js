@@ -22,6 +22,11 @@ class MessageService {
     async sendMessage(msgPayload) {
         let messageRecord;
         try {
+            if (!msgPayload.channel) {
+                throw new Error("Channel is required");
+            }
+            
+            console.log("Channel in payload is",msgPayload.channel)
             // Check whether message is a bulk or single message
             const { 
                 channel, 
@@ -43,9 +48,9 @@ class MessageService {
             const provider = this.provider.getCommsProvider(channel);
 
             if (!provider) {
-                throw new Error ("Message provider ${channel} not supported");
+                throw new Error (`Message provider ${channel} not supported`);
             }
-
+            
             // Prepare  message record based on channel
             const recordData = channel === 'sms' ? {
                 userId,
@@ -65,7 +70,7 @@ class MessageService {
             };
 
             messageRecord = await this.storageModels[channel].create(recordData);
-
+            console.log(messageRecord);
             const providerResponse = await provider.sendMessage(
                 msgPayload,
                 // Storage callback 
@@ -113,9 +118,10 @@ class MessageService {
                 });
             }
 
-            throw new Error(`Message send failed with ${channel} failed`, error.message);
+            //throw new Error(`Message send failed with ${channel} channel: ${error.message}`);
         }
     }
+    
     async sendBatchMessage(msgPayload) {
         const { channel, messages } = msgPayload;
 

@@ -1,3 +1,5 @@
+const Nodemailer = require ("./nodemailer.provider.js");
+
 class EmailProvider {
     constructor() {
 
@@ -16,8 +18,8 @@ class EmailProvider {
      * @param {*} msgPayload Contains all information 
      * required to send out a successful message
      */
-    sendMessage(msgPayload) {
-        console.log(msgPayload);
+    async sendMessage(msgPayload) {
+        await Nodemailer();
         return {
             message: "Successfully added to queue",
             status: "Pending",
