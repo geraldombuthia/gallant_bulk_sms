@@ -24,10 +24,15 @@ const EmailCredit = sequelize.define("EmailCredits", {
         type:DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0
+    },
+    price_per_unit: {
+        type: DataTypes.DECIMAL(10, 5),
+        allowNull: false,
+        defaultValue: 0.0000
     }
 }, {
     sequelize,
-    modelname: "EmailCredit",
+    modelName: "EmailCredit",
     tableName: "EmailCredits",
     timestamps: true,
     createdAt: "created_at",
