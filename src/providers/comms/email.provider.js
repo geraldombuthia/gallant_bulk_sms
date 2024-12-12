@@ -30,11 +30,8 @@ class EmailProvider {
      */
     async sendMessage(msgPayload) {
         try {
-            // console.log("Sending Message through Email Provider", msgPayload);
             const response = await sendMail(msgPayload);
-            // await sendMail();
-
-            console.log("Email provider response", response);
+            
             return {
                 status: "success",
                 ...response

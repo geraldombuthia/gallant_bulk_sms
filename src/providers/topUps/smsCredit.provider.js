@@ -63,7 +63,6 @@ class SMSCreditService {
 
             await transaction.commit();
             await updatedCredit.reload();
-            console.log("Successful credit", credit.dataValues);
             return {
                 credit,
                 creditBalance: updatedCredit.creditBalance

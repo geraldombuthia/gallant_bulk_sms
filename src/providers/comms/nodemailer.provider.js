@@ -6,7 +6,7 @@ const transporter = nodemailer.createTransport({
     service: "gmail",
     secure: false, // Use TLS
     auth: {
-        user: "geraldombuthia@gmail.com",
+        user: process.env.EMAIL_ADDRESS,
         pass: process.env.EMAIL_PASS
     },
     pool: true, // Enable connection pooling
@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
 });
 
 async function sendEmail(msgPayload) {
-    console.log("Send Email here", msgPayload);
+   
     try {
         const info = await transporter.sendMail({
             from: msgPayload.sender, // sender Address
@@ -28,6 +28,7 @@ async function sendEmail(msgPayload) {
             text: msgPayload?.textBody, // plain text body
             html: msgPayload?.htmlBody
         });
+        
         return {
             response: info.response,  // 250(succesful command completion) 
             // 2.0.0(successful transmission) OK(confirms email accepted by server) success response

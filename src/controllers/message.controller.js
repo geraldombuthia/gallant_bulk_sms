@@ -40,7 +40,18 @@ class MessageController {
                 userId,
                 channel: "sms"
             });
-            console.log("Result after send", result);
+            
+            // Handle remaining credits_used and balance_after somewhere else
+            const {providerResponse} = result;
+
+            const filteredProviderResponse = {
+                status: providerResponse.status,
+                message_id: providerResponse.message_id,
+                recipient: providerResponse.recipient,
+                network: providerResponse.network,
+                timestamp: providerResponse.timestamp
+            }
+            result.providerResponse = filteredProviderResponse;
             return res.status(201).json(result);
         } catch (error) {
             return res.status(500).json({

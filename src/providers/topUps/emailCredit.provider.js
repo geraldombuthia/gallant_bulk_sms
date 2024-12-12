@@ -51,8 +51,10 @@ class EmailCreditService {
 
             await credit.decrement("creditBalance", {
                 by: usedCredit,
-                transaction
+                transaction,
             });
+
+            await credit.reload({transaction});
 
             await transaction.commit();
 

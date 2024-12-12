@@ -82,9 +82,6 @@ class MessageService {
             default:
                 throw new Error(`Unsupported channel: ${channel}`);
             }
-            console.log("Record data is", recordData);
-            console.log("Storage Models:", Object.keys(this.storageModels));
-            console.log("Trying to create record for channel:", channel);
             // console.log("Model for this channel:", 
             //     await this.storageModels[channel].create(recordData));
             messageRecord = await this.storageModels[channel].create(recordData);
@@ -92,14 +89,11 @@ class MessageService {
             //     messageRecord.toJSON() : "No record returned");
             // console.log("Message record feedback", messageRecord.dataValues);
             const providerResponse = await provider.sendMessage(recordData);
-            // console.log("This is the feedback from provider send", await provider.sendMessage(messageRecord));
-            console.log("The provider Response is ",providerResponse);
 
             let billSend;
             let usedCredit = 1;
 
             if (providerResponse.status === "success") {
-                console.log("Provider response returned success");
                 const billingProvider = this.billing.getProvider(channel);
                 if (channel === 'email') {
                     
@@ -108,7 +102,6 @@ class MessageService {
                     console.log(`${totalEmails} have been sent and the used credits are ${usedCredit}`);
                 }
                 billSend = await billingProvider.spentCredit(usedCredit, userId);
-                console.log("Billing Send response ", billSend);
             }
             const {ehlo, status, ...responseDetails} = providerResponse;
             // Update message record with provider response
