@@ -95,14 +95,17 @@ class MessageService {
 
             if (providerResponse.status === "success") {
                 const billingProvider = this.billing.getProvider(channel);
-                if (channel === 'email') {
+                if (channel === "email") {
                     
-                    let totalEmails = providerResponse.accepted.length + providerResponse.rejected.length;
+                    const totalEmails = providerResponse.accepted.length 
+                    + providerResponse.rejected.length;
                     usedCredit = totalEmails;
-                    console.log(`${totalEmails} have been sent and the used credits are ${usedCredit}`);
+                    console.log(`${totalEmails} have been sent and 
+                        the used credits are ${usedCredit}`);
                 }
                 billSend = await billingProvider.spentCredit(usedCredit, userId);
             }
+            // eslint-disable-next-line
             const {ehlo, status, ...responseDetails} = providerResponse;
             // Update message record with provider response
             await messageRecord.update({
@@ -122,7 +125,7 @@ class MessageService {
                 credits_used: usedCredit,
                 creditBalance: billSend.creditBalance,
                 network: providerResponse?.network, // return relevant information
-                userId: userId
+                userId
             };
 
         } catch (error) {

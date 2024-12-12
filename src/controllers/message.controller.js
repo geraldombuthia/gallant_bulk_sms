@@ -50,7 +50,7 @@ class MessageController {
                 recipient: providerResponse.recipient,
                 network: providerResponse.network,
                 timestamp: providerResponse.timestamp
-            }
+            };
             result.providerResponse = filteredProviderResponse;
             return res.status(201).json(result);
         } catch (error) {

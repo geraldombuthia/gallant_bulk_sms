@@ -38,7 +38,7 @@ async function sendEmail(msgPayload) {
             rejected: info.rejected, // List of addresses that rejected
             envelope: info.envelope, // To and From addresses
             ehlo: info.ehlo,         // Supported capabilities 
-            messageTime: info.messageTime, //time to process message (ms)
+            messageTime: info.messageTime, // time to process message (ms)
             messageSize: info.messageSize, // Size of email
             envelopeTime: info.envelopeTime // time to process the email envelope
         };
