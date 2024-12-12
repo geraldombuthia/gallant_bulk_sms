@@ -143,9 +143,12 @@ CREATE TABLE IF NOT EXISTS SMSMsg (
 --@BLOCK 
 SELECT * FROM SMSMsg;
 
+--@BLOCK
+-- DROP TABLE IF EXISTS SMSMsg;
+
 
 --@BLOCK
-CREATE TABLE Emails (
+CREATE TABLE IF NOT EXISTS Emails (
     id INT AUTO_INCREMENT PRIMARY KEY,
     userId INT NOT NULL,
     subject VARCHAR(255) NOT NULL,
@@ -156,7 +159,7 @@ CREATE TABLE Emails (
     sender VARCHAR(255) NOT NULL,
     deliveryStatus VARCHAR(20) NOT NULL,
     providerId VARCHAR(255) NULL,
-    providerResponse VARCHAR(255) NULL,
+    providerResponse TEXT NULL,
     sentAt DATETIME NULL,
     trackingID VARCHAR(255) NULL,
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -166,3 +169,6 @@ CREATE TABLE Emails (
 
 --@BLOCK
 SELECT * FROM Emails;
+
+--@BLOCK
+-- DROP TABLE IF EXISTS  Emails;

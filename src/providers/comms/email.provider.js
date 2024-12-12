@@ -1,4 +1,4 @@
-const Nodemailer = require ("./nodemailer.provider.js");
+const sendMail = require ("./nodemailer.provider.js");
 
 class EmailProvider {
     constructor() {
@@ -19,12 +19,20 @@ class EmailProvider {
      * required to send out a successful message
      */
     async sendMessage(msgPayload) {
-        await Nodemailer();
-        return {
-            message: "Successfully added to queue",
-            status: "Pending",
-            code: 0
-        };
+        try {
+            console.log("Sending Message through Email Provider", msgPayload);
+            const response = await sendMail(msgPayload);
+            // await sendMail();
+
+            console.log("Email provider response", response);
+            return {
+                message: "Successfully added to queue",
+                status: "success",
+                code: 0
+            };
+        } catch(error) {
+            throw new Error("Email sending Email Error: ", error);
+        }
     }
 
     handleMSGCallback() {

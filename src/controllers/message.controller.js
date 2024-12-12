@@ -24,34 +24,33 @@ class MessageController {
             });
             
             if (!validateNumber.isValid()) {
-                throw new ParseError("Invalid phone number format");
+                throw new Error("Invalid phone number format");
             }
 
             const formatNumber = validateNumber.formatInternational()
                 .replace(/^(\+)/, "")
                 .replace(/\s+/g, "");
 
-
             const userId = 1; // implement with API key
 
             const result = await this.MessageService.sendMessage({
                 phoneNumber: formatNumber, 
-                country: 'KE',
+                country: "KE",
                 message,
                 userId,
-                channel: 'sms'
+                channel: "sms"
             });
-
+            console.log("Result after send", result);
             return res.status(201).json(result);
         } catch (error) {
             return res.status(500).json({
-                error: 'Failed to send SMS',
+                error: "Failed to send SMS",
                 message: error.message
             });
         }
     }
 
-    async sendBulkMSG() {
+    async sendBulkMSG(req, res) {
         // To be implemented
 
         return res.json(404).json({
@@ -65,24 +64,28 @@ class MessageController {
             recipient, 
             sender, 
             textBody, 
+            htmlBody,
             isHTML 
         } = req.body;
 
-        console.log();
+        console.log(req.body);
         try {
 
-            let msgPayload = {
+            const msgPayload = {
                 subject,
                 recipient,
                 sender,
                 textBody,
+                htmlBody,
                 isHTML,
-                channel: 'email',
+                channel: "email",
                 userId: 1
             };
 
             this.validateEmailInput(msgPayload);
             const response = await this.MessageService.sendMessage(msgPayload);
+
+            console.log("This is the message response: ", response);
             return res.status(200).json({
                 message: "Successfully sends Email"
             });
@@ -92,7 +95,7 @@ class MessageController {
 
             return res.status(500).json({
                 message: "Sending mail failed",
-            })
+            });
         }
 
     }
@@ -121,7 +124,7 @@ class MessageController {
 
         } catch (error) {
             return res.status(500).json({
-                error: 'Failed to retrieve SMS history',
+                error: "Failed to retrieve SMS history",
                 message: error.message
             });
         }   
@@ -133,7 +136,7 @@ class MessageController {
         }
 
         if (!message) {
-            throw new Error('Message is required');
+            throw new Error("Message is required");
         }
     }
 
@@ -150,7 +153,7 @@ class MessageController {
             throw new Error("Please add the sender email");
         }
 
-        if (!emailObj.textBody && !emailObj.htmlBody) {
+        if (!emailObj.textBody || !emailObj.htmlBody) {
             throw new Error("Please add an email body");
         }
 

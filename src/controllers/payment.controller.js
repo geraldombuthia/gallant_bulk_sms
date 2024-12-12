@@ -114,6 +114,7 @@ class PaymentController {
                 req.body,
                 pay_provider
             );
+            console.log(req.body);
             if (!paymentData) {
                 console.error("Payment Data is null");
                 return res.status(500).json("Payment Data is null");

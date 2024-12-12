@@ -1,7 +1,6 @@
 const { sequelize } = require("../config/database");
 const { DataTypes, Model } = require("sequelize");
 
-
 class SMS extends Model {
 
 }
@@ -16,7 +15,7 @@ SMS.init({
         allowNull: false,
         references: {
             model: "users",
-            key: 'id'
+            key: "id"
         },
     },
     senderId: {         // shortcode used to send
@@ -33,7 +32,7 @@ SMS.init({
     },
     deliveryStatus: {
         type: DataTypes.STRING(20),
-        defaultValue: 'pending',
+        defaultValue: "pending",
     },
     retryAttempts: {
         type: DataTypes.INTEGER,
@@ -53,8 +52,8 @@ SMS.init({
     }
 }, {
     sequelize,
-    modelName: 'SMS',
-    tableName: 'SMSMsg',
+    modelName: "SMS",
+    tableName: "SMSMsg",
     timestamps: true,
 });
 

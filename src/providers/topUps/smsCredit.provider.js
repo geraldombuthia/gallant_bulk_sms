@@ -49,8 +49,9 @@ class SMSCreditService {
                 lock: transaction.LOCK.UPDATE,
                 transaction
             });
-
+            // console.log("The returned credit is ", credit.dataValues);
             if (!credit || credit.creditBalance < usedCredit ) {
+                // return Insufficient credits instead
                 throw new Error("Insufficient credits");
             }
 
@@ -62,8 +63,11 @@ class SMSCreditService {
 
             await transaction.commit();
             await updatedCredit.reload();
-            console.log("Successful credit", credit);
-            return credit;
+            console.log("Successful credit", credit.dataValues);
+            return {
+                credit,
+                creditBalance: updatedCredit.creditBalance
+            };
 
         } catch (error) {
             await transaction.rollback();

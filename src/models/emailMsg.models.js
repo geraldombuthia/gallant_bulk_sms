@@ -14,7 +14,7 @@ Email.init({
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'users',
+            model: "users",
             key: "id"
         },
     },
@@ -42,13 +42,14 @@ Email.init({
             cc: [],
             bcc: []
         }),
+        // May need to remove this getter and setter function
         get() {
             // Parse JSON when retrieving
-            return JSON.parse(this.getDataValue('recipients'));
+            return JSON.parse(this.getDataValue("recipient"));
         },
         set(value) {
             // Validate and set JSON
-            this.setDataValue('recipients', JSON.stringify(value));
+            this.setDataValue("recipient", JSON.stringify(value));
         }
     },
     sender: {   // Senders email
@@ -58,13 +59,14 @@ Email.init({
     deliveryStatus: {
         type: DataTypes.STRING(20),
         allowNull: false,
+        defaultValue: "pending"
     },
     providerId: {
         type: DataTypes.STRING,
         allowNull: true,
     },
     providerResponse: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
     },
     sentAt: {
@@ -76,8 +78,8 @@ Email.init({
     },
 }, {
     sequelize,
-    modelName: 'Email',
-    tableName: 'Emails',
+    modelName: "Email",
+    tableName: "Emails",
     timestamps: true
 });
 
