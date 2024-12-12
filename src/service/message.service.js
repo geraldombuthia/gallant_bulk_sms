@@ -87,28 +87,35 @@ class MessageService {
             console.log("Trying to create record for channel:", channel);
             // console.log("Model for this channel:", 
             //     await this.storageModels[channel].create(recordData));
-            // messageRecord = await this.storageModels[channel].create(recordData);
+            messageRecord = await this.storageModels[channel].create(recordData);
             // console.log("MESSAGE RECORD CREATED:", messageRecord ?
             //     messageRecord.toJSON() : "No record returned");
             // console.log("Message record feedback", messageRecord.dataValues);
             const providerResponse = await provider.sendMessage(recordData);
-            console.log("This is the feedback from provider send", await provider.sendMessage(messageRecord));
+            // console.log("This is the feedback from provider send", await provider.sendMessage(messageRecord));
             console.log("The provider Response is ",providerResponse);
 
             let billSend;
-            const usedCredit = 1;
+            let usedCredit = 1;
 
             if (providerResponse.status === "success") {
                 console.log("Provider response returned success");
                 const billingProvider = this.billing.getProvider(channel);
+                if (channel === 'email') {
+                    
+                    let totalEmails = providerResponse.accepted.length + providerResponse.rejected.length;
+                    usedCredit = totalEmails;
+                    console.log(`${totalEmails} have been sent and the used credits are ${usedCredit}`);
+                }
                 billSend = await billingProvider.spentCredit(usedCredit, userId);
                 console.log("Billing Send response ", billSend);
             }
+            const {ehlo, status, ...responseDetails} = providerResponse;
             // Update message record with provider response
             await messageRecord.update({
-                deliveryStatus: providerResponse.status === "success" ? "success" : "failed",
-                providerId: providerResponse.messageId,
-                providerResponse: JSON.stringify(providerResponse),
+                deliveryStatus: providerResponse.status,
+                providerId: providerResponse?.messageId,
+                providerResponse: JSON.stringify(responseDetails),
                 cost: providerResponse.credits_used,
                 ...(channel === "email" && {
                     sentAt: new Date(),
@@ -118,12 +125,11 @@ class MessageService {
 
             return {
                 message: `${channel.toUpperCase()} sent successfully`,
-                messageId: messageRecord.id,
-                recipient: providerResponse.recipient,
-                credits_used: userId,
+                providerResponse,
+                credits_used: usedCredit,
                 creditBalance: billSend.creditBalance,
-                network: providerResponse.network // return relevant information
-
+                network: providerResponse?.network, // return relevant information
+                userId: userId
             };
 
         } catch (error) {

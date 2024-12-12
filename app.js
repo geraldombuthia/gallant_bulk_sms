@@ -25,6 +25,7 @@ const port = 3000;
 EventEmitter.defaultMaxListeners = 20;
 testConnection();
 
+app.timeout = 10000; // 10 seconds timeout
 app.use(morgan("dev", { immediate: false}));
 // app.use(morgan('combined', { immediate: true}));
 app.use(express.static(path.join(__dirname, "public")));

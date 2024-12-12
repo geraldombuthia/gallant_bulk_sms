@@ -59,6 +59,7 @@ class MessageController {
     }
 
     async sendEmail(req, res) {
+        const startTime = Date.now();
         const { 
             subject, 
             recipient, 
@@ -68,7 +69,7 @@ class MessageController {
             isHTML 
         } = req.body;
 
-        console.log(req.body);
+        // console.log(req.body);
         try {
 
             const msgPayload = {
@@ -82,12 +83,16 @@ class MessageController {
                 userId: 1
             };
 
-            this.validateEmailInput(msgPayload);
+            // this.validateEmailInput(msgPayload);
             const response = await this.MessageService.sendMessage(msgPayload);
 
             console.log("This is the message response: ", response);
+
+            const duration = Date.now() - startTime;
             return res.status(200).json({
-                message: "Successfully sends Email"
+                success: true,
+                duration,
+                response
             });
 
         } catch (error) {

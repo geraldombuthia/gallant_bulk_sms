@@ -1,14 +1,19 @@
 #!/usr/bin/env node
-
+require("dotenv").config();
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
     service: "gmail",
-    secure: false,
+    secure: false, // Use TLS
     auth: {
         user: "geraldombuthia@gmail.com",
-        pass: "cbwb ytkx emva tlou"
+        pass: process.env.EMAIL_PASS
     },
+    pool: true, // Enable connection pooling
+    maxConnections: 10, // Max concurrent conenctions
+    maxMessages: 100, // Max messages per connection
+    rateDelta: 1000, // Rate Limiting: time window
+    rateLimit: 5 // Max emails per time widnow
 });
 
 async function sendEmail(msgPayload) {
@@ -23,11 +28,18 @@ async function sendEmail(msgPayload) {
             text: msgPayload?.textBody, // plain text body
             html: msgPayload?.htmlBody
         });
-        console.log("This is the nodemailer ",info);
         return {
-            response: info.response,
-            messageId: info.messageId,
-            info
+            response: info.response,  // 250(succesful command completion) 
+            // 2.0.0(successful transmission) OK(confirms email accepted by server) success response
+            // 550(Permanently rejected i.e user Unknown)
+            messageId: info.messageId, // Globally Unique identify for this email
+            accepted: info.accepted, // List of addresses that accepted delivery
+            rejected: info.rejected, // List of addresses that rejected
+            envelope: info.envelope, // To and From addresses
+            ehlo: info.ehlo,         // Supported capabilities 
+            messageTime: info.messageTime, //time to process message (ms)
+            messageSize: info.messageSize, // Size of email
+            envelopeTime: info.envelopeTime // time to process the email envelope
         };
     } catch (error) {
         throw new Error(`Transporter Error on Nodemailer ${error.message}`);
