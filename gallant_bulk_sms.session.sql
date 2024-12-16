@@ -63,7 +63,7 @@ SELECT * FROM Payments
 SELECT * FROM Payments WHERE merchantRequestID = "60e4-4f14-997e-f04c8c4f586d172807285"
 
 --@BLOCK
-DROP TABLE IF EXISTS Payments;
+-- DROP TABLE IF EXISTS Payments;
 
 --@BLOCK
 DESCRIBE Payments;
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS SMSCredits (
 SELECT * FROM SMSCredits;
 
 --@BLOCK
---DROP TABLE IF EXISTS SMSCredits;
+-- DROP TABLE IF EXISTS SMSCredits;
 
 --@BLOCK
 CREATE TABLE IF NOT EXISTS EmailCredits (
@@ -118,6 +118,10 @@ CREATE TABLE IF NOT EXISTS EmailCredits (
     FOREIGN KEY (userId) REFERENCES users(id)
 );
 
+--@block
+UPDATE EmailCredits 
+SET price_per_unit = 0.05 
+WHERE userId = 1;
 --@BLOCK
 -- INSERT INTO EmailCredits VALUE (1, 1, 20.00000, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 --@BLOCK

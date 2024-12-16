@@ -100,6 +100,15 @@ class MessageController {
             console.log("This is the message response: ", response);
 
             const duration = Date.now() - startTime;
+
+            if (!response || response.status !== "success") {
+                console.log("Sending Mail failed:", response);
+                return res.status(201).json({
+                    success: "failed",
+                    duration,
+                    response
+                });
+            }
             return res.status(200).json({
                 success: true,
                 duration,

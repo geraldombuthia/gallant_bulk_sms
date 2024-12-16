@@ -75,7 +75,7 @@ class PaymentsService {
     async handlePaymentCallback(callbackData, pay_provider) {
         try {
             const provider = this.providerFactory.getProvider(pay_provider);
-            
+
             if (!provider) {
                 throw new Error("Payment provider not initiated");
             }
@@ -123,7 +123,7 @@ class PaymentsService {
                     creditsValue: existingTransaction.amount,
                     product: existingTransaction.purchaseType,
                 });
-                console.log(creditData);
+                console.log("This is the credit Data",creditData);
 
                 return savedTransaction.dataValues;
             } else {
