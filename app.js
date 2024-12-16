@@ -12,6 +12,7 @@ const passport = require("./src/config/passport.js");
 const AuthRoutes = require("./src/routes/auth.routes.js");
 const PayRoutes = require("./src/routes/payment.routes.js");
 const CreditRoutes = require("./src/routes/credit.routes.js");
+const MessageRoutes = require("./src/routes/message.routes.js");
 
 // const userAgentParser = require("./src/middleware/userAgentParser.js");
 // const extractIPAddress = require("./src/middleware/extractIPAddress.js");
@@ -24,6 +25,7 @@ const port = 3000;
 EventEmitter.defaultMaxListeners = 20;
 testConnection();
 
+app.timeout = 10000; // 10 seconds timeout
 app.use(morgan("dev", { immediate: false}));
 // app.use(morgan('combined', { immediate: true}));
 app.use(express.static(path.join(__dirname, "public")));
@@ -72,6 +74,7 @@ app.use((req, res, next) => {
 app.use("/auth", AuthRoutes);
 app.use("/pay", PayRoutes);
 app.use("/credit", CreditRoutes);
+app.use("/send", MessageRoutes);
 
 // app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess);
 app.route("/").get((req, res) => {

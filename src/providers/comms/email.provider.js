@@ -1,3 +1,15 @@
+const sendMail = require ("./nodemailer.provider.js");
+
+/**
+ * @brief
+ * Below is the cost of sending emails on AMAzon SES
+ * Sending Emails $0.10 for every 1000emails or every recipient
+ * Outgoing data $0.12 per GB of data in attachments i.e. headers,
+ * message content and attachments
+ * Incoming mail chunks $0.09 for every 1000 incoming mail chunks.
+ * 1 mail chunk is 256KB of incoming data.
+ * Do not use Gmail for bulk email
+ */
 class EmailProvider {
     constructor() {
 
@@ -16,16 +28,20 @@ class EmailProvider {
      * @param {*} msgPayload Contains all information 
      * required to send out a successful message
      */
-    sendEmail(msgPayload) {
-        console.log(msgPayload);
-        return {
-            message: "Successfully added to queue",
-            status: "Pending",
-            code: 0
-        };
+    async sendMessage(msgPayload) {
+        try {
+            const response = await sendMail(msgPayload);
+            
+            return {
+                status: "success",
+                ...response
+            };
+        } catch(error) {
+            throw new Error("Email sending Email Error: ", error);
+        }
     }
 
-    handleEmailCallback() {
+    handleMSGCallback() {
 
         return {
             status: "success",

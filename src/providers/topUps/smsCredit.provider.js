@@ -40,7 +40,7 @@ class SMSCreditService {
      * @param {number} userId 
      * @returns credit object
      */
-    async spentSMSCredit(usedCredit, userId) {
+    async spentCredit(usedCredit, userId) {
         const transaction = await sequelize.transaction();
 
         try {
@@ -49,8 +49,9 @@ class SMSCreditService {
                 lock: transaction.LOCK.UPDATE,
                 transaction
             });
-
+            // console.log("The returned credit is ", credit.dataValues);
             if (!credit || credit.creditBalance < usedCredit ) {
+                // return Insufficient credits instead
                 throw new Error("Insufficient credits");
             }
 
@@ -62,8 +63,10 @@ class SMSCreditService {
 
             await transaction.commit();
             await updatedCredit.reload();
-            console.log("Successful credit", credit);
-            return credit;
+            return {
+                credit,
+                creditBalance: updatedCredit.creditBalance
+            };
 
         } catch (error) {
             await transaction.rollback();
@@ -76,7 +79,7 @@ class SMSCreditService {
         }
     }
 
-    async checkSMSBalance(userId) {
+    async checkBalance(userId) {
         try {
             const creditBalance = await SMSCredit.findOne({
                 where: { userId },

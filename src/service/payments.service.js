@@ -123,7 +123,7 @@ class PaymentsService {
                     creditsValue: existingTransaction.amount,
                     product: existingTransaction.purchaseType,
                 });
-                console.log(creditData);
+                console.log("This is the credit Data",creditData);
 
                 return savedTransaction.dataValues;
             } else {
