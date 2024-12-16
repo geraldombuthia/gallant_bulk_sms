@@ -12,8 +12,8 @@ class CreditService {
     constructor() {
 
     }
-    pricePerEmailUnit = 0.0001; //Email
-    pricePerSMSUnit = 0.8; //SMS
+    pricePerEmailUnit = 0.0001; // Email
+    pricePerSMSUnit = 0.8; // SMS
     /**
      * @brief Creates a transaction to be stored to 
      * keep track of the purchase order value, units
@@ -24,39 +24,41 @@ class CreditService {
     async createTransaction(purchaseObj) {
         console.log("Create Transaction", purchaseObj, purchaseObj.product);
         try {
-          const rate = (purchaseObj.product === 'email') ? this.pricePerEmailUnit : this.pricePerSMSUnit;
-          const pricePerUnit = Number((purchaseObj.product === 'email') ? this.pricePerEmailUnit : this.pricePerSMSUnit);
+            const rate = (purchaseObj.product === "email") ? 
+                this.pricePerEmailUnit : this.pricePerSMSUnit;
+            const pricePerUnit = Number((purchaseObj.product === "email") ? 
+                this.pricePerEmailUnit : this.pricePerSMSUnit);
        
-          const transaction = new Credit({
-            userId: purchaseObj.userId,
-            paymentId: purchaseObj.paymentId,
-            creditsValue: purchaseObj.creditsValue,
-            productType: purchaseObj.product,
-            creditUnit: RoundDownUtil(purchaseObj.creditsValue / rate),
-            price_per_unit: pricePerUnit
-          });
+            const transaction = new Credit({
+                userId: purchaseObj.userId,
+                paymentId: purchaseObj.paymentId,
+                creditsValue: purchaseObj.creditsValue,
+                productType: purchaseObj.product,
+                creditUnit: RoundDownUtil(purchaseObj.creditsValue / rate),
+                price_per_unit: pricePerUnit
+            });
        
-          const saved = await transaction.save();
-          console.log("Transaction Saved", saved);
+            const saved = await transaction.save();
+            console.log("Transaction Saved", saved);
        
-          // Explicitly update price_per_unit if not set correctly
-          if (saved.price_per_unit !== 0.008) {
-            await Credit.update(
-              { price_per_unit: pricePerUnit },
-              { where: { id: saved.id } }
-            );
-            console.log("Explicitly updated price_per_unit");
-          }
+            // Explicitly update price_per_unit if not set correctly
+            if (saved.price_per_unit !== 0.008) {
+                await Credit.update(
+                    { price_per_unit: pricePerUnit },
+                    { where: { id: saved.id } }
+                );
+                console.log("Explicitly updated price_per_unit");
+            }
        
-          // Rest of the code remains the same...
+            // Rest of the code remains the same...
         } catch (error) {
-          console.error("Transaction Error", {
-            message: error.message,
-            stack: error.stack,
-            timestamp: new Date().toISOString(),
-          });
+            console.error("Transaction Error", {
+                message: error.message,
+                stack: error.stack,
+                timestamp: new Date().toISOString(),
+            });
         }
-       }
+    }
     async offersAndPromotions() {
         // Unsure what to do
     }
