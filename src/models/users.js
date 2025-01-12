@@ -46,8 +46,8 @@ User.init({
     }
 }, {
     sequelize,
-    modelname: "User",
-    tableName: "Users",
+    modelname: "user",
+    tableName: "users",
     timestamps: true, // Disable Sequelize's automatic timestamp handling
     createdAt: "created_at",
     updatedAt: "updated_at"

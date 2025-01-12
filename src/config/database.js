@@ -7,7 +7,8 @@ const sequelize = new Sequelize(
     process.env.DB_USERNAME,
     process.env.DB_PASSWORD,
     {
-        host: process.env.DB_HOST,
+        host: process.env.DB_HOST, //'gallantbulkdb' for use with docker,
+        port: 3306,
         dialect: process.env.DB_DIALECT,
 
         logging: (msg) => console.log("Sequelize Log:", msg),

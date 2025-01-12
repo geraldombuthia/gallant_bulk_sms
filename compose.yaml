@@ -1,0 +1,41 @@
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 3001:3000
+    environment:
+      - DB_NAME=gallantbulksms
+      - DB_USERNAME=root
+      - DB_PASSWORD=your_new_password
+      - DB_HOST=db 
+      - DB_DIALECT=mysql
+    develop:
+      watch:
+        - path: ./package.json
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+        - path: .
+          target: /app
+          action: sync
+  db:
+    image: mysql:8.0
+    container_name: gallantbulkdb
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: your_new_password
+      MYSQL_DATABASE: gallantbulksms
+    volumes: 
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
