@@ -16,9 +16,9 @@ const crypto = require("crypto");
 // Generate a secure random API key with metadata
 function generateApiKey() {
     const randomPart = crypto.randomBytes(24).toString("hex");
-    //const timestamp = Date.now().toString(36); // Base36 encoded timestamp
+    // const timestamp = Date.now().toString(36); // Base36 encoded timestamp
 
-    //const apikey = `${userId}-${timestamp}-${randomPart}`;
+    // const apikey = `${userId}-${timestamp}-${randomPart}`;
     return randomPart;
 }
 
