@@ -77,11 +77,18 @@ const validatePayment = [
 const validationHandler = (req, res, next) => {
     const errors = validationResult(req);
     const data = matchedData(req);
-
+  
     if (!errors.isEmpty()) {
         console.log(data);
-        return res.status(400).json({ errors: errors.array() });
+      
+        // For web requests, store the first error in res.locals
+        const firstError = errors.array()[0];
+        res.locals.error = firstError.msg;
+        next();
     }
+    
+    // Store the validated data in res.locals for use in next middleware
+    res.locals.validData = data;
     next();
 };
 

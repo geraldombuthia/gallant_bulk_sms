@@ -1,10 +1,17 @@
 const AuthService = require("../service/auth.service");
+const { sequelize } = require("../config/database");
+const { UniqueConstraintError, ValidationError } = sequelize.Sequelize;
 
 class AuthController {
-    static async register(req, res, next) {
+    static async register(req, res) {
         try {
             const user = await AuthService.register(req.body);
             console.error("User registered: ", user);
+
+            if (!user) {
+                res.locals.message = "Registration error.";
+                res.redirect(303, "/auth/register");
+            }
 
             // if (req.accepts('json')) {
             //     // If it's an API request, return JSON
@@ -21,7 +28,20 @@ class AuthController {
             res.redirect(303, "/auth/login");
             // AuthController.redirectMessage;
         } catch (error) {
-            next(error);
+            if (error instanceof UniqueConstraintError) {
+                res.locals.error = `${error.errors[0].path} is already in use`;
+                return res.redirect(303, "/auth/register");
+            }
+
+            if (error instanceof ValidationError) {
+                // For validation errors
+                res.locals.error = error.errors[0].message;
+                return res.redirect(303, "/auth/register");
+            }
+            // For unexpected errors
+            console.error("Registration error: ", error);
+            res.locals.error = "An unexpected error occurred";
+            return res.redirect(303, "/auth/register");
         }
     }
 
