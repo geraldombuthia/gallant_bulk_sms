@@ -1,4 +1,8 @@
-CREATE IF NOT EXIST DATABASE gallantbulksms;
+CREATE DATABASE IF NOT EXISTS gallantbulksms;
+
+USE gallantbulksms;
+--@block
+-- DROP DATABASE gallantbulksms;
 
 --@block
 SELECT * FROM device_access
@@ -24,6 +28,7 @@ CREATE TABLE IF NOT EXISTS users(
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(255) NOT NULL UNIQUE,
     phone VARCHAR(30) NOT NULL,
+    apikey VARCHAR(255) NOT NULL,
     password VARCHAR(128) NOT NULL,    
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -33,7 +38,7 @@ CREATE TABLE IF NOT EXISTS users(
 SELECT * FROM users
 
 --@BLOCK
-DROP TABLE IF EXISTS users;
+-- DROP TABLE IF EXISTS users;
 
 --@BLOCK
 CREATE TABLE IF NOT EXISTS Payments (
@@ -86,7 +91,7 @@ CREATE TABLE IF NOT EXISTS Credits (
 SELECT * FROM Credits;
 
 --@BLOCK
---DROP TABLE IF EXISTS Credits;
+-- DROP TABLE IF EXISTS Credits;
 
 --@BLOCK
 CREATE TABLE IF NOT EXISTS SMSCredits (

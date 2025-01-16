@@ -32,6 +32,10 @@ User.init({
         type: DataTypes.STRING(20),
         allowNull: true
     },
+    apikey: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     password: {
         type: DataTypes.STRING(128),
     },
