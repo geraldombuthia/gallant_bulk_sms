@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const rateLimit = require("express-rate-limit");
 const path = require("path");
 const session = require("express-session");
 const flash = require("connect-flash");
@@ -22,6 +23,7 @@ const {isAuthenticated} = require("./src/middleware/auth.middleware.js");
 
 const app = express();
 const port = 3000;
+
 EventEmitter.defaultMaxListeners = 20;
 testConnection();
 
@@ -62,16 +64,28 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(flash()); // Enable flash messages
+// app.use((req, res, next) => {
+//     res.locals.messages = req.flash(); // Makes flash available in views
+//     next();
+// });
 app.use((req, res, next) => {
-    res.locals.messages = req.flash(); // Makes flash available in views
-    next();
-});
-app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.info = req.flash("info");
     res.locals.user = req.user;
     next();
 });
 
-app.use("/auth", AuthRoutes);
+const loginLimiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 15 minutes
+    max: 5, // Limit each IP to 100 requests per `window`
+    message: "Too many requests, please try again later.",
+    handler: (req, res) => {
+        res.redirect("/ratelimit");
+    }
+});
+
+app.use("/auth", loginLimiter, AuthRoutes);
 app.use("/pay", PayRoutes);
 app.use("/credit", CreditRoutes);
 app.use("/send", MessageRoutes);
@@ -82,10 +96,16 @@ app.route("/").get((req, res) => {
     res.render("index.ejs");
 });
 
+app.get("/auth/too-many-attempts", (req, res) => {
+    res.render("tooManyAttempts.ejs");
+});
+
 app.route("/about").get((req, res) => {
     res.status(200).json({msg:"About Gallant Byte SMS"});
 });
-
+app.get("/ratelimit", (req, res) => {
+    res.render("tooManyAttempts.ejs");
+});
 app.route("/dashboard").get(isAuthenticated, (req, res) => {
     res.render("dashboard.ejs", {user: req.user});
 });

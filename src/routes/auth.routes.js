@@ -21,6 +21,7 @@ router.post(
 router.get("/login", (req, res) => {
     res.render("login");
 });
+
 router.post(
     "/login",
     validateLogin,
@@ -38,6 +39,10 @@ router.get("/logout", AuthController.logout, (req, res, next) => {
         }
         res.redirect("/"); // Redirect to the home page
     });
+});
+
+router.get("/ratelimit", (req, res) => {
+    res.render("tooManyAttempts.ejs");
 });
 
 module.exports = router;

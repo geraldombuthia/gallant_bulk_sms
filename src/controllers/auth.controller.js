@@ -1,3 +1,7 @@
+const {
+    parsePhoneNumberWithError,
+    ParseError
+} = require("libphonenumber-js");
 const AuthService = require("../service/auth.service");
 const { sequelize } = require("../config/database");
 const { UniqueConstraintError, ValidationError } = sequelize.Sequelize;
@@ -5,42 +9,46 @@ const { UniqueConstraintError, ValidationError } = sequelize.Sequelize;
 class AuthController {
     static async register(req, res) {
         try {
+            const validateNumber = parsePhoneNumberWithError(String(req.body.phone), {
+                defaultCountry: "KE"
+            });
+            
+            if (!validateNumber.isValid()) {
+                throw new ParseError("Invalid phone number format");
+            }
+            const formatNumber = validateNumber.formatInternational()
+                .replace(/^(\+)/, "")
+                .replace(/\s+/g, "");
+
+            req.body.phone = formatNumber;
+
             const user = await AuthService.register(req.body);
             console.error("User registered: ", user);
 
             if (!user) {
-                res.locals.message = "Registration error.";
+                req.flash("error", "Registration failed");
                 res.redirect(303, "/auth/register");
             }
-
-            // if (req.accepts('json')) {
-            //     // If it's an API request, return JSON
-            //     return res.status(201).json({
-            //         message: 'Registration successful. Please login',
-            //         user: user
-            //     });
-            // } else {
-            //     // For SSR, redirect to the login page with a success message
-            //     res.locals.message = 'Registration successful. Please login.'
-            //     return res.redirect(201, "/auth/login");
-            // }
             res.locals.message = "Registration succesful. Please login";
+            req.flash("success", "Registration successful!Please login");
             res.redirect(303, "/auth/login");
             // AuthController.redirectMessage;
         } catch (error) {
             if (error instanceof UniqueConstraintError) {
-                res.locals.error = `${error.errors[0].path} is already in use`;
+                req.flash("error", `${error.errors[0].path} is already in use`);
+                console.log("Error of unique nature", error);
                 return res.redirect(303, "/auth/register");
             }
 
             if (error instanceof ValidationError) {
                 // For validation errors
-                res.locals.error = error.errors[0].message;
+                req.flash("error", `${error.errors[0].message}`);
+                console.log("ValidationError", error);
                 return res.redirect(303, "/auth/register");
             }
             // For unexpected errors
             console.error("Registration error: ", error);
-            res.locals.error = "An unexpected error occurred";
+            req.flash("error", `Registration Error: ${error.message}`);
             return res.redirect(303, "/auth/register");
         }
     }

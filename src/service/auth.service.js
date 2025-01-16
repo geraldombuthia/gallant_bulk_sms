@@ -8,7 +8,7 @@ class AuthService {
             console.log(userData);
             const existingUser = await User.findOne({ where: { username: userData.username } });
             if (existingUser) {
-                throw "User with same username already exists";
+                throw new Error ("User with same username already exists");
                 // return res.status(400).json({ error: "Username already exists" });
             }
             const user = await User.create(userData);
