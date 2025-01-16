@@ -19,7 +19,7 @@ class AuthController {
             // }
             res.locals.message = "Registration succesful. Please login";
             res.redirect(201, "/auth/login");
-            AuthController.redirectMessage;
+            // AuthController.redirectMessage;
         } catch (error) {
             next(error);
         }
