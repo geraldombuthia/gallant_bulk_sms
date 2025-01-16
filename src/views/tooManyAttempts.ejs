@@ -1,0 +1,82 @@
+<%-include('partials/head')%>
+<body>
+    <div class="container">
+        <div class="message-box">
+            <h1>Too Many Attempts</h1>
+            <p class="error-message">You have made too many login attempts in a short period. Please try again later.</p>
+            <p class="retry-message">You can try logging in after 10 minutes.</p>
+            <a href="/auth/login" class="back-button">Go Back to Login</a>
+        </div>
+    </div>
+</body>
+
+<style>
+    /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f1f1f1;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    flex-direction: column;
+}
+
+.message-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    text-align: center;
+    width: 300px;
+}
+
+.message-box h1 {
+    font-size: 24px;
+    color: #ff4d4d;
+    margin-bottom: 20px;
+}
+
+.error-message {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.retry-message {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 30px;
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #0056b3;
+}
+
+</style>
+
+
