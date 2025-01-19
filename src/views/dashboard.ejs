@@ -14,6 +14,7 @@
       <li><a href="#" data-section="support">Support & Documentation</a></li>
       <li><a href="#" data-section="profile">User Profile</a></li>
     </ul>
+    <button class="hamburger" onclick="toggleSidebar()">☰</button>
   </nav>
 
   <!-- Main Content -->
@@ -335,7 +336,7 @@
           <div class="usage-card" style="text-align: center">
             <h3>Starter-pack</h3>
             <p class="usage-value">KES 1/sms</p>
-            <p>1,000 - 5000 SMS</p>
+            <p class="usage-sms-range">1,000 - 5000 SMS</p>
             <button
               class="action-button plan-button"
               data-id="1"
@@ -347,7 +348,7 @@
           <div class="usage-card" style="text-align: center">
             <h3>Business pack</h3>
             <p class="usage-value">KES 0.8/sms</p>
-            <p>5,001 - 20,000 SMS</p>
+            <p class="usage-sms-range">5,001 - 20,000 SMS</p>
             <button
               class="action-button plan-button"
               data-id="2"
@@ -359,7 +360,7 @@
           <div class="usage-card" style="text-align: center">
             <h3>Enterprise Pack</h3>
             <p class="usage-value">KES 0.5/sms</p>
-            <p>20,000+ SMS</p>
+            <p class="usage-sms-range">20,000+ SMS</p>
             <button
               class="action-button plan-button"
               data-id="3"
@@ -608,13 +609,25 @@
 <script src="/js/dashboard.js"></script>
 <script>
   let currentRate = 0;
+  let planName = "";
+  let usageRange = "";
   //Modal Functionality
   function openModal(modalId) {
-    document.getElementById(modalId).style.display = "block";
+    const modal = document.getElementById(modalId);
+    modal.style.display = "block";
+    const modalHeader = modal.querySelector(".modal-header");
+    modalHeader.querySelector("h3").textContent = `${planName}  (${usageRange})`;
   }
 
   function closeModal(modalId) {
-    document.getElementById(modalId).style.display = "none";
+    const modal = document.getElementById(modalId);
+    modal.style.display = "none";
+    const modal_inputs = modal.querySelectorAll("input");
+
+    console.log(modal_inputs.forEach(input => {
+      console.log(input.value);
+    }));
+
   }
 
   window.onclick = function (ev) {
@@ -637,14 +650,21 @@
 
       const usageCard = clickedButton.closest(".usage-card");
 
+      const plan = usageCard.querySelector("h3");
+
       const usageValue = usageCard.querySelector(".usage-value");
+
+      const usageSMSRange = usageCard.querySelector(".usage-sms-range");
 
       if (usageValue) {
         console.log("Usage Value:", usageValue.textContent);
+        console.log("Plan name", plan.textContent);
         // alert(`Selected Plan: ${usageValue.textContent}`);
         const numericRate = usageValue.textContent.match(/[\d.]+/);
         console.log(numericRate[0]);
         currentRate = numericRate[0];
+        planName = plan.textContent;
+        usageRange = usageSMSRange.textContent;
       } else {
         console.error("Usage value not found");
       }
@@ -703,5 +723,9 @@
 
     // planButtons
   })
+  function toggleSidebar() {
+    const sidebar = document.querySelector('.selector');
+    sidebar.classList.toggle('open');
+  }
   // openModal("paymentModal");
 </script>
