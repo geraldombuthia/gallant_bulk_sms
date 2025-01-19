@@ -40,7 +40,7 @@
       <div class="stats-grid">
         <!-- Account Balance -->
         <div class="stats-card">
-          <div class="status-icon">
+          <div class="stats-icon">
             <i class="fa-solid fa-wallet"></i>
           </div>
           <div class="stats-info">
@@ -148,32 +148,11 @@
     </section>
 
     <!-- API Management -->
-    <!-- <section id="api" class="content-section">
-      <h2>API Management</h2>
-      <div class="api-grid">
-        <div class="api-card">
-          <h3>API Keys</h3>
-          <button>Generate New API Key</button>
-          <ul>
-            <li>Key 1: ********1234</li>
-            <li>Key 2: ********5678</li>
-          </ul>
-        </div>
-        <div class="api-card">
-          <h3>API Usage Statistics</h3>
-          <p>Last 24 Hours: 5,000 SMS sent</p>
-        </div>
-        <div class="api-card">
-          <h3>Webhook Configuration</h3>
-          <button>Setup Webhooks</button>
-        </div>
-      </div>
-    </section> -->
     <section id="overview" class="content-section">
       <h2>API Management</h2>
       <div class="api-key-card">
         <div class="api-key-header">
-          <h3>API Keys</h3>
+          <h3><i class="fa-solid fa-key"></i> API Keys</h3>
           <button class="action-button" style="width: auto">
             Generate New API
           </button>
@@ -319,19 +298,29 @@
           </div>
           <div>
             <h4>Quick Recharge</h4>
-            <form action="" style="margin-top: 1rem">
+            <form action="" id="paymentForm" style="margin-top: 1rem">
               <input
                 type="number"
                 placeholder="Enter Amount (KES)"
                 class="form-input"
+                id="amount-input"
+                required
               />
               <input
                 type="tel"
                 placeholder="Enter M-Pesa number"
                 class="form-input"
+                id="mpesa-number-input"
+                required
               />
-              <button class="action-button" style="width: 100%">
-                <i class="fas fa-money-bill">Request Payment</i>
+              <button
+                class="action-button"
+                id="confirmPaymentBtn"
+                style="width: 100%"
+                onclick="showPaymentConfirmation()"
+              >
+                <i class="fas fa-money-bill"></i>
+                Request Payment
               </button>
             </form>
           </div>
@@ -345,25 +334,37 @@
         <div class="api-usage-grid">
           <div class="usage-card" style="text-align: center">
             <h3>Starter-pack</h3>
-            <p class="usage-value">KES 1/SMS</p>
+            <p class="usage-value">KES 1/sms</p>
             <p>1,000 - 5000 SMS</p>
-            <button class="action-button" style="width: auto; margin-top: 1rem">
+            <button
+              class="action-button plan-button"
+              data-id="1"
+              style="width: 100%; margin-top: 1rem"
+            >
               Select Plan
             </button>
           </div>
           <div class="usage-card" style="text-align: center">
             <h3>Business pack</h3>
-            <p class="usage-value">KES 0.8/SMS</p>
+            <p class="usage-value">KES 0.8/sms</p>
             <p>5,001 - 20,000 SMS</p>
-            <button class="action-button" style="width: 100%; margin-top: 1rem">
+            <button
+              class="action-button plan-button"
+              data-id="2"
+              style="width: 100%; margin-top: 1rem"
+            >
               Select Plan
             </button>
           </div>
           <div class="usage-card" style="text-align: center">
             <h3>Enterprise Pack</h3>
-            <p class="usage-value">KES 0.5/SMS</p>
+            <p class="usage-value">KES 0.5/sms</p>
             <p>20,000+ SMS</p>
-            <button class="action-button" style="width: 100%; margin-top: 1rem">
+            <button
+              class="action-button plan-button"
+              data-id="3"
+              style="width: 100%; margin-top: 1rem"
+            >
               Select Plan
             </button>
           </div>
@@ -372,7 +373,7 @@
       <div class="api-logs">
         <div class="api-key-header">
           <h3>Transaction History</h3>
-          <button class="action-button">
+          <button class="action-button" style="width: auto">
             <i class="fas fa-file-export"></i>
             Export Transactions
           </button>
@@ -486,6 +487,80 @@
         </form>
       </div>
     </div>
+    <!-- Payment Confirmation Modal -->
+    <div id="paymentModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('paymentModal')"
+          >&times;</span
+        >
+        <div class="modal-header">
+          <h3>Confirm Payment Request</h3>
+        </div>
+        <div class="modal-body">
+          <p><strong>Amount:</strong> <span id="confirmAmount">KES 0</span></p>
+          <p>
+            <strong>M-Pesa Number:</strong> <span id="confirmNumber"></span>
+          </p>
+          <p style="margin-top: 15px">
+            Click confirm to proceed with the payment request.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="action-button"
+            style="background: #6c757d"
+            onclick="closeModal('paymentModal')"
+          >
+            Cancel
+          </button>
+          <button class="action-button payment-btn" onclick="submitPayment()">
+            Confirm Payment
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Plan Selection Modal -->
+    <div id="planModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal" onclick="closeModal('planModal')"
+          >&times;</span
+        >
+        <div class="modal-header">
+          <h3>Select Plan</h3>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 15px">
+            <label for="numMessages">Number of Messages:</label>
+            <input
+              type="number"
+              id="numMessages"
+              class="form-input"
+              onchange="calculateCost()"
+            />
+          </div>
+          <div style="margin-bottom: 15px">
+            <label for="totalCost">Total Cost (KES):</label>
+            <input type="text" id="totalCost" class="form-input" readonly />
+          </div>
+          <div style="margin-bottom: 15px">
+            <label for="billingNumber">Billing Number:</label>
+            <input type="tel" id="billingNumber" class="form-input" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            class="action-button"
+            style="background: #6c757d"
+            onclick="closeModal('planModal')"
+          >
+            Cancel
+          </button>
+          <button class="action-button" onclick="submitPlanSelection()">
+            Confirm Selection
+          </button>
+        </div>
+      </div>
+    </div>
 
     <!-- Security Settings Form Overlay -->
     <div id="security-overlay" class="overlay">
@@ -531,3 +606,102 @@
 </div>
 
 <script src="/js/dashboard.js"></script>
+<script>
+  let currentRate = 0;
+  //Modal Functionality
+  function openModal(modalId) {
+    document.getElementById(modalId).style.display = "block";
+  }
+
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = "none";
+  }
+
+  window.onclick = function (ev) {
+    if (ev.target.classList.contains("modal")) {
+      event.target.style.display = "none";
+    }
+  };
+
+  //close button functionality
+  document.querySelectorAll(".close-modal").forEach((button) => {
+    button.onclick = function () {
+      this.closest(".modal").style.display = "none";
+    };
+  });
+
+  document.querySelectorAll(".plan-button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      //Get the clicked button
+      const clickedButton = event.target;
+
+      const usageCard = clickedButton.closest(".usage-card");
+
+      const usageValue = usageCard.querySelector(".usage-value");
+
+      if (usageValue) {
+        console.log("Usage Value:", usageValue.textContent);
+        // alert(`Selected Plan: ${usageValue.textContent}`);
+        const numericRate = usageValue.textContent.match(/[\d.]+/);
+        console.log(numericRate[0]);
+        currentRate = numericRate[0];
+      } else {
+        console.error("Usage value not found");
+      }
+
+      openModal("planModal");
+    });
+  });
+
+  //Payment Modal functionality
+  function showPaymentConfirmation() {
+    const amount = document.querySelector("#amount-input").value;
+    const mpesanumber = document.querySelector("#mpesa-number-input").value;
+    const confirmBtn = document.getElementById("confirmPaymentBtn");
+    const paymentForm = document.getElementById("paymentForm");
+
+    console.log(amount, mpesanumber);
+    paymentForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+    });
+
+    document.getElementById("confirmAmount").textContent = `KES ${amount}`;
+    document.getElementById("confirmNumber").textContent = mpesanumber;
+
+    openModal("paymentModal");
+  }
+  function submitPayment() {
+    console.log("Submitting Payment...");
+    closeModal("paymentModal");
+  }
+
+  function calculateCost() {
+    const messages = document.getElementById("numMessages").value;
+    const cost = messages * currentRate;
+
+    document.getElementById("totalCost").value = `KES ${cost.toFixed(2)}`;
+  }
+
+  function submitPlanSelection() {
+    //Add your plan Selection
+    console.log("Submitting plan selection...");
+    closeModal('planModal');
+  }
+
+  // Update the onclick handlers for your buttons
+  document.addEventListener('DOMContentLoaded', function() {
+    //update payment request button
+    const paymentForm = document.querySelector('form');
+    const paymentButton = document.querySelector('.payment-btn');
+
+    paymentButton.onclick = function(e) {
+      e.preventDefault();
+      showPaymentConfirmation();
+    }
+
+    // const planButtons = document.querySelectorAll(".usage-card .plan-button");
+
+    // planButtons
+  })
+  // openModal("paymentModal");
+</script>

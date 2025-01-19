@@ -115,8 +115,17 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 .stats-icon i {
-  font-size: 1.5rem;
+  display: flex; /* Flexbox for centering the icon */
+  align-items: center; /* Vertically center icon */
+  justify-content: center; /* Horizontally center icon */
+  width: 30px; /* Fixed width for consistent layout */
+  font-size: 1.2rem;
   color: #4a90e2;
+  margin-right: 0.5rem;
+  height: 30px; /* Fixed height for consistent layout */
+  background-color: #f5f5f5; /* Optional: Background color for icon */
+  border-radius: 50%; /* Optional: Circle icon background */
+
 }
 .stats-info h3 {
   margin: 0 0 0.5rem 0;
@@ -291,7 +300,7 @@ body {
   padding-right: 1em;
   border-right: 0;
 }
-.api-key-header h3 {
+.api-key-header h3, h4, h3, .modal-body {
   color: rgb(56, 55, 55);
 }
 .api-key-value {
@@ -388,6 +397,7 @@ body {
   padding: 1rem;
   border-radius: 5px;
   margin: 1rem 0;
+  color: rgb(56, 55, 55);
 }
 
 .payment-instructions ol {
@@ -397,6 +407,60 @@ body {
 
 .payment-instructions li {
   margin-bottom: 0.5rem;
+}
+#planModal, #paymentModal,.modal-content {
+  color: rgb(56, 55, 55);
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  color: rgba(56, 55, 55, 0.1);
+}
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 500px;
+  border-radius: 10px;
+  position: relative;
+}
+.close-modal {
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #aaa;
+}
+.close-modal:hover {
+  color: black;
+}
+.modal-header {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  color: rgba(56, 55, 55, 0.1);
+}
+.modal-body {
+  margin-bottom: 20px;
+  color: rgba(56, 55, 55, 0.1);
+}
+.modal-footer {
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+  color: rgba(56, 55, 55, 0.1);
+}
+.modal-footer button {
+  margin-left: 10px;
 }
 
 /* Overview Grid */
