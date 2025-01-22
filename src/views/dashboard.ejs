@@ -2,611 +2,880 @@
 <head>
   <link rel="stylesheet" href="/css/dashboard.css" />
 </head>
-<div class="dashboard">
-  <!-- Sidebar -->
-  <nav class="sidebar">
-    <h2>Dashboard</h2>
-    <ul>
-      <li><a href="#" data-section="overview">Overview</a></li>
-      <li><a href="#" data-section="api">API Management</a></li>
-      <li><a href="#" data-section="short-codes">Short Code Management</a></li>
-      <li><a href="#" data-section="billing">Billing & Payments</a></li>
-      <li><a href="#" data-section="support">Support & Documentation</a></li>
-      <li><a href="#" data-section="profile">User Profile</a></li>
-    </ul>
-    <button class="hamburger" onclick="toggleSidebar()">☰</button>
-  </nav>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Account Overview -->
-    <section id="overview" class="content-section">
-      <h2>Account Overview</h2>
-      <!-- <div class="overview-grid">
-        <div class="overview-card">
-          <h3>SMS Credit Balance</h3>
-          <p>10,000 <span>SMS</span></p>
-          <button>Recharge Now</button>
-        </div>
-        <div class="overview-card">
-          <h3>SMS Pricing</h3>
-          <p>0.8 <span>kSh</span></p>
-        </div>
-        <div class="overview-card">
-          <h3>API Details</h3>
-          <p>API key: <span>*******</span></p>
-          <button>Manage Short Codes</button>
-        </div>
-      </div> -->
-      <div class="stats-grid">
-        <!-- Account Balance -->
-        <div class="stats-card">
-          <div class="stats-icon">
-            <i class="fa-solid fa-wallet"></i>
-          </div>
-          <div class="stats-info">
-            <h3>Account Balance</h3>
-            <p class="stats-value balance">$1,250.00</p>
-            <button class="action-button">Recharge Now</button>
-          </div>
-        </div>
-        <div class="stats-card">
-          <div class="stats-icon">
-            <i class="fa-solid fa-tags"></i>
-          </div>
-          <div class="stats-info">
-            <h3>SMS Pricing(per sms)</h3>
-            <p class="stats-value pricing-value">$0.80</p>
-            <button class="action-button">View Full Pricing</button>
-          </div>
-        </div>
-        <div class="stats-card">
-          <div class="stats-icon">
-            <i class="fa-solid fa-key"></i>
-          </div>
-          <div class="stats-info">
-            <h3>API Details</h3>
-            <p class="stats-value api-value">********abc123</p>
-            <button class="action-button">Manage API Keys</button>
-          </div>
-        </div>
-      </div>
+<body>
+  <button class="navmenu-toggle" arial-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <%- include('partials/sidebar'); %>
 
-      <div class="activity-grid">
-        <div class="activity-card">
-          <div class="card-header">
-            <h3><i class="fa-solid fa-history"></i> Recent Activity</h3>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Account Overview -->
+      <section id="overview" class="content-section">
+        <h2>Account Overview</h2>
+        <div class="stats-grid">
+          <!-- Account Balance -->
+          <div class="stats-card">
+            <div class="stats-icon">
+              <i class="fa-solid fa-wallet"></i>
+            </div>
+            <div class="stats-info">
+              <h3>Account Balance</h3>
+              <p class="stats-value balance">$1,250.00</p>
+              <button class="action-button">Recharge Now</button>
+            </div>
           </div>
-          <div class="activity-list">
-            <div class="activity-item">
-              <div class="activity-info">
-                <span class="activity-type">SMS Sent</span>
-                <span class="activity-recipient">+1234567890</span>
+          <div class="stats-card">
+            <div class="stats-icon">
+              <i class="fa-solid fa-tags"></i>
+            </div>
+            <div class="stats-info">
+              <h3>SMS Pricing(per sms)</h3>
+              <p class="stats-value pricing-value">$0.80</p>
+              <button class="action-button">View Full Pricing</button>
+            </div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-icon">
+              <i class="fa-solid fa-key"></i>
+            </div>
+            <div class="stats-info">
+              <h3>API Details</h3>
+              <p class="stats-value api-value">********abc123</p>
+              <button class="action-button">Manage API Keys</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="activity-grid">
+          <div class="activity-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-history"></i> Recent Activity</h3>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-info">
+                  <span class="activity-type">SMS Sent</span>
+                  <span class="activity-recipient">+1234567890</span>
+                </div>
+                <div class="activity-status">
+                  <span class="status-delivered">Delivered</span>
+                  <span class="activity-time">2 mins ago</span>
+                </div>
               </div>
-              <div class="activity-status">
-                <span class="status-delivered">Delivered</span>
-                <span class="activity-time">2 mins ago</span>
+              <div class="activity-item">
+                <div class="activity-info">
+                  <span class="activity-type">Account Recharge</span>
+                  <span class="activity-amount">$50.00</span>
+                </div>
+                <div class="activity-status">
+                  <span class="status-success">Success</span>
+                  <span class="activity-time">1 hour ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-info">
+                  <span class="activity-type">SMS Sent</span>
+                  <span class="activity-recipient">+0987654321</span>
+                </div>
+                <div class="activity-status">
+                  <span class="status-failed">Failed</span>
+                  <span class="activity-time">2 hours ago</span>
+                </div>
               </div>
             </div>
-            <div class="activity-item">
-              <div class="activity-info">
-                <span class="activity-type">Account Recharge</span>
-                <span class="activity-amount">$50.00</span>
-              </div>
-              <div class="activity-status">
-                <span class="status-success">Success</span>
-                <span class="activity-time">1 hour ago</span>
-              </div>
+          </div>
+          <div class="notifications-card">
+            <div class="card-header">
+              <h3><i class="fa-solid fa-bell"></i> Notifications</h3>
             </div>
-            <div class="activity-item">
-              <div class="activity-info">
-                <span class="activity-type">SMS Sent</span>
-                <span class="activity-recipient">+0987654321</span>
+            <div class="notifications-list">
+              <div class="notification-item">
+                <p class="notification-message">
+                  Low balance alert! Recharge now.
+                </p>
+                <span class="notification-time">5 mins ago</span>
               </div>
-              <div class="activity-status">
-                <span class="status-failed">Failed</span>
-                <span class="activity-time">2 hours ago</span>
+              <div class="notification-item">
+                <p class="notification-message">
+                  New pricing updates available
+                </p>
+                <span class="notification-time">1 day ago</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="notifications-card">
-          <div class="card-header">
-            <h3><i class="fa-solid fa-bell"></i> Notifications</h3>
-          </div>
-          <div class="notifications-list">
-            <div class="notification-item">
-              <p class="notification-message">
-                Low balance alert! Recharge now.
-              </p>
-              <span class="notification-time">5 mins ago</span>
-            </div>
-            <div class="notification-item">
-              <p class="notification-message">New pricing updates available</p>
-              <span class="notification-time">1 day ago</span>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="quick-links-section">
-        <h3><i class="fa-solid fa-link"></i>Quick Links</h3>
-        <div class="quick-links-grid">
-          <button class="quick-link-button">
-            <i class="fa-solid fa-paper-plane"></i>
-            Send SMS
-          </button>
-          <button class="quick-link-button">
-            <i class="fa-solid fa-credit-card"></i>
-            Recharge
-          </button>
-          <button class="quick-link-button">
-            <i class="fa-solid fa-list"></i>
-            View Logs
-          </button>
+        <div class="quick-links-section">
+          <h3><i class="fa-solid fa-link"></i>Quick Links</h3>
+          <div class="quick-links-grid">
+            <button class="quick-link-button">
+              <i class="fa-solid fa-paper-plane"></i>
+              Send SMS
+            </button>
+            <button class="quick-link-button">
+              <i class="fa-solid fa-credit-card"></i>
+              Recharge
+            </button>
+            <button class="quick-link-button">
+              <i class="fa-solid fa-list"></i>
+              View Logs
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- API Management -->
-    <section id="overview" class="content-section">
-      <h2>API Management</h2>
-      <div class="api-key-card">
-        <div class="api-key-header">
-          <h3><i class="fa-solid fa-key"></i> API Keys</h3>
-          <button class="action-button" style="width: auto">
-            Generate New API
-          </button>
-        </div>
-        <div class="api-key-value">
-          <span>sk_live_12345abcdef...</span>
-          <button class="copy-btn" title="Copy API key">
-            <i class="fas fa-copy"></i>
-          </button>
-        </div>
-        <div class="api-key-value">
-          <span>sk_test_12345abcdef...</span>
-          <button class="copy-btn" title="Copy API key">
-            <i class="fas fa-copy"></i>
-          </button>
-        </div>
-      </div>
-      <div class="api-usage-grid">
-        <div class="usage-card">
-          <h3>Total API calls</h3>
-          <p class="usage-value">45,287</p>
-          <p>Last 30 days</p>
-        </div>
-        <div class="usage-card">
-          <h3>Success Rate</h3>
-          <p class="usage-value">99.8%</p>
-          <p>Average response time: 245ms</p>
-        </div>
-        <div class="usage-card">
-          <h3>Active Integrations</h3>
-          <p class="usage-value">12</p>
-        </div>
-      </div>
-      <div class="api-logs">
-        <h3>Recent API logs</h3>
-        <table class="log-table">
-          <thead>
-            <tr>
-              <th>TimeStamp</th>
-              <th>Nethod</th>
-              <th>Endpoint</th>
-              <th>Status</th>
-              <th>Response Time</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2025-01-19 14:23:15</td>
-              <td><span class="method-badge method-post">POST</span></td>
-              <td>/api/v1/messages/send</td>
-              <td><span class="status-success">200 OK</span></td>
-              <td>234ms</td>
-            </tr>
-            <tr>
-              <td>2025-01-19 14:22:45</td>
-              <td><span class="method-badge method-get">GET</span></td>
-              <td>/api/v1/messages/status</td>
-              <td><span class="status-success">200 OK</span></td>
-              <td>187ms</td>
-            </tr>
-            <tr>
-              <td>2025-01-19 14:21:30</td>
-              <td><span class="method-badge method-post">POST</span></td>
-              <td>/api/v1/messages/bulk</td>
-              <td><span class="status-error">429 Rate Limited</span></td>
-              <td>156ms</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Short Code Management -->
-    <section id="short-codes" class="content-section">
-      <h2>Short Code Management</h2>
-      <div class="short-codes-grid">
-        <div class="short-code-card">
-          <h3>Your Short Codes</h3>
-          <ul>
-            <li>Short Code 1: Active</li>
-            <li>Short Code 2: Active</li>
-          </ul>
-          <button>Renew Codes</button>
-        </div>
-        <div class="short-code-card">
-          <h3>Purchase New Short Code</h3>
-          <button>Buy Now</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Billing & Payments -->
-    <section id="billing" class="content-section">
-      <h2>Billing & Payments</h2>
-      <div class="api-key-card">
-        <div class="api-key-header">
-          <h3>SMS Credit Balance</h3>
-          <button class="action-button" style="width: auto">
-            <i class="fas fa-download"></i>
-            Download Invoice
-          </button>
-        </div>
-        <div class="api-usage-grid" style="margin-bottom: 0">
-          <div class="usage-card">
-            <h3>Available Credits</h3>
-            <p class="usage-value">15,427</p>
-            <p>SMS Credits</p>
+      <!-- API Management -->
+      <section id="api" class="content-section">
+        <h2>API Management</h2>
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3><i class="fa-solid fa-key"></i> API Keys</h3>
+            <button class="action-button" style="width: auto">
+              Generate New API
+            </button>
           </div>
-          <div class="usage-card">
-            <h3>Amount Spent</h3>
-            <p class="usage-value">KES 24,573</p>
-            <p>SMS Credits</p>
+          <div class="api-key-value">
+            <span>sk_live_12345abcdef...</span>
+            <button class="copy-btn" title="Copy API key">
+              <i class="fas fa-copy"></i>
+            </button>
           </div>
-          <div class="usage-card">
-            <h3>Next Auto-Recharge</h3>
-            <p class="usage-value">5,000</p>
-            <p>At 1,000 credits remaining</p>
+          <div class="api-key-value">
+            <span>sk_test_12345abcdef...</span>
+            <button class="copy-btn" title="Copy API key">
+              <i class="fas fa-copy"></i>
+            </button>
           </div>
-        </div>
-      </div>
-      <div class="api-key-card">
-        <div class="api-key-header">
-          <h3>Make Payments via MPESA</h3>
-        </div>
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem">
-          <div>
-            <h4>Payment Details</h4>
-            <div class="payment-instructions">
-              <p><strong>Paybill Number:</strong> 247247</p>
-              <p><strong>Account Number</strong>Your Phone Number</p>
-              <p><strong>Reference:</strong> SMS</p>
-
-              <p style="margin-top: 1rem"><strong>Steps:</strong></p>
-              <ol>
-                <li>Go to M-PESA on your Phone</li>
-                <li>Select Pay Bill option</li>
-                <li>Enter Business no. 247247</li>
-                <li>Enter Account no. (Your phone Number)</li>
-                <li>Enter the amount</li>
-                <li>Enter your M-PESA PIN and Send</li>
-              </ol>
-            </div>
-          </div>
-          <div>
-            <h4>Quick Recharge</h4>
-            <form action="" id="paymentForm" style="margin-top: 1rem">
-              <input
-                type="number"
-                placeholder="Enter Amount (KES)"
-                class="form-input"
-                id="amount-input"
-                required
-              />
-              <input
-                type="tel"
-                placeholder="Enter M-Pesa number"
-                class="form-input"
-                id="mpesa-number-input"
-                required
-              />
-              <button
-                class="action-button"
-                id="confirmPaymentBtn"
-                style="width: 100%"
-                onclick="showPaymentConfirmation()"
-              >
-                <i class="fas fa-money-bill"></i>
-                Request Payment
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!-- Promotions Section -->
-      <div class="api-key-card">
-        <div class="api-key-header">
-          <h3>Current promotions</h3>
         </div>
         <div class="api-usage-grid">
-          <div class="usage-card" style="text-align: center">
-            <h3>Starter-pack</h3>
-            <p class="usage-value">KES 1/sms</p>
-            <p class="usage-sms-range">1,000 - 5000 SMS</p>
-            <button
-              class="action-button plan-button"
-              data-id="1"
-              style="width: 100%; margin-top: 1rem"
-            >
-              Select Plan
+          <div class="usage-card">
+            <h3>Total API calls</h3>
+            <p class="usage-value">45,287</p>
+            <p>Last 30 days</p>
+          </div>
+          <div class="usage-card">
+            <h3>Success Rate</h3>
+            <p class="usage-value">99.8%</p>
+            <p>Average response time: 245ms</p>
+          </div>
+          <div class="usage-card">
+            <h3>Active Integrations</h3>
+            <p class="usage-value">12</p>
+          </div>
+        </div>
+        <div class="api-logs">
+          <h3>Recent API logs</h3>
+          <table class="log-table">
+            <thead>
+              <tr>
+                <th>TimeStamp</th>
+                <th>Nethod</th>
+                <th>Endpoint</th>
+                <th>Status</th>
+                <th>Response Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-01-19 14:23:15</td>
+                <td><span class="method-badge method-post">POST</span></td>
+                <td>/api/v1/messages/send</td>
+                <td><span class="status-success">200 OK</span></td>
+                <td>234ms</td>
+              </tr>
+              <tr>
+                <td>2025-01-19 14:22:45</td>
+                <td><span class="method-badge method-get">GET</span></td>
+                <td>/api/v1/messages/status</td>
+                <td><span class="status-success">200 OK</span></td>
+                <td>187ms</td>
+              </tr>
+              <tr>
+                <td>2025-01-19 14:21:30</td>
+                <td><span class="method-badge method-post">POST</span></td>
+                <td>/api/v1/messages/bulk</td>
+                <td><span class="status-error">429 Rate Limited</span></td>
+                <td>156ms</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Short Code Management -->
+      <section id="shortcodes" class="content-section">
+        <h2>Shortcode Management</h2>
+
+        <!-- Shortcode Overview -->
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>Active Shortcodes</h3>
+            <button class="shortcode-action-button">
+              <i class="fas fa-plus"></i> Request New Shortcode
             </button>
           </div>
-          <div class="usage-card" style="text-align: center">
-            <h3>Business pack</h3>
-            <p class="usage-value">KES 0.8/sms</p>
-            <p class="usage-sms-range">5,001 - 20,000 SMS</p>
-            <button
-              class="action-button plan-button"
-              data-id="2"
-              style="width: 100%; margin-top: 1rem"
-            >
-              Select Plan
+
+          <div class="shortcode-grid">
+            <div class="shortcode-card">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: start;
+                  margin-bottom: 1rem;
+                "
+              >
+                <div>
+                  <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem">
+                    22123
+                  </h3>
+                  <span class="status-badge status-active">Active</span>
+                </div>
+                <button class="shortcode-action-button " style="padding: 0.5rem;">
+                  <i class="fas fa-cog"></i>
+                </button>
+              </div>
+              <p style="color: #6c757d; margin-bottom: 1rem">Monthly Usage</p>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                <span>147,582 / 200,000</span>
+                <span>73.8%</span>
+              </div>
+              <div class="usage-bar">
+                <div class="usage-progress" style="width: 73.8%"></div>
+              </div>
+            </div>
+
+            <div class="shortcode-card">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: start;
+                  margin-bottom: 1rem;
+                "
+              >
+                <div>
+                  <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem">
+                    22456
+                  </h3>
+                  <span class="status-badge status-pending"
+                    >Pending Approval</span
+                  >
+                </div>
+                <button class="shortcode-action-button " style="padding: 0.5rem">
+                  <i class="fas fa-cog"></i>
+                </button>
+              </div>
+              <p style="color: #6c757d; margin-bottom: 1rem">Monthly Usage</p>
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  margin-bottom: 0.5rem;
+                "
+              >
+                <span>0 / 100,000</span>
+                <span>0%</span>
+              </div>
+              <div class="usage-bar">
+                <div class="usage-progress" style="width: 0%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Shortcode Details -->
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>Shortcode Details</h3>
+            <div>
+              <button class="action-button" style="margin-right: 0.5rem">
+                <i class="fas fa-download"></i> Export Report
+              </button>
+              <button class="action-button">
+                <i class="fas fa-filter"></i> Filter
+              </button>
+            </div>
+          </div>
+
+          <table class="shortcode-table">
+            <thead>
+              <tr>
+                <th>Shortcode</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Monthly Limit</th>
+                <th>Expiry Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>22123</td>
+                <td>Dedicated</td>
+                <td><span class="status-badge status-active">Active</span></td>
+                <td>200,000 SMS</td>
+                <td>Dec 31, 2024</td>
+                <td>
+                  <button class="action-button" style="padding: 0.5rem">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>22456</td>
+                <td>Shared</td>
+                <td>
+                  <span class="status-badge status-pending">Pending</span>
+                </td>
+                <td>100,000 SMS</td>
+                <td>Pending</td>
+                <td>
+                  <button class="action-button" style="padding: 0.5rem">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td>22789</td>
+                <td>Dedicated</td>
+                <td>
+                  <span class="status-badge status-expired">Expired</span>
+                </td>
+                <td>150,000 SMS</td>
+                <td>Jan 1, 2024</td>
+                <td>
+                  <button class="action-button" style="padding: 0.5rem">
+                    <i class="fas fa-sync"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Billing & Payments -->
+      <section id="billing" class="content-section">
+        <h2>Billing & Payments</h2>
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>SMS Credit Balance</h3>
+            <button class="action-button" style="width: auto">
+              <i class="fas fa-download"></i>
+              Download Invoice
             </button>
           </div>
-          <div class="usage-card" style="text-align: center">
-            <h3>Enterprise Pack</h3>
-            <p class="usage-value">KES 0.5/sms</p>
-            <p class="usage-sms-range">20,000+ SMS</p>
-            <button
-              class="action-button plan-button"
-              data-id="3"
-              style="width: 100%; margin-top: 1rem"
-            >
-              Select Plan
+          <div class="api-usage-grid" style="margin-bottom: 0">
+            <div class="usage-card">
+              <h3>Available Credits</h3>
+              <p class="usage-value">15,427</p>
+              <p>SMS Credits</p>
+            </div>
+            <div class="usage-card">
+              <h3>Amount Spent</h3>
+              <p class="usage-value">KES 24,573</p>
+              <p>SMS Credits</p>
+            </div>
+            <div class="usage-card">
+              <h3>Next Auto-Recharge</h3>
+              <p class="usage-value">5,000</p>
+              <p>At 1,000 credits remaining</p>
+            </div>
+          </div>
+        </div>
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>Make Payments via MPESA</h3>
+          </div>
+          <div class="details-grid">
+            <div>
+              <h4>Payment Details</h4>
+              <div class="payment-instructions">
+                <p><strong>Paybill Number:</strong> 247247</p>
+                <p><strong>Account Number</strong>Your Phone Number</p>
+                <p><strong>Reference:</strong> SMS</p>
+
+                <p style="margin-top: 1rem"><strong>Steps:</strong></p>
+                <ol>
+                  <li>Go to M-PESA on your Phone</li>
+                  <li>Select Pay Bill option</li>
+                  <li>Enter Business no. 247247</li>
+                  <li>Enter Account no. (Your phone Number)</li>
+                  <li>Enter the amount</li>
+                  <li>Enter your M-PESA PIN and Send</li>
+                </ol>
+              </div>
+            </div>
+            <div>
+              <h4>Quick Recharge</h4>
+              <form action="" id="paymentForm" style="margin-top: 1rem">
+                <input
+                  type="number"
+                  placeholder="Enter Amount (KES)"
+                  class="form-input"
+                  id="amount-input"
+                  required
+                />
+                <input
+                  type="tel"
+                  placeholder="Enter M-Pesa number"
+                  class="form-input"
+                  id="mpesa-number-input"
+                  required
+                />
+                <button
+                  class="action-button"
+                  id="confirmPaymentBtn"
+                  style="width: 100%"
+                  onclick="showPaymentConfirmation()"
+                >
+                  <i class="fas fa-money-bill"></i>
+                  Request Payment
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!-- Promotions Section -->
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>Current promotions</h3>
+          </div>
+          <div class="api-usage-grid">
+            <div class="usage-card" style="text-align: center">
+              <h3>Starter-pack</h3>
+              <p class="usage-value">KES 1/sms</p>
+              <p class="usage-sms-range">1,000 - 5000 SMS</p>
+              <button
+                class="action-button plan-button"
+                data-id="1"
+                style="width: 100%; margin-top: 1rem"
+              >
+                Select Plan
+              </button>
+            </div>
+            <div class="usage-card" style="text-align: center">
+              <h3>Business pack</h3>
+              <p class="usage-value">KES 0.8/sms</p>
+              <p class="usage-sms-range">5,001 - 20,000 SMS</p>
+              <button
+                class="action-button plan-button"
+                data-id="2"
+                style="width: 100%; margin-top: 1rem"
+              >
+                Select Plan
+              </button>
+            </div>
+            <div class="usage-card" style="text-align: center">
+              <h3>Enterprise Pack</h3>
+              <p class="usage-value">KES 0.5/sms</p>
+              <p class="usage-sms-range">20,000+ SMS</p>
+              <button
+                class="action-button plan-button"
+                data-id="3"
+                style="width: 100%; margin-top: 1rem"
+              >
+                Select Plan
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="api-logs">
+          <div class="api-key-header">
+            <h3>Transaction History</h3>
+            <button class="action-button" style="width: auto">
+              <i class="fas fa-file-export"></i>
+              Export Transactions
             </button>
           </div>
+          <table class="log-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Transaction ID</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Credits</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2025-01-19 14:23:15</td>
+                <td>TRX123456789</td>
+                <td>M-Pesa Payment</td>
+                <td>KES 5,000</td>
+                <td>5,000 SMS</td>
+                <td><span class="status-success">Completed</span></td>
+              </tr>
+              <tr>
+                <td>2025-01-17 16:45:22</td>
+                <td>TRX123456787</td>
+                <td>M-Pesa Payment</td>
+                <td>KES 2,000</td>
+                <td>2,000 SMS</td>
+                <td><span class="status-error">Failed</span></td>
+              </tr>
+              <tr>
+                <td>2025-01-18 09:15:30</td>
+                <td>TRX123456788</td>
+                <td>Auto-Recharge</td>
+                <td>KES 10,000</td>
+                <td>10,000 SMS</td>
+                <td><span class="status-pending">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-      </div>
-      <div class="api-logs">
-        <div class="api-key-header">
-          <h3>Transaction History</h3>
-          <button class="action-button" style="width: auto">
-            <i class="fas fa-file-export"></i>
-            Export Transactions
-          </button>
-        </div>
-        <table class="log-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Transaction ID</th>
-              <th>Type</th>
-              <th>Amount</th>
-              <th>Credits</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>2025-01-19 14:23:15</td>
-              <td>TRX123456789</td>
-              <td>M-Pesa Payment</td>
-              <td>KES 5,000</td>
-              <td>5,000 SMS</td>
-              <td><span class="status-success">Completed</span></td>
-            </tr>
-            <tr>
-              <td>2025-01-17 16:45:22</td>
-              <td>TRX123456787</td>
-              <td>M-Pesa Payment</td>
-              <td>KES 2,000</td>
-              <td>2,000 SMS</td>
-              <td><span class="status-error">Failed</span></td>
-            </tr>
-            <tr>
-              <td>2025-01-18 09:15:30</td>
-              <td>TRX123456788</td>
-              <td>Auto-Recharge</td>
-              <td>KES 10,000</td>
-              <td>10,000 SMS</td>
-              <td><span class="status-pending">Pending</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
+      </section>
 
-    <!-- Support & Documentation -->
-    <section id="support" class="content-section">
-      <h2>Support & Documentation</h2>
-      <div class="support-grid">
-        <div class="support-card">
-          <h3>API Documentation</h3>
-          <button>View Documentation</button>
+      <!-- Support & Documentation -->
+      <section id="support" class="content-section">
+        <h2>Support & Documentation</h2>
+        <div class="support-grid">
+          <div class="support-card">
+            <h3>API Documentation</h3>
+            <button>View Documentation</button>
+          </div>
+          <div class="support-card">
+            <h3>Contact Support</h3>
+            <button>Get Help</button>
+          </div>
         </div>
-        <div class="support-card">
-          <h3>Contact Support</h3>
-          <button>Get Help</button>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- User Profile -->
-    <section id="profile" class="content-section">
-      <h2>User Profile</h2>
-      <div class="profile-grid">
-        <div class="profile-card">
-          <h3>Profile Information</h3>
-          <button id="edit-profile-btn">Edit Profile</button>
-        </div>
-        <div class="profile-card">
-          <h3>Security Settings</h3>
-          <button id="update-security-btn">Update Security</button>
-        </div>
-      </div>
-    </section>
+      <!-- User Profile -->
+      <section id="profile" class="content-section">
+        <h2>User Profile</h2>
+        <!-- Profile Information -->
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>Profile Information</h3>
+            <button class="action-button" style="width: auto">
+              <i class="fas fa-save"></i> Save Changes
+            </button>
+          </div>
 
-    <!-- Profile Edit Form Overlay -->
-    <div id="profile-edit-overlay" class="overlay">
-      <div class="overlay-content">
-        <span class="close-button">&times;</span>
-        <h2>Edit Profile</h2>
-        <form id="profile-edit-form">
-          <div class="profile-form-group">
-            <label for="full-name">Full Name</label>
-            <input
-              class="profile-input"
-              type="text"
-              id="full-name"
-              name="full-name"
-              required
-            />
+          <div class="profile-grid">
+            <div class="profile-sidebar">
+              <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <button
+                class="action-button"
+                style="width: 100%; margin-bottom: 1rem"
+              >
+                <i class="fas fa-camera"></i> Change Photo
+              </button>
+              <div class="verification-badge">
+                <i class="fas fa-check-circle" style="margin-right: 0.5rem"></i>
+                Verified Account
+              </div>
+            </div>
+
+            <div class="profile-details">
+              <div
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem"
+              >
+                <div class="form-group">
+                  <label class="form-label">First Name</label>
+                  <input type="text" class="form-input" value="John" />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Last Name</label>
+                  <input type="text" class="form-input" value="Doe" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input
+                  type="email"
+                  class="form-input"
+                  value="john.doe@example.com"
+                />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" value="+254 712 345 678" />
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Company Name</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  value="Tech Solutions Ltd"
+                />
+              </div>
+            </div>
           </div>
-          <div class="profile-form-group">
-            <label for="full-name">Username</label>
-            <input
-              class="profile-input"
-              type="text"
-              id="username"
-              name="username"
-              required
-            />
+        </div>
+        <!-- Security Settings -->
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>Security Settings</h3>
           </div>
-          <div class="profile-form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
+
+          <div class="security-grid">
+            <div class="security-card">
+              <h4 style="margin-bottom: 1rem">Change Password</h4>
+              <div class="form-group">
+                <label class="form-label">Current Password</label>
+                <input type="password" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-input" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" class="form-input" />
+              </div>
+              <button class="action-button" style="width: 100%">
+                Update Password
+              </button>
+            </div>
+
+            <div class="security-card">
+              <h4 style="margin-bottom: 1rem">Two-Factor Authentication</h4>
+              <p style="margin-bottom: 1rem; color: #6c757d">
+                Enhance your account security by enabling two-factor
+                authentication.
+              </p>
+              <button class="action-button" style="width: 100%">
+                <i class="fas fa-shield-alt"></i> Enable 2FA
+              </button>
+            </div>
           </div>
-          <div class="profile-form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" />
+        </div>
+        <!-- Notification Preferences -->
+        <div class="api-key-card">
+          <div class="api-key-header">
+            <h3>Notification Preferences</h3>
           </div>
-          <button type="submit">Save Changes</button>
-        </form>
+
+          <div style="display: grid; gap: 1rem">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                background: #f8f9fa;
+                border-radius: 5px;
+              "
+            >
+              <div>
+                <h4>Email Notifications</h4>
+                <p style="color: #6c757d">
+                  Receive updates about your account activity
+                </p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="slider round"></span>
+              </label>
+            </div>
+
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                background: #f8f9fa;
+                border-radius: 5px;
+              "
+            >
+              <div>
+                <h4>SMS Notifications</h4>
+                <p style="color: #6c757d">
+                  Get alerts about important account events
+                </p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" />
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Profile Edit Form Overlay -->
+      <div id="profile-edit-overlay" class="overlay">
+        <div class="overlay-content">
+          <span class="close-button">&times;</span>
+          <h2>Edit Profile</h2>
+          <form id="profile-edit-form">
+            <div class="profile-form-group">
+              <label for="full-name">Full Name</label>
+              <input
+                class="profile-input"
+                type="text"
+                id="full-name"
+                name="full-name"
+                required
+              />
+            </div>
+            <div class="profile-form-group">
+              <label for="full-name">Username</label>
+              <input
+                class="profile-input"
+                type="text"
+                id="username"
+                name="username"
+                required
+              />
+            </div>
+            <div class="profile-form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            <div class="profile-form-group">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+            <button type="submit">Save Changes</button>
+          </form>
+        </div>
       </div>
-    </div>
-    <!-- Payment Confirmation Modal -->
-    <div id="paymentModal" class="modal">
-      <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('paymentModal')"
-          >&times;</span
-        >
-        <div class="modal-header">
-          <h3>Confirm Payment Request</h3>
-        </div>
-        <div class="modal-body">
-          <p><strong>Amount:</strong> <span id="confirmAmount">KES 0</span></p>
-          <p>
-            <strong>M-Pesa Number:</strong> <span id="confirmNumber"></span>
-          </p>
-          <p style="margin-top: 15px">
-            Click confirm to proceed with the payment request.
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="action-button"
-            style="background: #6c757d"
-            onclick="closeModal('paymentModal')"
+      <!-- Payment Confirmation Modal -->
+      <div id="paymentModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal" onclick="closeModal('paymentModal')"
+            >&times;</span
           >
-            Cancel
-          </button>
-          <button class="action-button payment-btn" onclick="submitPayment()">
-            Confirm Payment
-          </button>
+          <div class="modal-header">
+            <h3>Confirm Payment Request</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+              <strong>Amount:</strong> <span id="confirmAmount">KES 0</span>
+            </p>
+            <p>
+              <strong>M-Pesa Number:</strong> <span id="confirmNumber"></span>
+            </p>
+            <p style="margin-top: 15px">
+              Click confirm to proceed with the payment request.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="action-button"
+              style="background: #6c757d"
+              onclick="closeModal('paymentModal')"
+            >
+              Cancel
+            </button>
+            <button class="action-button payment-btn" onclick="submitPayment()">
+              Confirm Payment
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- Plan Selection Modal -->
-    <div id="planModal" class="modal">
-      <div class="modal-content">
-        <span class="close-modal" onclick="closeModal('planModal')"
-          >&times;</span
-        >
-        <div class="modal-header">
-          <h3>Select Plan</h3>
-        </div>
-        <div class="modal-body">
-          <div style="margin-bottom: 15px">
-            <label for="numMessages">Number of Messages:</label>
-            <input
-              type="number"
-              id="numMessages"
-              class="form-input"
-              onchange="calculateCost()"
-            />
-          </div>
-          <div style="margin-bottom: 15px">
-            <label for="totalCost">Total Cost (KES):</label>
-            <input type="text" id="totalCost" class="form-input" readonly />
-          </div>
-          <div style="margin-bottom: 15px">
-            <label for="billingNumber">Billing Number:</label>
-            <input type="tel" id="billingNumber" class="form-input" />
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button
-            class="action-button"
-            style="background: #6c757d"
-            onclick="closeModal('planModal')"
+      <!-- Plan Selection Modal -->
+      <div id="planModal" class="modal">
+        <div class="modal-content">
+          <span class="close-modal" onclick="closeModal('planModal')"
+            >&times;</span
           >
-            Cancel
-          </button>
-          <button class="action-button" onclick="submitPlanSelection()">
-            Confirm Selection
-          </button>
+          <div class="modal-header">
+            <h3>Select Plan</h3>
+          </div>
+          <div class="modal-body">
+            <div style="margin-bottom: 15px">
+              <label for="numMessages">Number of Messages:</label>
+              <input
+                type="number"
+                id="numMessages"
+                class="form-input"
+                onchange="calculateCost()"
+              />
+            </div>
+            <div style="margin-bottom: 15px">
+              <label for="totalCost">Total Cost (KES):</label>
+              <input type="text" id="totalCost" class="form-input" readonly />
+            </div>
+            <div style="margin-bottom: 15px">
+              <label for="billingNumber">Billing Number:</label>
+              <input type="tel" id="billingNumber" class="form-input" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              class="action-button"
+              style="background: #6c757d"
+              onclick="closeModal('planModal')"
+            >
+              Cancel
+            </button>
+            <button class="action-button" onclick="submitPlanSelection()">
+              Confirm Selection
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Security Settings Form Overlay -->
-    <div id="security-overlay" class="overlay">
-      <div class="overlay-content">
-        <span class="close-button">&times;</span>
-        <h2>Update Security Settings</h2>
-        <form id="security-form">
-          <div class="profile-form-group">
-            <label for="current-password">Current Password</label>
-            <input
-              class="profile-input"
-              type="password"
-              id="current-password"
-              name="current-password"
-              required
-            />
-          </div>
-          <div class="profile-form-group">
-            <label for="new-password">New Password</label>
-            <input
-              class="profile-input"
-              type="password"
-              id="new-password"
-              name="new-password"
-              required
-            />
-          </div>
-          <div class="profile-form-group">
-            <label for="confirm-password">Confirm Password</label>
-            <input
-              class="profile-input"
-              type="password"
-              id="confirm-password"
-              name="confirm-password"
-              required
-            />
-          </div>
-          <button type="submit">Update Password</button>
-        </form>
+      <!-- Security Settings Form Overlay -->
+      <div id="security-overlay" class="overlay">
+        <div class="overlay-content">
+          <span class="close-button">&times;</span>
+          <h2>Update Security Settings</h2>
+          <form id="security-form">
+            <div class="profile-form-group">
+              <label for="current-password">Current Password</label>
+              <input
+                class="profile-input"
+                type="password"
+                id="current-password"
+                name="current-password"
+                required
+              />
+            </div>
+            <div class="profile-form-group">
+              <label for="new-password">New Password</label>
+              <input
+                class="profile-input"
+                type="password"
+                id="new-password"
+                name="new-password"
+                required
+              />
+            </div>
+            <div class="profile-form-group">
+              <label for="confirm-password">Confirm Password</label>
+              <input
+                class="profile-input"
+                type="password"
+                id="confirm-password"
+                name="confirm-password"
+                required
+              />
+            </div>
+            <button type="submit">Update Password</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</body>
 
 <script src="/js/dashboard.js"></script>
+<!-- <script src="/js/main.js"></script> -->
 <script>
   let currentRate = 0;
   let planName = "";
@@ -616,7 +885,9 @@
     const modal = document.getElementById(modalId);
     modal.style.display = "block";
     const modalHeader = modal.querySelector(".modal-header");
-    modalHeader.querySelector("h3").textContent = `${planName}  (${usageRange})`;
+    modalHeader.querySelector(
+      "h3"
+    ).textContent = `${planName}  (${usageRange})`;
   }
 
   function closeModal(modalId) {
@@ -624,10 +895,11 @@
     modal.style.display = "none";
     const modal_inputs = modal.querySelectorAll("input");
 
-    console.log(modal_inputs.forEach(input => {
-      console.log(input.value);
-    }));
-
+    console.log(
+      modal_inputs.forEach((input) => {
+        console.log(input.value);
+      })
+    );
   }
 
   window.onclick = function (ev) {
@@ -705,27 +977,55 @@
   function submitPlanSelection() {
     //Add your plan Selection
     console.log("Submitting plan selection...");
-    closeModal('planModal');
+    closeModal("planModal");
   }
 
   // Update the onclick handlers for your buttons
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener("DOMContentLoaded", function () {
     //update payment request button
-    const paymentForm = document.querySelector('form');
-    const paymentButton = document.querySelector('.payment-btn');
+    const paymentForm = document.querySelector("form");
+    const paymentButton = document.querySelector(".payment-btn");
 
-    paymentButton.onclick = function(e) {
+    paymentButton.onclick = function (e) {
       e.preventDefault();
       showPaymentConfirmation();
-    }
+    };
 
     // const planButtons = document.querySelectorAll(".usage-card .plan-button");
 
     // planButtons
-  })
-  function toggleSidebar() {
-    const sidebar = document.querySelector('.selector');
-    sidebar.classList.toggle('open');
-  }
+  });
+  // Toggle Nav sidebar in menu
+  const navToggle = document.querySelector(".navmenu-toggle");
+  const sidebar = document.querySelector(".sidebar");
+  const links = document.querySelectorAll(".sidebar a");
+  const sections = document.querySelectorAll(".content-section");
+
+  navToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+    const icon = navToggle.querySelector("i");
+    icon.classList.toggle("fa-bars");
+    icon.classList.toggle("fa-times");
+  });
+
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      //e.preventDefault(); //May need to be removed due to the server side rendered nature of this
+      const targetId = link.getAttribute("href").substring(1);
+
+      // sections.forEach((section) => {
+      //   section.classList.remove("active");
+      //   if (section.id === targetId) section.classList.add("active");
+      // });
+
+      // // Update active ink
+      // links.forEach((l) => l.classList.remove("active"));
+      // link.classList.add("active");
+      // sidebar.classList.remove("active");
+      const icon = navToggle.queySlector("i");
+      icon.classList.add("fa-bars");
+      icon.classList.remove("fa-times");
+    });
+  });
   // openModal("paymentModal");
 </script>
