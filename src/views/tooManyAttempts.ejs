@@ -1,82 +1,81 @@
-<%-include('partials/head')%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Limited</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background-color: #f0f2f5;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 0 20px;
+        }
+        .message-box {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 30px;
+            text-align: center;
+        }
+        .message-box i {
+            font-size: 4rem;
+            color: #ff4d4d;
+            margin-bottom: 20px;
+        }
+        .message-box h1 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        .error-message {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .retry-message {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 25px;
+        }
+        .back-button {
+            display: inline-block;
+            width: 100%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        .back-button:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
 <body>
     <div class="container">
         <div class="message-box">
-            <h1>Too Many Attempts</h1>
-            <p class="error-message">You have made too many login attempts in a short period. Please try again later.</p>
-            <p class="retry-message">You can try logging in after 10 minutes.</p>
-            <a href="/auth/login" class="back-button">Go Back to Login</a>
+            <i class="fas fa-exclamation-triangle"></i>
+            <h1>Rate Limited</h1>
+            <p class="error-message">Too many login attempts detected</p>
+            <p class="retry-message">Please wait 10 minutes before trying again</p>
+            <a href="/login" class="back-button">Return to Login</a>
         </div>
     </div>
 </body>
-
-<style>
-    /* General Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background-color: #f1f1f1;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    flex-direction: column;
-}
-
-.message-box {
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    text-align: center;
-    width: 300px;
-}
-
-.message-box h1 {
-    font-size: 24px;
-    color: #ff4d4d;
-    margin-bottom: 20px;
-}
-
-.error-message {
-    font-size: 16px;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.retry-message {
-    font-size: 14px;
-    color: #888;
-    margin-bottom: 30px;
-}
-
-.back-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    text-decoration: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s;
-}
-
-.back-button:hover {
-    background-color: #0056b3;
-}
-
-</style>
-
-
+</html>

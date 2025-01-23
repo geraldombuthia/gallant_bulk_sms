@@ -44,7 +44,43 @@
         text-decoration: none;
         font-weight: 500;
       }
+      .logo {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0; /* Removes any default spacing between flex items */
+      }
 
+      .logo img {
+        width: 20px; /* Allows the image to size based on its content */
+        max-width: 80px; /* Maintains your desired maximum size */
+        height: auto; /* Maintains aspect ratio */
+        margin: 1rem; /* Removes any margin */
+        padding: 0; /* Removes any padding */
+        object-fit: contain; /* Ensures the entire image is visible */
+      }
+      /* Variation 1: Blue and Dark Blue (Original) */
+      .gallant {
+        color: #4a90e2;
+      }
+      /* .sms { color: #2c3e50; } */
+
+      /* Variation 2: Green Tones */
+      /* .gallant { color: #2ecc71; } */
+      .sms { color: #27ae60; }
+
+      /* Variation 3: Orange Tones */
+      /* .gallant { color: #e67e22; } */
+      /* .sms { color: #d35400; } */
+
+      /* Variation 4: Teal Gradient */
+      /* .gallant { color: #1abc9c; } */
+      /* .sms { color: #16a085; } */
+
+      /* Variation 5: Purple Gradient */
+      /* .gallant { color: #9b59b6; } */
+      /* .sms { color: #8e44ad; } */
       .hero {
         background: #2c3e50;
         color: white;
@@ -282,7 +318,9 @@
       .action-button:hover {
         background: #357abd;
       }
-
+      .signup-button {
+        background: #2ecc71;
+      }
       .features-list {
         list-style: none;
         margin: 1.5rem 0;
@@ -330,20 +368,35 @@
   </head>
   <body>
     <nav class="navbar">
-      <div class="logo">
-        <h2>SMS Service</h2>
+      <div
+        class="logo"
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        "
+      >
+        <img src="/gallantlogonobgactualcrop.png" />
+        <h2>
+          <span class="gallant">Gallant</span><span class="sms">SMS</span>
+        </h2>
       </div>
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#pricing">Pricing</a>
         <a href="#contact">Contact</a>
-        <a href="/login" class="action-button">Login</a>
+        <a href="/auth/login" class="action-button">Login</a>
+        <a href="/auth/register" class="action-button signup-button">Signup</a>
       </div>
     </nav>
 
     <section class="hero">
       <h1>We help you build online communication channels faster.</h1>
-      <p>Reach your customers instantly with our reliable SMS platform.</p>
+      <p>
+        Reach your customers instantly with our reliable and affordable Bulk SMS
+        platform.
+      </p>
       <a href="#pricing" class="action-button">Get Started</a>
     </section>
 

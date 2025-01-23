@@ -93,7 +93,7 @@ app.use("/send", MessageRoutes);
 // app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess);
 app.route("/").get((req, res) => {
 
-    res.render("index.ejs");
+    res.render("newindex.ejs");
 });
 
 app.get("/auth/too-many-attempts", (req, res) => {
