@@ -17,6 +17,7 @@
           <%- include('partials/notification'); %>
             <!-- Account Overview -->
             <section id="overview" class="content-section">
+              <%- include('partials/greeting');%>
               <h2>Account Overview</h2>
               <div class="stats-grid">
                 <!-- Account Balance -->
@@ -878,20 +879,6 @@
           showPaymentConfirmation(); //@TODO: Setup Payment confirmation as a form
         };
       }
-
-      // const planButtons = document.querySelectorAll(".usage-card .plan-button");
-
-      // planButtons
-      const flashMessage = document.querySelector(".notification-popup");
-
-      if (flashMessage) {
-        flashMessage.classList.add("show");
-
-        //set timer to remove the notification after 3 seconds
-        setTimeout(() => {
-          flashMessage.classList.remove("show");
-        }, 300000);
-      }
     });
     // Toggle Nav sidebar in menu
     const navToggle = document.querySelector(".navmenu-toggle");
@@ -910,16 +897,6 @@
       link.addEventListener("click", () => {
         //e.preventDefault(); //May need to be removed due to the server side rendered nature of this
         const targetId = link.getAttribute("href").substring(1);
-
-        // sections.forEach((section) => {
-        //   section.classList.remove("active");
-        //   if (section.id === targetId) section.classList.add("active");
-        // });
-
-        // // Update active ink
-        // links.forEach((l) => l.classList.remove("active"));
-        // link.classList.add("active");
-        // sidebar.classList.remove("active");
         const icon = navToggle.queySlector("i");
         icon.classList.add("fa-bars");
         icon.classList.remove("fa-times");
