@@ -24,39 +24,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function showProfileEditOverlay() {
-    profileEditOverlay.style.display = "block";
-}
-
-function hideProfileEditOverlay() {
-    profileEditOverlay.style.display = "none";
-}
-
-function updateProfileInfo(event) {
-    event.preventDefault();
-    // Code to update profile information
-    console.log("Profile information updated");
-    hideProfileEditOverlay();
-    showSuccessPopup("Profile updated successfully!");
-}
-
-function showSecurityOverlay() {
-    securityOverlay.style.display = "block";
-}
-
-function hideSecurityOverlay() {
-    securityOverlay.style.display = "none";
-}
-
-function updateSecuritySettings(event) {
-    event.preventDefault();
-    // Code to update security settings
-    console.log("Security settings updated");
-    hideSecurityOverlay();
-    showSuccessPopup("Security settings updated successfully!");
-}
-
-function showSuccessPopup(message) {
-    // Code to display a custom pop-up notification
-    alert(message);
-}
