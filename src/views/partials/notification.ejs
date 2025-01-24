@@ -1,0 +1,160 @@
+<!-- Notification Popup -->
+<!-- Success Notification -->
+<div id="notificationpopup" class="notification-container">
+    <div class="notification success">
+        <div class="notification-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="notification-content">
+            <div class="notification-title">Success</div>
+            <div class="notification-message">Your operation was completed successfully!</div>
+        </div>
+        <button class="notification-close">&times;</button>
+    </div>
+</div>
+
+<style>
+    .notification-container {
+        display: none;
+        width: auto;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    .notification {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        border-left: 5px solid;
+        animation: slideIn 0.3s ease-out;
+    }
+
+    .notification.success {
+        border-left-color: #28a745;
+    }
+
+    .notification.error {
+        border-left-color: #dc3545;
+    }
+
+    .notification-icon {
+        margin-right: 15px;
+        font-size: 24px;
+    }
+
+    .notification.success .notification-icon {
+        color: #28a745;
+    }
+
+    .notification.error .notification-icon {
+        color: #dc3545;
+    }
+
+    .notification-content {
+        flex-grow: 1;
+    }
+
+    .notification-title {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .notification-message {
+        color: #666;
+    }
+
+    .notification-close {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #999;
+        margin-left: 15px;
+    }
+
+    .show {
+        display: block;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes fadeOut {
+        from {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        to {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+    }
+</style>
+
+<script>
+    function showNotification(type, title, message) {
+        const container = document.querySelector('.notification-container');
+        const popup = document.getElementById("notificationpopup");
+        const iconEl = popup.querySelector(".notification-icon");
+        const titleEl = popup.querySelector(".notification-title");
+        const messageEl = popup.querySelector(".notification-message");
+
+        // Reset previous classes
+        popup.classList.remove("success", "error");
+        iconEl.innerHTML = "";
+
+        // Set notification details
+        popup.classList.add(type);
+
+        if (type === "success") {
+            iconEl.innerHTML =
+                '<i class="fas fa-check-circle" style="color: #28a745;"></i>';
+        } else if (type === "error") {
+            iconEl.innerHTML =
+                '<i class="fas fa-exclamation-circle" style="color: #dc3545;"></i>';
+        }
+
+        titleEl.textContent = title;
+        messageEl.textContent = message;
+
+        console.log("WHy is it not displaying", message);
+
+        // Show popup
+        container.style.display = 'block';
+        popup.style.animation = 'slideIn 0.3s ease-out';
+
+        // Hide popup after 3 seconds
+        setTimeout(() => {
+            // popup.classList.remove("show");
+            popup.style.animation = 'fadeOut 0.3s ease-out';
+
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 300);
+            console.log("Waiting...");
+        }, 3000);
+    }
+
+    // Example trigger for testing
+    document.addEventListener("DOMContentLoaded", () => {
+        // Uncomment to test notifications
+        // showNotification('success', 'Success', 'Operation completed successfully');
+        showNotification('error', 'Error', 'Something went wrong');
+    });
+</script>
