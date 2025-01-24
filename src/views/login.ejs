@@ -1,31 +1,252 @@
-<%-include('partials/head')%>
-<%-include('partials/header')%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - GallantSMS</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<body>
-    <section class="login">
-        <div class="login-form">
-            <form action="/auth/login" method="POST">
-                <%- include('partials/message') %>
-                <h2>Login</h2>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="your_email@gmail.com" required />
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" placeholder="********" required/>
-                </div>
-                <div class="remember-group">
-                    <input type="checkbox" id="remember" name="remember" placeholder="password"/>
-                    <label for="remember">Remember me</label>
-                </div>
-                <button type="submit" class="cta-button">Login</button>
-            </form>
-            <div class="forgot-password">
-                <a href="#">Forgot Password?</a>
-            </div>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        line-height: 1.6;
+      }
+
+      .navbar {
+        background: #2c3e50;
+        padding: 1rem 2rem;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+      }
+
+      .logo img {
+        width: 20px;
+        max-width: 80px;
+        height: auto;
+        margin: 1rem;
+        padding: 0;
+        object-fit: contain;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .action-button {
+        background: #4a90e2;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .action-button:hover {
+        background: #357abd;
+      }
+
+      .signup-button {
+        background: #2ecc71;
+      }
+
+      .hamburger-menu {
+        display: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .login-container {
+        max-width: 500px;
+        margin: 120px auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #2c3e50;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 0.5rem;
+      }
+
+      .login-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+        margin-top: 1rem;
+      }
+
+      .login-button:hover {
+        background: #357abd;
+      }
+
+      .register-link {
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .register-link a {
+        color: #4a90e2;
+        text-decoration: none;
+      }
+
+      .forgot-password {
+        text-align: right;
+        margin-bottom: 1rem;
+      }
+
+      .forgot-password a {
+        color: #4a90e2;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: #2c3e50;
+          flex-direction: column;
+          padding: 1rem;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .hamburger-menu {
+          display: block;
+        }
+
+        .login-container {
+          width: 90%;
+          margin: 100px auto;
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/gallantlogonobgactualcrop.png" alt="GallantSMS Logo" />
+        <h2>GallantSMS</h2>
+      </div>
+      <div class="hamburger-menu" id="hamburgerMenu">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#contact">Contact</a>
+        <a href="/auth/login" class="action-button">Login</a>
+        <a href="/auth/register" class="action-button signup-button">Signup</a>
+      </div>
+    </nav>
+
+    <div class="login-container">
+      <div class="login-header">
+        <h2>Welcome Back</h2>
+        <p>Log in to your GallantSMS account</p>
+        <%-include('partials/message')%>
+      </div>
+      <form id="loginForm" method="post" action="/auth/login">
+        <div class="form-group">
+          <label>Email or Username</label>
+          <input 
+            type="text" 
+            class="form-input" 
+            placeholder="Enter your email" 
+            name="email" 
+            required 
+          />
         </div>
-    </section>
-</body>
-<%-include('partials/footer')%>
-<script src="/js/main.js"></script>
+        <div class="form-group">
+          <label>Password</label>
+          <input 
+            type="password" 
+            class="form-input" 
+            placeholder="Enter your password" 
+            name="password" 
+            required 
+          />
+        </div>
+        <div class="forgot-password">
+          <a href="#">Forgot Password?</a>
+        </div>
+        <button type="submit" class="login-button">Log In</button>
+      </form>
+      <div class="register-link">
+        Don't have an account? <a href="/auth/register">Sign up here</a>
+      </div>
+    </div>
+
+    <script>
+      // Mobile responsive navbar toggle
+      document.getElementById('hamburgerMenu').addEventListener('click', function() {
+        const navLinks = document.getElementById('navLinks');
+        navLinks.classList.toggle('active');
+      });
+    </script>
+  </body>
+</html>

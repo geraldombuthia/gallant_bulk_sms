@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SMS Service - Build Communication Channels</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+    }
+
+    .navbar {
+      background: #2c3e50;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 0;
+      /* Removes any default spacing between flex items */
+    }
+
+    .logo img {
+      width: 20px;
+      /* Allows the image to size based on its content */
+      max-width: 80px;
+      /* Maintains your desired maximum size */
+      height: auto;
+      /* Maintains aspect ratio */
+      margin: 1rem;
+      /* Removes any margin */
+      padding: 0;
+      /* Removes any padding */
+      object-fit: contain;
+      /* Ensures the entire image is visible */
+    }
+
+    /* Variation 1: Blue and Dark Blue (Original) */
+    .gallant {
+      color: #4a90e2;
+    }
+
+    /* .sms { color: #2c3e50; } */
+
+    /* Variation 2: Green Tones */
+    /* .gallant { color: #2ecc71; } */
+    .sms {
+      color: #27ae60;
+    }
+
+    /* Variation 3: Orange Tones */
+    /* .gallant { color: #e67e22; } */
+    /* .sms { color: #d35400; } */
+
+    /* Variation 4: Teal Gradient */
+    /* .gallant { color: #1abc9c; } */
+    /* .sms { color: #16a085; } */
+
+    /* Variation 5: Purple Gradient */
+    /* .gallant { color: #9b59b6; } */
+    /* .sms { color: #8e44ad; } */
+    .hero {
+      background: #2c3e50;
+      color: white;
+      padding: 8rem 2rem 6rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: #2c3e50;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .features {
+      padding: 4rem 2rem;
+      background: white;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      text-align: center;
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-card i {
+      font-size: 2.5rem;
+      color: #4a90e2;
+      margin-bottom: 1rem;
+    }
+
+    .pricing {
+      padding: 4rem 2rem;
+      background: #f8f9fa;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: white;
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .pricing-card.popular {
+      border: 2px solid #4a90e2;
+      position: relative;
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: #4a90e2;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
+
+    .price {
+      font-size: 2.5rem;
+      color: #4a90e2;
+      margin: 1rem 0;
+      font-weight: bold;
+    }
+
+    .contact {
+      padding: 4rem 2rem;
+      background: white;
+    }
+
+    .contact-container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .contact-info {
+      padding: 2rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact-info-item i {
+      font-size: 1.5rem;
+      color: #4a90e2;
+      margin-right: 1rem;
+    }
+
+    .contact-form {
+      padding: 2rem;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      margin-top: 0.5rem;
+    }
+
+    textarea.form-input {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .footer {
+      background: #2c3e50;
+      color: white;
+      padding: 4rem 2rem 2rem;
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 1.5rem;
+      color: #4a90e2;
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 0.75rem;
+    }
+
+    .footer-column ul li a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+      justify-content: center;
+    }
+
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .action-button {
+      background: #4a90e2;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .action-button:hover {
+      background: #357abd;
+    }
+
+    .signup-button {
+      background: #2ecc71;
+    }
+
+    .features-list {
+      list-style: none;
+      margin: 1.5rem 0;
+      text-align: left;
+    }
+
+    .features-list li {
+      margin-bottom: 0.75rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .features-list li::before {
+      content: "✓";
+      color: #4a90e2;
+      position: absolute;
+      left: 0;
+    }
+
+    @media (max-width: 1024px) {
+
+      .features-grid,
+      .pricing-grid,
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+
+      .features-grid,
+      .pricing-grid,
+      .footer-grid,
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar">
+    <div class="logo" style="
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+        ">
+      <img src="/gallantlogonobgactualcrop.png" />
+      <h2>
+        <span class="gallant">Gallant</span><span class="sms">SMS</span>
+      </h2>
+    </div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#contact">Contact</a>
+      <a href="/auth/login" class="action-button">Login</a>
+      <a href="/auth/register" class="action-button signup-button">Signup</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <h1>We help you build online communication channels faster.</h1>
+    <p>
+      Reach your customers instantly with our reliable and affordable Bulk SMS
+      platform.
+    </p>
+    <a href="#pricing" class="action-button">Get Started</a>
+  </section>
+
+  <section class="features" id="features">
+    <div class="section-header">
+      <h2>Why Choose Us</h2>
+      <p>
+        Discover the features that make our SMS platform stand out from the
+        competition.
+      </p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <i class="fas fa-bolt"></i>
+        <h3>Lightning Fast</h3>
+        <p>
+          Deliver messages instantly to your customers with our optimized
+          infrastructure.
+        </p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-shield-alt"></i>
+        <h3>Secure Platform</h3>
+        <p>
+          Your data is protected with enterprise-grade security and
+          encryption.
+        </p>
+      </div>
+      <div class="feature-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Real-time Analytics</h3>
+        <p>Track delivery rates and engagement with detailed analytics.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing" id="pricing">
+    <div class="section-header">
+      <h2>Choose Your Plan</h2>
+      <p>Select the perfect plan for your business needs.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Starter Pack</h3>
+        <div class="price">KES 1/SMS</div>
+        <p>Perfect for small businesses</p>
+        <ul class="features-list">
+          <li>1,000 - 5,000 SMS</li>
+          <li>Basic Analytics</li>
+          <li>API Access</li>
+          <li>24/7 Support</li>
+        </ul>
+        <a href="#" class="action-button">Select Plan</a>
+      </div>
+
+      <div class="pricing-card popular">
+        <span class="popular-tag">Most Popular</span>
+        <h3>Business Pack</h3>
+        <div class="price">KES 0.8/SMS</div>
+        <p>Ideal for growing businesses</p>
+        <ul class="features-list">
+          <li>5,001 - 20,000 SMS</li>
+          <li>Advanced Analytics</li>
+          <li>Priority API Access</li>
+          <li>Priority Support</li>
+          <li>Custom Sender ID</li>
+        </ul>
+        <a href="#" class="action-button">Select Plan</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Enterprise Pack</h3>
+        <div class="price">KES 0.5/SMS</div>
+        <p>For large-scale operations</p>
+        <ul class="features-list">
+          <li>20,000+ SMS</li>
+          <li>Enterprise Analytics</li>
+          <li>Dedicated API Access</li>
+          <li>24/7 Premium Support</li>
+          <li>Multiple Sender IDs</li>
+          <li>Custom Integration</li>
+        </ul>
+        <a href="#" class="action-button">Select Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="section-header">
+      <h2>Get in Touch</h2>
+      <p>We're here to help and answer any questions you might have.</p>
+    </div>
+    <div class="contact-container">
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <h4>Address</h4>
+            <p>123 Business Street, Nairobi, Kenya</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <h4>Phone</h4>
+            <p>+254 700 000000</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <h4>Email</h4>
+            <p>support@smsservice.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-input" placeholder="Your name" />
+          </div>
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" class="form-input" placeholder="Your email" />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea class="form-input" placeholder="Your message"></textarea>
+          </div>
+          <button type="submit" class="action-button">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h3>SMS Service</h3>
+        <p>
+          Building better communication channels for businesses across Africa.
+        </p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#features">Features</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">API Documentation</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

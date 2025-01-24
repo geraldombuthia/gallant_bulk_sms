@@ -1,42 +1,284 @@
 <%-include('partials/head')%>
-<%-include('partials/header')%>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-<body>
-  <section class="register">
-    <div class="register-form">
-        <%- include('partials/message') %>
-        <h1>Register</h1>
-        <form action="/auth/register" method="POST">
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" id="name" name="name" placeholder="John Doe" required>
-                <div class="error" id="nameError"></div>
-            </div>
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" placeholder="johndoe123" required>
-                <div class="error" id="usernameError"></div>
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" placeholder="johndoe@example.com" required>
-                <div class="error" id="emailError"></div>
-            </div>
-            <div class="form-group">
-                <label for="phone">Phone</label>
-                <input type="tel" id="phone" name="phone" placeholder="+1234567890">
-                <div class="error" id="phoneError"></div>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" placeholder="********" required>
-                <div class="error" id="passwordError"></div>
-            </div>
-            <button type="submit" value="Register" class="cta-button">Register</button>
-        </form>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        line-height: 1.6;
+      }
 
+      .navbar {
+        background: #2c3e50;
+        padding: 1rem 2rem;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .logo {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+      }
+
+      .logo img {
+        width: 20px;
+        max-width: 80px;
+        height: auto;
+        margin: 1rem;
+        padding: 0;
+        object-fit: contain;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .action-button {
+        background: #4a90e2;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .action-button:hover {
+        background: #357abd;
+      }
+
+      .signup-button {
+        background: #2ecc71;
+      }
+
+      .hamburger-menu {
+        display: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .register-container {
+        max-width: 500px;
+        margin: 120px auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .register-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        color: #2c3e50;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 0.5rem;
+      }
+
+      .register-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: #4a90e2;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background 0.3s;
+        margin-top: 1rem;
+      }
+
+      .register-button:hover {
+        background: #357abd;
+      }
+
+      .login-link {
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .login-link a {
+        color: #4a90e2;
+        text-decoration: none;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          width: 100%;
+          background: #2c3e50;
+          flex-direction: column;
+          padding: 1rem;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .hamburger-menu {
+          display: block;
+        }
+
+        .register-container {
+          width: 90%;
+          margin: 100px auto;
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  <body>
+    <nav class="navbar">
+      <div class="logo">
+        <img src="/gallantlogonobgactualcrop.png" alt="GallantSMS Logo" />
+        <h2>GallantSMS</h2>
+      </div>
+      <div class="hamburger-menu" id="hamburgerMenu">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="nav-links" id="navLinks">
+        <a href="/">Home</a>
+        <a href="/#features">Features</a>
+        <a href="/#pricing">Pricing</a>
+        <a href="/#contact">Contact</a>
+        <a href="/auth/login" class="action-button">Login</a>
+        <a href="/auth/register" class="action-button signup-button">Signup</a>
+      </div>
+    </nav>
+
+    <div class="register-container">
+      <div class="register-header">
+        <h2>Create Your Account</h2>
+        <p>Start building better communication channels</p>
+        <%-include('partials/message')%>
+      </div>
+      <form id="registerForm" method="post" action="/auth/register">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input 
+            type="text" 
+            class="form-input" 
+            placeholder="Enter your full name" 
+            name="name" 
+            required 
+          />
+        </div>
+        <div class="form-group">
+          <label>Username</label>
+          <input 
+            type="text" 
+            class="form-input" 
+            placeholder="Choose a unique username" 
+            name="username" 
+            required 
+          />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input 
+            type="email" 
+            class="form-input" 
+            placeholder="Enter your email address" 
+            name="email" 
+            required 
+          />
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input 
+            type="tel" 
+            class="form-input" 
+            placeholder="Enter your phone number" 
+            name="phone" 
+            required 
+          />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input 
+            type="password" 
+            class="form-input" 
+            placeholder="Create a strong password" 
+            name="password" 
+            required 
+          />
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <input 
+            type="password" 
+            class="form-input" 
+            placeholder="Confirm your password" 
+            name="confirmPassword" 
+            required 
+          />
+        </div>
+        <button type="submit" class="register-button">Create Account</button>
+      </form>
+      <div class="login-link">
+        Already have an account? <a href="/auth/login">Login here</a>
+      </div>
     </div>
-  </section>
-</body>
-<%-include('partials/footer')%>
-<script src="/js/main.js"></script>
+
+    <script>
+      // Mobile responsive navbar toggle
+      document.getElementById('hamburgerMenu').addEventListener('click', function() {
+        const navLinks = document.getElementById('navLinks');
+        navLinks.classList.toggle('active');
+      });
+
+      // // Basic client-side form validation
+      // document.getElementById('registerForm').addEventListener('submit', function(e) {
+      //   e.preventDefault();
+        
+      //   const password = document.querySelector('input[name="password"]').value;
+      //   const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+        
+      //   if (password !== confirmPassword) {
+      //     alert('Passwords do not match. Please try again.');
+      //     return;
+      //   }
+
+      //   // Here you would typically send the form data to your backend
+      //   alert('Registration form submitted! (Note: Backend processing not implemented in this example)');
+      // });
+    </script>
+  </body>
+</html>
