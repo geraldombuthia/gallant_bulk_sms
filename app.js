@@ -78,7 +78,7 @@ app.use((req, res, next) => {
 
 const loginLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 15 minutes
-    max: 50, // Limit each IP to 100 requests per `window`
+    max: 10, // Limit each IP to 100 requests per `window`
     message: "Too many requests, please try again later.",
     handler: (req, res) => {
         res.redirect("/ratelimit");
