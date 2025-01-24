@@ -77,14 +77,22 @@ const validatePayment = [
 const validationHandler = (req, res, next) => {
     const errors = validationResult(req);
     const data = matchedData(req);
-  
     if (!errors.isEmpty()) {
-        console.log(data);
+        console.log("Validatuon errors:", errors.array());
       
         // For web requests, store the first error in res.locals
         const firstError = errors.array()[0];
         res.locals.error = firstError.msg;
-        next();
+
+        if (req.originalUrl.includes("login")) {
+            req.flash("error", res.locals.error);
+            return res.redirect("/auth/login");
+        }
+
+        if (req.originalUrl.includes("register")) {
+            req.flash("error", res.locals.error);
+            return res.redirect("/auth/register");
+        }
     }
     
     // Store the validated data in res.locals for use in next middleware

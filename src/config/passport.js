@@ -10,7 +10,7 @@ passport.use(
                 const user = await User.findOne({ where: { email } });
 
                 if (!user) {
-                    return done(null, false, { message: "Incorrect email or password" });
+                    return done(null, false, { message: "Incorrect email or password"});
 
                 }
                 const isMatch = await user.validatePassword(password);

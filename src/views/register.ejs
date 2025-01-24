@@ -187,8 +187,9 @@
       <div class="register-header">
         <h2>Create Your Account</h2>
         <p>Start building better communication channels</p>
+        <%-include('partials/message')%>
       </div>
-      <form id="registerForm">
+      <form id="registerForm" method="post" action="/auth/register">
         <div class="form-group">
           <label>Full Name</label>
           <input 
@@ -263,21 +264,21 @@
         navLinks.classList.toggle('active');
       });
 
-      // Basic client-side form validation
-      document.getElementById('registerForm').addEventListener('submit', function(e) {
-        e.preventDefault();
+      // // Basic client-side form validation
+      // document.getElementById('registerForm').addEventListener('submit', function(e) {
+      //   e.preventDefault();
         
-        const password = document.querySelector('input[name="password"]').value;
-        const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
+      //   const password = document.querySelector('input[name="password"]').value;
+      //   const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
         
-        if (password !== confirmPassword) {
-          alert('Passwords do not match. Please try again.');
-          return;
-        }
+      //   if (password !== confirmPassword) {
+      //     alert('Passwords do not match. Please try again.');
+      //     return;
+      //   }
 
-        // Here you would typically send the form data to your backend
-        alert('Registration form submitted! (Note: Backend processing not implemented in this example)');
-      });
+      //   // Here you would typically send the form data to your backend
+      //   alert('Registration form submitted! (Note: Backend processing not implemented in this example)');
+      // });
     </script>
   </body>
 </html>

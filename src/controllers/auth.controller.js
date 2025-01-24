@@ -20,18 +20,18 @@ class AuthController {
                 .replace(/^(\+)/, "")
                 .replace(/\s+/g, "");
 
-            req.body.phone = formatNumber;
+            req.body.phone = formatNumber; // @TODO Extract all items into an object
 
             const user = await AuthService.register(req.body);
-            console.error("User registered: ", user);
+            // console.error("User registered: ", user);
 
             if (!user) {
                 req.flash("error", "Registration failed");
-                res.redirect(303, "/auth/register");
+                return res.redirect(303, "/auth/register");
             }
             res.locals.message = "Registration succesful. Please login";
             req.flash("success", "Registration successful!Please login");
-            res.redirect(303, "/auth/login");
+            return res.redirect(303, "/auth/login");
             // AuthController.redirectMessage;
         } catch (error) {
             if (error instanceof UniqueConstraintError) {
@@ -54,6 +54,7 @@ class AuthController {
     }
 
     static async login(req, res) {
+        // if (res.headersSent) return;
         if (req.user) {
             return res.redirect("/dashboard");
         } else {
@@ -67,7 +68,7 @@ class AuthController {
                 return next(err);
             }
  
-            res.redirect("/auth/login"); // Redirect to the home page
+            return res.redirect("/auth/login"); // Redirect to the home page
         });
     }
 

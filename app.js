@@ -72,13 +72,13 @@ app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.info = req.flash("info");
-    res.locals.user = req.user;
+    res.locals.user = req.user || {name: "Guest"};
     next();
 });
 
 const loginLimiter = rateLimit({
     windowMs: 10 * 60 * 1000, // 15 minutes
-    max: 5, // Limit each IP to 100 requests per `window`
+    max: 50, // Limit each IP to 100 requests per `window`
     message: "Too many requests, please try again later.",
     handler: (req, res) => {
         res.redirect("/ratelimit");

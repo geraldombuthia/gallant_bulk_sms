@@ -10,7 +10,7 @@ const {
 const router = express.Router();
 
 router.get("/register", (req, res) => {
-    res.render("register", { user: req.user });
+    res.render("register", { user: req.user, messages: req.flash() });
 });
 router.post(
     "/register",
@@ -19,27 +19,40 @@ router.post(
     AuthController.register
 );
 router.get("/login", (req, res) => {
-    res.render("login");
+    res.render("login", { messages: req.flash()});
 });
 
 router.post(
     "/login",
     validateLogin,
     validationHandler,
-    passport.authenticate("local", {
-        failureRedirect: "/auth/login",
-        failureFlash:true,
-    }),
-    AuthController.login
+    (req, res, next) => {
+        passport.authenticate("local", (err, user, info) => {
+            if (err) {
+                //Handle unexpected errors
+                return next(err);
+            }
+            if (!user) {
+                //Handle authentication failure (e.g. invalid credentials)
+                req.flash("error", info.message || "Invalid credentials");
+                console.log("Experienced an error");
+                return res.redirect("/auth/login"); //stop execution here
+                console.log("Experienced and error after");
+            }
+            // Log the user in
+            req.logIn(user, (err) => {
+                if (err) {
+                    //Handle login errors
+                    return next(err);
+                }
+                //Successful login: redirect to dashboard
+                return res.redirect("/dashboard");
+            });
+        })(req, res, next); // Pass `req`, `res`, `next` to `passport.authenticate`
+    }
+    // AuthController.login
 );
-router.get("/logout", AuthController.logout, (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        res.redirect("/"); // Redirect to the home page
-    });
-});
+router.get("/logout", AuthController.logout);
 
 router.get("/ratelimit", (req, res) => {
     res.render("tooManyAttempts.ejs");
