@@ -1,0 +1,108 @@
+<!-- Support & Documentation -->
+<section id="support" class="content-section">
+    <%- include('../greeting') %>
+  <h2>Support & Documentation</h2>
+
+  <div class="quick-actions">
+    <div class="action-card">
+      <i class="fas fa-phone"></i>
+      <h3>Contact Support</h3>
+      <p>Available 24/7</p>
+      <p>+254 700 000 000</p>
+    </div>
+    <div class="action-card">
+      <i class="fas fa-envelope"></i>
+      <h3>Email Support</h3>
+      <p>Response within 24h</p>
+      <p>support@sms-platform.com</p>
+    </div>
+    <div class="action-card">
+      <i class="fas fa-comment"></i>
+      <h3>Live Chat</h3>
+      <p>Chat with us now</p>
+      <button class="action-button">Start Chat</button>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="docs-chat-section">
+      <div class="tab-header">
+        <button class="tab-button active" onclick="switchTab('docs')">
+          Documentation
+        </button>
+        <button class="tab-button" onclick="switchTab('chat')">
+          Live Chat
+        </button>
+      </div>
+
+      <div class="tab-content" id="docs-content">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search documentation..." />
+        </div>
+        <div class="doc-items">
+          <div class="doc-item">
+            <h3>Getting Started Guide</h3>
+            <span>Basic</span>
+          </div>
+          <div class="doc-item">
+            <h3>API Documentation</h3>
+            <span>Technical</span>
+          </div>
+          <div class="doc-item">
+            <h3>SMS Integration Guide</h3>
+            <span>Technical</span>
+          </div>
+          <div class="doc-item">
+            <h3>Billing & Pricing FAQ</h3>
+            <span>Billing</span>
+          </div>
+          <div class="doc-item">
+            <h3>Best Practices</h3>
+            <span>Basic</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="chat-content" style="display: none">
+        <div class="chat-container">
+          <div class="chat-messages">
+            <div class="message agent">Hi! How can I help you today?</div>
+          </div>
+          <div class="chat-input">
+            <input type="text" placeholder="Type your message..." />
+            <button class="shortcode-action-button">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-content">
+      <div class="quick-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li>
+            <a href="#"><i class="fas fa-book"></i> API Documentation</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-file-alt"></i> Integration Guide</a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-question-circle"></i> FAQs</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="popular-articles">
+        <h3>Popular Articles</h3>
+        <ul>
+          <li><a href="#">How to integrate SMS API</a></li>
+          <li><a href="#">Understanding SMS credits</a></li>
+          <li><a href="#">Bulk SMS best practices</a></li>
+          <li><a href="#">Payment methods guide</a></li>
+          <li><a href="#">Message delivery status</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

@@ -165,24 +165,7 @@
       }
     </style>
   <body>
-    <nav class="navbar">
-      <div class="logo">
-        <img src="/gallantlogonobgactualcrop.png" alt="GallantSMS Logo" />
-        <h2>GallantSMS</h2>
-      </div>
-      <div class="hamburger-menu" id="hamburgerMenu">
-        <i class="fas fa-bars"></i>
-      </div>
-      <div class="nav-links" id="navLinks">
-        <a href="/">Home</a>
-        <a href="/#features">Features</a>
-        <a href="/#pricing">Pricing</a>
-        <a href="/#contact">Contact</a>
-        <a href="/auth/login" class="action-button">Login</a>
-        <a href="/auth/register" class="action-button signup-button">Signup</a>
-      </div>
-    </nav>
-
+    <%- include('partials/nav'); %>
     <div class="register-container">
       <div class="register-header">
         <h2>Create Your Account</h2>
@@ -263,22 +246,6 @@
         const navLinks = document.getElementById('navLinks');
         navLinks.classList.toggle('active');
       });
-
-      // // Basic client-side form validation
-      // document.getElementById('registerForm').addEventListener('submit', function(e) {
-      //   e.preventDefault();
-        
-      //   const password = document.querySelector('input[name="password"]').value;
-      //   const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
-        
-      //   if (password !== confirmPassword) {
-      //     alert('Passwords do not match. Please try again.');
-      //     return;
-      //   }
-
-      //   // Here you would typically send the form data to your backend
-      //   alert('Registration form submitted! (Note: Backend processing not implemented in this example)');
-      // });
     </script>
   </body>
 </html>

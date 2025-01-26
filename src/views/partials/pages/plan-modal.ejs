@@ -1,0 +1,69 @@
+<!-- Payment Confirmation Modal -->
+<div id="paymentModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="modal-header">
+      <h3>Confirm Payment Request</h3>
+    </div>
+    <div class="modal-body" style="color: rgb(99, 98, 98)">
+      <p><strong>Amount:</strong> KES<span id="confirmAmount">0</span></p>
+      <p><strong>M-Pesa Number:</strong> <span id="confirmNumber"></span></p>
+      <p style="margin-top: 15px">
+        Click confirm to proceed with the payment request.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="action-button"
+        style="background: #6c757d"
+        onclick="closeModal('paymentModal')"
+      >
+        Cancel
+      </button>
+      <button class="action-button" id="confirmPaymentBtn" onclick="submitPayment()">
+        Confirm Payment
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Plan Selection Modal -->
+<div id="planModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div class="modal-header">
+      <h3>Select Plan</h3>
+    </div>
+    <div class="modal-body" style="color: rgb(99, 98, 98)">
+      <div style="margin-bottom: 15px">
+        <label for="numMessages">Number of Messages:</label>
+        <input
+          type="number"
+          id="numMessages"
+          class="form-input"
+          onchange="calculateCost()"
+        />
+      </div>
+      <div style="margin-bottom: 15px">
+        <label for="totalCost">Total Cost (KES):</label>
+        <input type="text" id="totalCost" class="form-input" readonly />
+      </div>
+      <div style="margin-bottom: 15px">
+        <label for="billingNumber">Billing Number:</label>
+        <input type="tel" id="billingNumber" class="form-input" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button
+        class="action-button"
+        style="background: #6c757d"
+        onclick="closeModal('planModal')"
+      >
+        Cancel
+      </button>
+      <button class="action-button" onclick="submitPlanSelection()">
+        Confirm Selection
+      </button>
+    </div>
+  </div>
+</div>

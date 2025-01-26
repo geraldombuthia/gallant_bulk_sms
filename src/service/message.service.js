@@ -191,7 +191,7 @@ class MessageService {
     async getMessageHistory(userId, options = {}) {
         // Pass the UserID and Options
         const {
-            channel,
+            channel = "sms",
             limit = 50,
             offset = 0,
             status
@@ -201,20 +201,38 @@ class MessageService {
             // use the appropriate model based on channel
             const Model = this.storageModels[channel];
 
+            if (!Model) {
+                throw new Error(`Invalid channel: ${channel}`);
+            }
             const query = { userId };
 
             if (status) {
                 query.deliveryStatus = status;
             }
 
-            return Model.findAndCountAll({
+            const result =  Model.findAndCountAll({
                 where: query,
                 limit, 
                 offset,
                 order: [["createdAt", "DESC"]]
             });
+
+            if (!result || result.count === 0) {
+                return { total: 0, data: [], message: "No messages found." };
+            }
+    
+            return {
+                total: result.count,
+                data: result.rows,
+            };
         } catch (error) {
-            throw new Error("Error fetching Message History ", error);
+            console.error("Error in getMessageHistory", {
+                userId, 
+                channel,
+                error: error.message,
+                stack: error.stack
+            });
+            throw new Error("Error fetching Message History ");
         }
 
     }

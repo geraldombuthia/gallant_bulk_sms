@@ -229,6 +229,7 @@ body {
 .activity-list,
 .notifications-list {
   padding: 1rem;
+  border-radius: 10px;
 }
 
 .activity-item,
@@ -286,6 +287,30 @@ body {
   color: #999;
   font-size: 0.8rem;
 }
+
+/* Empty state styles */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+  color: #6c757d;
+}
+
+.empty-state-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #4a90e2;
+  opacity: 0.6;
+}
+
+.empty-state-message {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
 
 .quick-links-section {
   background: rgb(250, 250, 250);
@@ -562,7 +587,7 @@ h3,
 
 .details-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 
@@ -653,8 +678,47 @@ h3,
 }
 
 .notifications-card  {
-  color: rgb(201, 198, 198);
+  /* color: rgb(201, 198, 198); */
+  background: white;
+  border-radius:0px;
+  box-shadow: 0 2px 4px rba(0,0,0,0.1);
+  overflow: hidden;
+  border-radius: 10px;
 }
+.api-key-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: #4a90e2;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.8rem;
+}
+
+
+.copy-button:hover {
+  background-color: #e9ecef;
+}
+
+.copy-button.copied {
+  background-color: #28a745;
+  color: white;
+}
+
+.copy-button i {
+  margin-right: 5px;
+}
+
 /* API Grid */
 .overview-grid,
 .api-grid,
@@ -1098,8 +1162,6 @@ button:hover {
   }
 
   .stats-grid,
-
-  .details-grid,
   .activity-grid,
   .profile-grid,
   .security-grid,

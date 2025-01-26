@@ -10,7 +10,11 @@ const {
 const router = express.Router();
 
 router.get("/register", (req, res) => {
-    res.render("register", { user: req.user, messages: req.flash() });
+    res.render("register", {
+        user: req.user,
+        messages: req.flash(),
+        layout: false,
+    });
 });
 router.post(
     "/register",
@@ -19,7 +23,7 @@ router.post(
     AuthController.register
 );
 router.get("/login", (req, res) => {
-    res.render("login", { messages: req.flash()});
+    res.render("login", { messages: req.flash(), layout: false });
 });
 
 router.post(
@@ -44,8 +48,15 @@ router.post(
                     // Handle login errors
                     return next(err);
                 }
-                // Successful login: redirect to dashboard
-                return res.redirect("/dashboard");
+                // Explicitly save the session before redirecting
+                req.session.save((saveErr) => {
+                    if (saveErr) {
+                        return next(saveErr);
+                    }
+
+                    console.log("Session saved, redirecting to dashboard");
+                    return res.redirect("/dashboard");
+                });
             });
         })(req, res, next); // Pass `req`, `res`, `next` to `passport.authenticate`
     }
@@ -54,7 +65,7 @@ router.post(
 router.get("/logout", AuthController.logout);
 
 router.get("/ratelimit", (req, res) => {
-    res.render("tooManyAttempts.ejs");
+    res.render("tooManyAttempts.ejs", { layout: false });
 });
 
 module.exports = router;

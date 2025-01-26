@@ -154,6 +154,20 @@ class PaymentsService {
             throw new Error(`Error processing ${pay_provider} callback: ${  error.message}`);
         }
     }
+
+    async getPayments(userId) {
+        try {
+            const payments = await Payment.findAll({
+                where: {
+                    userId
+                }
+            });
+
+            return payments;
+        } catch (error) {
+            throw new Error(`Error fetching payments: ${ error.message}`);
+        }
+    }
 }
 
 module.exports = PaymentsService;

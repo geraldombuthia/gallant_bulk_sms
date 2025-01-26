@@ -12,7 +12,7 @@ class CreditService {
     constructor() {
 
     }
-    pricePerEmailUnit = 0.0001; // Email
+    pricePerEmailUnit = 0.001; // Email
     pricePerSMSUnit = 0.8; // SMS
     /**
      * @brief Creates a transaction to be stored to 
@@ -67,15 +67,26 @@ class CreditService {
 
     }
 
-    async getBalance(userId, productType) {
+    async getBalance(userId, productType = "all") {
         const creditProvider = new CreditHandlerFactory();
+        // productType is either email, sms or both
 
+        if (productType === "all") {
+            const emailProvider = creditProvider.getProvider("email");
+            const smsProvider = creditProvider.getProvider("sms");
+
+            const emailBalance = await emailProvider.checkBalance(userId);
+            const smsBalance = await smsProvider.checkBalance(userId);
+            
+            console.log("Check this out", emailBalance.get({plain: true}), smsBalance);
+            return {emailBalance: emailBalance.get({plain: true}), smsBalance};
+        }
         const provider = creditProvider.getProvider(productType);
 
         const balance =  await provider.checkSMSBalance(userId);
 
         console.log(balance);
-        return balance;
+        return {balance};
     }
 
 }
