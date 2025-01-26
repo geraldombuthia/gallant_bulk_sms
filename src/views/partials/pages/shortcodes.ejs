@@ -1,0 +1,154 @@
+<!-- Short Code Management -->
+<section id="shortcodes" class="content-section">
+    <%- include('../greeting', {user:user}) %>
+  <h2>SenderID Management</h2>
+  <!-- Shortcode Overview -->
+  <div class="api-key-card">
+    <div class="api-key-header">
+      <h3>Active SenderIDs</h3>
+      <button class="shortcode-action-button">
+        <i class="fas fa-plus"></i> Request New SenderID
+      </button>
+    </div>
+
+    <div class="shortcode-grid">
+      <div class="shortcode-card">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+          "
+        >
+          <div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem">
+              GallantByte
+            </h3>
+            <span class="status-badge status-active">Active</span>
+          </div>
+          <button class="shortcode-action-button" style="padding: 0.5rem">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <p style="color: #6c757d; margin-bottom: 1rem">Monthly Usage</p>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+          "
+        >
+          <span>147,582 / 200,000</span>
+          <span>73.8%</span>
+        </div>
+        <div class="usage-bar">
+          <div class="usage-progress" style="width: 73.8%"></div>
+        </div>
+      </div>
+
+      <div class="shortcode-card">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+          "
+        >
+          <div>
+            <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem">Persona</h3>
+            <span class="status-badge status-pending">Pending</span>
+          </div>
+          <button class="shortcode-action-button" style="padding: 0.5rem">
+            <i class="fas fa-cog"></i>
+          </button>
+        </div>
+        <p style="color: #6c757d; margin-bottom: 1rem">Monthly Usage</p>
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+          "
+        >
+          <span>0 / 100,000</span>
+          <span>0%</span>
+        </div>
+        <div class="usage-bar">
+          <div class="usage-progress" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Shortcode Details -->
+  <div class="api-key-card">
+    <div class="api-key-header">
+      <h3>SenderID Details</h3>
+      <div>
+        <button class="action-button" style="margin-right: 0.5rem">
+          <i class="fas fa-download"></i> Export Report
+        </button>
+        <button class="action-button">
+          <i class="fas fa-filter"></i> Filter
+        </button>
+      </div>
+    </div>
+
+    <table class="shortcode-table">
+      <thead>
+        <tr>
+          <th>SenderID</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Monthly Limit</th>
+          <th>Expiry Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>GallantSMS</td>
+          <td>Dedicated</td>
+          <td><span class="status-badge status-active">Active</span></td>
+          <td>200,000 SMS</td>
+          <td>Dec 31, 2024</td>
+          <td>
+            <button class="action-button" style="padding: 0.5rem">
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>Persona</td>
+          <td>Shared</td>
+          <td>
+            <span class="status-badge status-pending">Pending</span>
+          </td>
+          <td>100,000 SMS</td>
+          <td>Pending</td>
+          <td>
+            <button class="action-button" style="padding: 0.5rem">
+              <i class="fas fa-edit"></i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <td>22789</td>
+          <td>Dedicated</td>
+          <td>
+            <span class="status-badge status-expired">Expired</span>
+          </td>
+          <td>150,000 SMS</td>
+          <td>Jan 1, 2024</td>
+          <td>
+            <button class="action-button" style="padding: 0.5rem">
+              <i class="fas fa-sync"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

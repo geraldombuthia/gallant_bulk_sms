@@ -22,7 +22,7 @@ class SMSCreditService {
 
             await transaction.commit();
             await updatedCredit.reload();
-            // console.log("Updated Credits", updatedCredit.dataValues);
+            console.log("Updated Credits", updatedCredit.dataValues);
             return updatedCredit.dataValues;
         } catch (error) {
             await transaction.rollback();
@@ -83,14 +83,18 @@ class SMSCreditService {
         try {
             const creditBalance = await SMSCredit.findOne({
                 where: { userId },
-                attributes: ["creditBalance"], // Only fetch the balance field
+                // attributes: ["creditBalance"], // Only fetch the balance field
                 lock: true // Consider not using for less critical checks
             });
 
-            return {
-                userId, 
-                creditBalance: creditBalance.creditBalance ?? 0
-            }; // Return just value or obj
+            if (!creditBalance) {
+                return {
+                    userId,
+                    creditBalance: 0
+                };
+            }
+
+            return creditBalance.get({ plain: true });
         } catch(error) {
             console.error("Failed to fetch credit balance",{
                 message: error.message,

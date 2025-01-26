@@ -21,7 +21,7 @@ class EmailCreditService {
             await transaction.commit();
             await updatedCredit.reload();
             // console.log("Updated Credits", updatedCredit.dataValues);
-            return updatedCredit.dataValues;
+            return updatedCredit.get({ plain: true });
 
         } catch (error) {
             await transaction.rollback();
@@ -75,7 +75,6 @@ class EmailCreditService {
         try {
             const creditBalance = await EmailCredit.findOne({
                 where: { userId },
-                attributes: ["creditBalance"],
                 lock: true
             });
 

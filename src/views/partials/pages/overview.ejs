@@ -1,0 +1,207 @@
+<section id="overview" class="content-section">
+  <%- include('../greeting', {user:user}) %>
+  <h2>Account Overview</h2>
+  <div class="stats-grid">
+    <!-- Account Balance -->
+    <div class="stats-card">
+      <div class="stats-icon">
+        <i class="fa-solid fa-wallet"></i>
+      </div>
+      <div class="stats-info">
+        <h3>Account Balance</h3>
+        <p class="stats-value balance">
+          $<%= overviewData.credits.smsBalance.creditBalance || 0 %>
+        </p>
+        <button class="action-button">Recharge Now</button>
+      </div>
+    </div>
+    <div class="stats-card">
+      <div class="stats-icon">
+        <i class="fa-solid fa-tags"></i>
+      </div>
+      <div class="stats-info">
+        <h3>SMS Pricing (per sms)</h3>
+        <p class="stats-value pricing-value">
+          $<%= (Number(overviewData.credits.smsBalance.price_per_unit) ||
+          0).toFixed(2)%>
+        </p>
+        <button class="action-button">View Full Pricing</button>
+      </div>
+    </div>
+    <div class="stats-card">
+      <div class="stats-icon">
+        <i class="fa-solid fa-key"></i>
+      </div>
+      <div class="stats-info">
+        <h3>API Details</h3>
+        <div class="api-key-container">
+          <p class="stats-value api-value" id="api-key-display" data-apikey="<%= overviewData.user.apikey %>">
+            $<%= overviewData.user.apikey.slice(0, 6) + '...' +
+            overviewData.user.apikey.slice(-5) %>
+          </p>
+          <button class="copy-button" data-target="#api-key-display">
+            <i class="fas fa-copy"></i>
+          </button>
+        </div>
+        <button class="action-button">Manage API Keys</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="activity-grid">
+    <div class="activity-card">
+      <div class="card-header">
+        <h3><i class="fa-solid fa-history"></i> Recent Activity</h3>
+      </div>
+      <!-- Inside the activity-list div -->
+      <div class="activity-list">
+        <% const limitedActivities = activities && activities.length ?
+        activities.slice(0, 3) : []; %> <% if (limitedActivities.length > 0) {
+        %> <% limitedActivities.forEach(function(activity) { %>
+        <div class="activity-item">
+          <div class="activity-info">
+            <span class="activity-type"><%= activity.type %></span>
+            <span class="activity-recipient"><%= activity.recipient %></span>
+          </div>
+          <div class="activity-status">
+            <% if (activity.status === 'delivered') { %>
+            <span class="status-delivered">Delivered</span>
+            <% } else if (activity.status === 'success') { %>
+            <span class="status-success">Success</span>
+            <% } else { %>
+            <span class="status-failed">Failed</span>
+            <% } %>
+            <span class="activity-time"
+              ><%= formatTimeAgo(activity.createdAt) %></span
+            >
+          </div>
+        </div>
+        <% }); %> <% if (activities.length > 3) { %>
+        <div class="view-all-container">
+          <a href="/all-activities" class="view-all-link"
+            >View All Activities</a
+          >
+        </div>
+        <% } %> <% } else { %>
+        <div class="empty-state">
+          <i class="fas fa-history empty-state-icon"></i>
+          <p class="empty-state-message">No recent activity</p>
+          <button class="action-button">Send SMS</button>
+        </div>
+        <% } %>
+      </div>
+    </div>
+    <div class="notifications-card">
+      <div class="card-header">
+        <h3><i class="fa-solid fa-bell"></i> Notifications</h3>
+      </div>
+      <!-- Inside the notifications-list div -->
+      <div class="notifications-list">
+        <% const limitedNotifications = notifications ? notifications.slice(0,
+        3) : []; %> <% if (limitedNotifications.length > 0) { %> <%
+        limitedNotifications.forEach(function(notification) { %>
+        <div class="notification-item">
+          <p class="notification-message"><%= notification.message %></p>
+          <span class="notification-time">
+            <%= formatTimeAgo(notification.createdAt) %>
+          </span>
+        </div>
+        <% }); %> <% if (notifications.length > 3) { %>
+        <div class="view-all-container">
+          <a href="/all-notifications" class="view-all-link"
+            >View All Notifications</a
+          >
+        </div>
+        <% } %> <% } else { %>
+        <div class="empty-state">
+          <i class="fas fa-bell empty-state-icon"></i>
+          <p class="empty-state-message">No notifications</p>
+          <button class="action-button">Check Updates</button>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-links-section">
+    <h3><i class="fa-solid fa-link"></i>Quick Links</h3>
+    <div class="quick-links-grid">
+      <button class="quick-link-button">
+        <i class="fa-solid fa-paper-plane"></i>
+        Send SMS
+      </button>
+      <button class="quick-link-button">
+        <i class="fa-solid fa-credit-card"></i>
+        Recharge
+      </button>
+      <button class="quick-link-button">
+        <i class="fa-solid fa-list"></i>
+        View Logs
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document
+      .querySelector(".action-button")
+      .addEventListener("click", async () => {
+        try {
+          const response = await fetch("/api/notifications");
+          const newNotifications = await response.json();
+          // Update notifications list in the DOM
+        } catch (error) {
+          console.error("Failed to fetch notifications", error);
+        }
+      });
+
+    // Function to handle copying text
+    function copyToClipboard(textToCopy, buttonElement) {
+      // Create a temporary textarea element
+      const tempTextArea = document.createElement("textarea");
+      tempTextArea.value = textToCopy;
+      document.body.appendChild(tempTextArea);
+
+      // Select the text
+      tempTextArea.select();
+      tempTextArea.setSelectionRange(0, 99999); // For mobile devices
+
+      // Copy the text
+      try {
+        const successful = document.execCommand("copy");
+        const msg = successful ? "Copied!" : "Copy failed";
+
+        // Temporary button state change
+        const originalText = buttonElement.textContent;
+        buttonElement.textContent = msg;
+        buttonElement.classList.add("copied");
+
+        // Revert back after 2 seconds
+        setTimeout(() => {
+          buttonElement.textContent = originalText;
+          buttonElement.classList.remove("copied");
+        }, 2000);
+      } catch (err) {
+        console.error("Copying failed", err);
+      }
+
+      // Remove the temporary textarea
+      document.body.removeChild(tempTextArea);
+    }
+
+    // Setup copy buttons
+    const copyButtons = document.querySelectorAll(".copy-button");
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", (e) => {
+        // Get the target element to copy from
+        const targetElement = button.closest('.api-key-container').querySelector('.api-value');
+
+        if (targetElement) {
+          const apiKey = targetElement.dataset.apikey;
+          copyToClipboard(apiKey, button);
+        }
+      });
+    });
+  });
+</script>

@@ -1,0 +1,146 @@
+<!-- User Profile -->
+<section id="profile" class="content-section">
+    <%- include('../greeting', {user:user}) %>
+  <h2>User Profile</h2>
+  <!-- Profile Information -->
+  <div class="api-key-card">
+    <div class="api-key-header">
+      <h3>Profile Information</h3>
+      <button class="action-button" style="width: auto">
+        <i class="fas fa-save"></i> Save Changes
+      </button>
+    </div>
+
+    <div class="profile-grid">
+      <div class="profile-sidebar">
+        <div class="profile-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <button class="action-button" style="width: 100%; margin-bottom: 1rem">
+          <i class="fas fa-camera"></i> Change Photo
+        </button>
+        <div class="verification-badge">
+          <i class="fas fa-check-circle" style="margin-right: 0.5rem"></i>
+          Verified Account
+        </div>
+      </div>
+
+      <div class="profile-details">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" class="form-input" value="John" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" class="form-input" value="Doe" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-input" value="john.doe@example.com" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" class="form-input" value="+254 712 345 678" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Company Name</label>
+          <input type="text" class="form-input" value="Tech Solutions Ltd" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Security Settings -->
+  <div class="api-key-card">
+    <div class="api-key-header">
+      <h3>Security Settings</h3>
+    </div>
+
+    <div class="security-grid">
+      <div class="security-card">
+        <h4 style="margin-bottom: 1rem">Change Password</h4>
+        <div class="form-group">
+          <label class="form-label">Current Password</label>
+          <input type="password" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">New Password</label>
+          <input type="password" class="form-input" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm New Password</label>
+          <input type="password" class="form-input" />
+        </div>
+        <button class="action-button" style="width: 100%">
+          Update Password
+        </button>
+      </div>
+
+      <div class="security-card">
+        <h4 style="margin-bottom: 1rem">Two-Factor Authentication</h4>
+        <p style="margin-bottom: 1rem; color: #6c757d">
+          Enhance your account security by enabling two-factor authentication.
+        </p>
+        <button class="action-button" style="width: 100%">
+          <i class="fas fa-shield-alt"></i> Enable 2FA
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Notification Preferences -->
+  <div class="api-key-card">
+    <div class="api-key-header">
+      <h3>Notification Preferences</h3>
+    </div>
+
+    <div style="display: grid; gap: 1rem">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem;
+          background: #f8f9fa;
+          border-radius: 5px;
+        "
+      >
+        <div>
+          <h4>Email Notifications</h4>
+          <p style="color: #6c757d">
+            Receive updates about your account activity
+          </p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" checked />
+          <span class="slider round"></span>
+        </label>
+      </div>
+
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem;
+          background: #f8f9fa;
+          border-radius: 5px;
+        "
+      >
+        <div>
+          <h4>SMS Notifications</h4>
+          <p style="color: #6c757d">
+            Get alerts about important account events
+          </p>
+        </div>
+        <label class="switch">
+          <input type="checkbox" />
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</section>

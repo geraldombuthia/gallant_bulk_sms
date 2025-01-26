@@ -27,4 +27,17 @@ async function testConnection() {
     }
 }
 
-module.exports = { sequelize, testConnection };
+// Sync models with the database
+const syncDatabase = async () => {
+    try {
+      // Sync all models
+      await sequelize.sync({ force: false, alter: false }); 
+      // force: false ensures that it doesn't drop the tables
+      // alter: false ensures that it doesn't alter the tables
+      console.log("Database synced successfully");
+    } catch (error) {
+      console.error("Error syncing the database:", error);
+    }
+  };
+
+module.exports = { sequelize, testConnection, syncDatabase };
