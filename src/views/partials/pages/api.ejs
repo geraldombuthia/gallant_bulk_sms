@@ -1,79 +1,133 @@
-<!-- API Management -->
-
+<!-- API Management Section -->
 <section id="api" class="content-section">
-    <%- include('../greeting', {user:user}) %>
-    <h2>API Management</h2>
-    <div class="api-key-card">
-      <div class="api-key-header">
-        <h3><i class="fa-solid fa-key"></i> API Keys</h3>
-        <button class="action-button" style="width: auto">
-          Generate New API
-        </button>
-      </div>
-      <div class="api-key-value">
-        <span>sk_live_12345abcdef...</span>
-        <button class="copy-btn" title="Copy API key">
-          <i class="fas fa-copy"></i>
-        </button>
-      </div>
-      <div class="api-key-value">
-        <span>sk_test_12345abcdef...</span>
-        <button class="copy-btn" title="Copy API key">
-          <i class="fas fa-copy"></i>
-        </button>
-      </div>
+  <%- include('../greeting', {user:user}) %>
+  <h2>API Management</h2>
+
+  <div class="api-key-card">
+    <div class="api-key-header">
+      <h3><i class="fa-solid fa-key"></i> API Keys</h3>
+      <button class="action-button" style="width: auto">
+        Generate New API
+      </button>
     </div>
-    <div class="api-usage-grid">
-      <div class="usage-card">
-        <h3>Total API calls</h3>
-        <p class="usage-value">45,287</p>
-        <p>Last 30 days</p>
-      </div>
-      <div class="usage-card">
-        <h3>Success Rate</h3>
-        <p class="usage-value">99.8%</p>
-        <p>Average response time: 245ms</p>
-      </div>
-      <div class="usage-card">
-        <h3>Active Integrations</h3>
-        <p class="usage-value">12</p>
-      </div>
+
+    <!-- <% if (user.apikey && user.apikey.length > 0) { %>
+          <% user.apikey.forEach(function(apikey) { %>
+              <div class="api-key-value">
+                  <span><%= apikey.masked ? apikey.masked : apikey.key %></span>
+                  <button class="copy-btn" title="Copy API key" data-key="<%= apikey.key %>">
+                      <i class="fas fa-copy"></i>
+                  </button>
+              </div>
+          <% }); %>
+      <% } else { %>
+          <div class="empty-state">
+              <p>No API keys generated yet.</p>
+              <button class="action-button">Generate First API Key</button>
+          </div>
+      <% } %> -->
+    <% if (user.apikey && user.apikey.length > 0) { %>
+    <div class="api-key-value">
+      <span
+        ><%= user.apikey.masked ? user.apikey.masked : user.apikey.key %></span
+      >
+      <button
+        class="copy-btn"
+        title="Copy API key"
+        data-key="<%= user.apikey.key %>"
+      >
+        <i class="fas fa-copy"></i>
+      </button>
     </div>
-    <div class="api-logs">
-      <h3>Recent API logs</h3>
-      <table class="log-table">
-        <thead>
-          <tr>
-            <th>TimeStamp</th>
-            <th>Nethod</th>
-            <th>Endpoint</th>
-            <th>Status</th>
-            <th>Response Time</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>2025-01-19 14:23:15</td>
-            <td><span class="method-badge method-post">POST</span></td>
-            <td>/api/v1/messages/send</td>
-            <td><span class="status-success">200 OK</span></td>
-            <td>234ms</td>
-          </tr>
-          <tr>
-            <td>2025-01-19 14:22:45</td>
-            <td><span class="method-badge method-get">GET</span></td>
-            <td>/api/v1/messages/status</td>
-            <td><span class="status-success">200 OK</span></td>
-            <td>187ms</td>
-          </tr>
-          <tr>
-            <td>2025-01-19 14:21:30</td>
-            <td><span class="method-badge method-post">POST</span></td>
-            <td>/api/v1/messages/bulk</td>
-            <td><span class="status-error">429 Rate Limited</span></td>
-            <td>156ms</td>
-          </tr>
-        </tbody>
-      </table>
+    <% } else { %>
+    <div class="empty-state">
+      <p>No API key generated yet.</p>
+      <button class="action-button">Generate First API Key</button>
     </div>
-  </section>
+    <% } %>
+  </div>
+
+  <% if (user.apiUsage) { %>
+  <div class="api-usage-grid">
+    <div class="usage-card">
+      <h3>Total API calls</h3>
+      <p class="usage-value">
+        <%= user.apiUsage.totalCalls.toLocaleString() %>
+      </p>
+      <p>Last 30 days</p>
+    </div>
+    <div class="usage-card">
+      <h3>Success Rate</h3>
+      <p class="usage-value"><%= user.apiUsage.successRate %>%</p>
+      <p>Average response time: <%= user.apiUsage.averageResponseTime %>ms</p>
+    </div>
+    <div class="usage-card">
+      <h3>Active Integrations</h3>
+      <p class="usage-value"><%= user.apiUsage.activeIntegrations %></p>
+    </div>
+  </div>
+  <% } else { %>
+  <div class="empty-state">
+    <p>No API usage data available</p>
+  </div>
+  <% } %>
+
+  <div class="api-logs">
+    <h3>Recent API logs</h3>
+    <% if (user.apiLogs && user.apiLogs.length > 0) { %>
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th>TimeStamp</th>
+          <th>Method</th>
+          <th>Endpoint</th>
+          <th>Status</th>
+          <th>Response Time</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% user.apiLogs.forEach(function(log) { %>
+        <tr>
+          <td><%= log.timestamp %></td>
+          <td>
+            <span class="method-badge method-<%= log.method.toLowerCase() %>"
+              ><%= log.method %></span
+            >
+          </td>
+          <td><%= log.endpoint %></td>
+          <td>
+            <span
+              class="status-<%= log.status >= 200 && log.status < 300 ? 'success' : 'error' %>"
+              ><%= log.status %> <%= log.statusText %></span
+            >
+          </td>
+          <td><%= log.responseTime %>ms</td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <% } else { %>
+    <div class="empty-state">
+      <p>No recent API logs</p>
+    </div>
+    <% } %>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Copy API key functionality
+    const copyButtons = document.querySelectorAll(".copy-btn");
+    copyButtons.forEach((button) => {
+      button.addEventListener("click", function () {
+        const apikey = this.getAttribute("data-key");
+        navigator.clipboard.writeText(apikey).then(() => {
+          this.innerHTML = '<i class="fas fa-check"></i>';
+          setTimeout(() => {
+            this.innerHTML = '<i class="fas fa-copy"></i>';
+          }, 2000);
+        });
+      });
+    });
+  });
+</script>
