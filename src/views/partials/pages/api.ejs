@@ -10,31 +10,13 @@
         Generate New API
       </button>
     </div>
-
-    <!-- <% if (user.apikey && user.apikey.length > 0) { %>
-          <% user.apikey.forEach(function(apikey) { %>
-              <div class="api-key-value">
-                  <span><%= apikey.masked ? apikey.masked : apikey.key %></span>
-                  <button class="copy-btn" title="Copy API key" data-key="<%= apikey.key %>">
-                      <i class="fas fa-copy"></i>
-                  </button>
-              </div>
-          <% }); %>
-      <% } else { %>
-          <div class="empty-state">
-              <p>No API keys generated yet.</p>
-              <button class="action-button">Generate First API Key</button>
-          </div>
-      <% } %> -->
-    <% if (user.apikey && user.apikey.length > 0) { %>
+    <% if (user.apikey) { %>
     <div class="api-key-value">
-      <span
-        ><%= user.apikey.masked ? user.apikey.masked : user.apikey.key %></span
-      >
+      <span><%= user.apikey %></span>
       <button
         class="copy-btn"
         title="Copy API key"
-        data-key="<%= user.apikey.key %>"
+        data-key="<%= user.apikey %>"
       >
         <i class="fas fa-copy"></i>
       </button>
@@ -122,7 +104,7 @@
       button.addEventListener("click", function () {
         const apikey = this.getAttribute("data-key");
         navigator.clipboard.writeText(apikey).then(() => {
-          this.innerHTML = '<i class="fas fa-check"></i>';
+          this.innerHTML = '<i class="fas fa-check"></i> copied';
           setTimeout(() => {
             this.innerHTML = '<i class="fas fa-copy"></i>';
           }, 2000);

@@ -6,7 +6,7 @@
       <h3>Confirm Payment Request</h3>
     </div>
     <div class="modal-body" style="color: rgb(99, 98, 98)">
-      <p><strong>Amount:</strong> <span id="confirmAmount">KES 0</span></p>
+      <p><strong>Amount:</strong> KES<span id="confirmAmount">0</span></p>
       <p><strong>M-Pesa Number:</strong> <span id="confirmNumber"></span></p>
       <p style="margin-top: 15px">
         Click confirm to proceed with the payment request.
@@ -20,7 +20,7 @@
       >
         Cancel
       </button>
-      <button class="action-button" onclick="submitPayment()">
+      <button class="action-button" id="confirmPaymentBtn" onclick="submitPayment()">
         Confirm Payment
       </button>
     </div>

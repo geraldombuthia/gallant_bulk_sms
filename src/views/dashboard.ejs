@@ -1,244 +1,280 @@
 <%-include('partials/head', {currentPage: pageTitle})%>
 
-  <head>
-    <link rel="stylesheet" href="/css/dashboard.css" />
-  </head>
+<head>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
 
-  <body>
-    <button class="navmenu-toggle" arial-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-    <div class="dashboard">
-      <!-- Sidebar -->
-      <%- include('partials/sidebar', {currentPage: pageTitle}); %>
-        <!-- Main Content -->
-        <div class="main-content">
-          <%- include('partials/notification'); %>
-            <!-- Account Overview -->
-            <%- body %>
-        </div>
+<body>
+  <button class="navmenu-toggle" arial-label="Toggle navigation">
+    <i class="fas fa-bars"></i>
+  </button>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <%- include('partials/sidebar', {currentPage: pageTitle}); %>
+    <!-- Main Content -->
+    <div class="main-content">
+      <%- include('partials/notification'); %>
+      <!-- Account Overview -->
+      <%- body %>
     </div>
-  </body>
+  </div>
+</body>
 
-  <script src="/js/dashboard.js"></script>
-  <!--<script src="/js/main.js"></script>-->
-  <script>
-    let currentRate = 0;
-    let planName = "";
-    let usageRange = "";
-    //Modal Functionality
-    function openModal(modalId) {
-      const modal = document.getElementById(modalId);
-      modal.style.display = "block";
+<script src="/js/dashboard.js"></script>
+<!--<script src="/js/main.js"></script>-->
+<script>
+  let currentRate = 0;
+  let planName = "";
+  let usageRange = "";
+  //Modal Functionality
+  function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = "block";
 
-      if (modalId == "planModal") {
-        const modalHeader = modal.querySelector(".modal-header");
-        modalHeader.querySelector(
-          "h3"
-        ).textContent = `${planName}  (${usageRange})`;
-      }
+    if (modalId == "planModal") {
+      const modalHeader = modal.querySelector(".modal-header");
+      modalHeader.querySelector(
+        "h3"
+      ).textContent = `${planName}  (${usageRange})`;
     }
+  }
 
-    function closeModal(modalId) {
-      const modal = document.getElementById(modalId);
-      modal.style.display = "none";
-      const modal_inputs = modal.querySelectorAll("input");
+  function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    modal.style.display = "none";
+    const modal_inputs = modal.querySelectorAll("input");
 
-      console.log(
-        modal_inputs.forEach((input) => {
-          console.log(input.value);
-        })
-      );
+    console.log(
+      modal_inputs.forEach((input) => {
+        console.log(input.value);
+      })
+    );
+  }
+
+  window.onclick = function (ev) {
+    if (ev.target.classList.contains("modal")) {
+      event.target.style.display = "none";
     }
+  };
 
-    window.onclick = function (ev) {
-      if (ev.target.classList.contains("modal")) {
-        event.target.style.display = "none";
-      }
+  //close button functionality
+  document.querySelectorAll(".close-modal").forEach((button) => {
+    button.onclick = function () {
+      this.closest(".modal").style.display = "none";
     };
+  });
 
-    //close button functionality
-    document.querySelectorAll(".close-modal").forEach((button) => {
-      button.onclick = function () {
-        this.closest(".modal").style.display = "none";
-      };
-    });
+  document.querySelectorAll(".plan-button").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      //Get the clicked button
+      const clickedButton = event.target;
 
+      const usageCard = clickedButton.closest(".usage-card");
 
-    document.querySelectorAll(".plan-button").forEach((button) => {
-      button.addEventListener("click", (event) => {
-        //Get the clicked button
-        const clickedButton = event.target;
+      const plan = usageCard.querySelector("h3");
 
-        const usageCard = clickedButton.closest(".usage-card");
+      const usageValue = usageCard.querySelector(".usage-value");
 
-        const plan = usageCard.querySelector("h3");
+      const usageSMSRange = usageCard.querySelector(".usage-sms-range");
 
-        const usageValue = usageCard.querySelector(".usage-value");
-
-        const usageSMSRange = usageCard.querySelector(".usage-sms-range");
-
-        if (usageValue) {
-          console.log("Usage Value:", usageValue.textContent);
-          console.log("Plan name", plan.textContent);
-          // alert(`Selected Plan: ${usageValue.textContent}`);
-          const numericRate = usageValue.textContent.match(/[\d.]+/);
-          console.log(numericRate[0]);
-          currentRate = numericRate[0];
-          planName = plan.textContent;
-          usageRange = usageSMSRange.textContent;
-        } else {
-          console.error("Usage value not found");
-        }
-
-        openModal("planModal");
-      });
-    });
-
-    //Payment Modal functionality
-    function showPaymentConfirmation() {
-      const amount = document.querySelector("#amount-input").value;
-      const mpesanumber = document.querySelector("#mpesa-number-input").value;
-      const confirmBtn = document.getElementById("confirmPaymentBtn");
-      const paymentForm = document.getElementById("paymentForm");
-
-      console.log(amount, mpesanumber);
-      paymentForm.addEventListener("submit", function (event) {
-        event.preventDefault();
-      });
-
-      document.getElementById("confirmAmount").textContent = `KES ${amount}`;
-      document.getElementById("confirmNumber").textContent = mpesanumber;
-
-      openModal("paymentModal");
-    }
-    function submitPayment() {
-      console.log("Submitting Payment...");
-      closeModal("paymentModal");
-    }
-
-    function calculateCost() {
-      const messages = document.getElementById("numMessages").value;
-      const cost = messages * currentRate;
-
-      document.getElementById("totalCost").value = `KES ${cost.toFixed(2)}`;
-    }
-
-    function submitPlanSelection() {
-      //Add your plan Selection
-      console.log("Submitting plan selection...");
-      closeModal("planModal");
-    }
-
-    // Update the onclick handlers for your buttons
-    document.addEventListener("DOMContentLoaded", function () {
-      //update payment request button
-      const paymentForm = document.querySelector("form");
-      const paymentButton = document.querySelector(".payment-btn");
-
-      if (paymentButton) {
-        paymentButton.onclick = function (e) {
-          e.preventDefault();
-          showPaymentConfirmation(); //@TODO: Setup Payment confirmation as a form
-        };
+      if (usageValue) {
+        console.log("Usage Value:", usageValue.textContent);
+        console.log("Plan name", plan.textContent);
+        // alert(`Selected Plan: ${usageValue.textContent}`);
+        const numericRate = usageValue.textContent.match(/[\d.]+/);
+        console.log(numericRate[0]);
+        currentRate = numericRate[0];
+        planName = plan.textContent;
+        usageRange = usageSMSRange.textContent;
+      } else {
+        console.error("Usage value not found");
       }
 
-      // const planButtons = document.querySelectorAll(".usage-card .plan-button");
-
-      // planButtons
-      // const flashMessage = document.querySelector(".notification-popup");
-
-      // if (flashMessage) {
-      //   flashMessage.classList.add("show");
-
-      //   //set timer to remove the notification after 3 seconds
-      //   setTimeout(() => {
-      //     flashMessage.classList.remove("show");
-      //   }, 300000);
-      // }
+      openModal("planModal");
     });
-    // Toggle Nav sidebar in menu
-    const navToggle = document.querySelector(".navmenu-toggle");
-    const sidebar = document.querySelector(".sidebar");
-    const links = document.querySelectorAll(".sidebar a");
-    const sections = document.querySelectorAll(".content-section");
+  });
 
-    navToggle.addEventListener("click", () => {
-      sidebar.classList.toggle("active");
-      const icon = navToggle.querySelector("i");
-      icon.classList.toggle("fa-bars");
-      icon.classList.toggle("fa-times");
+  //Payment Modal functionality
+  function showPaymentConfirmation() {
+    console.log("Showing Payment Confirmation...");
+    const amount = document.querySelector("#amount-input").value;
+    const mpesanumber = document.querySelector("#mpesa-number-input").value;
+    const confirmBtn = document.getElementById("confirmPaymentBtn");
+    const paymentForm = document.getElementById("paymentForm");
+
+    console.log(amount, mpesanumber);
+    paymentForm.addEventListener("submit", function (event) {
+      event.preventDefault();
     });
 
-    links.forEach((link) => {
-      link.addEventListener("click", () => {
-        //e.preventDefault(); //May need to be removed due to the server side rendered nature of this
-        const targetId = link.getAttribute("href").substring(1);
+    document.getElementById("confirmAmount").textContent = `${amount}`;
+    document.getElementById("confirmNumber").textContent = mpesanumber;
 
-        // sections.forEach((section) => {
-        //   section.classList.remove("active");
-        //   if (section.id === targetId) section.classList.add("active");
-        // });
+    openModal("paymentModal");
+  }
+  function submitPayment() {
+    // Get form inputs
+    const amountInput = document.getElementById("amount-input");
+    const mpesaNumberInput = document.getElementById("mpesa-number-input");
 
-        // // Update active ink
-        // links.forEach((l) => l.classList.remove("active"));
-        // link.classList.add("active");
-        // sidebar.classList.remove("active");
-        const icon = navToggle.queySlector("i");
-        icon.classList.add("fa-bars");
-        icon.classList.remove("fa-times");
-      });
-    });
-    // openModal("paymentModal");
+    console.log(amountInput.value, mpesaNumberInput.value);
+    // return;
+  // Prepare URLSearchParams instead of FormData
+  const paymentData = new URLSearchParams();
+  paymentData.append("phoneNumber", mpesaNumberInput.value);
+  paymentData.append("amount", amountInput.value);
+  paymentData.append("provider", "mpesa");
+  paymentData.append("currency", "KE");
+  paymentData.append("purchaseType", "sms");
 
-    function switchTab(tab) {
-      // Hide all tab contents
-      document.getElementById("docs-content").style.display = "none";
-      document.getElementById("chat-content").style.display = "none";
-
-      // Show selected tab content
-      document.getElementById(tab + "-content").style.display = "block";
-
-      // Update tab buttons
-      const buttons = document.querySelectorAll(".tab-button");
-      buttons.forEach((button) => button.classList.remove("active"));
-      event.target.classList.add("active");
-    }
-
-    // Chat functionality
-    const chatInput = document.querySelector(".chat-input input");
-    const chatMessages = document.querySelector(".chat-messages");
-    const sendButton = document.querySelector(".chat-input .action-button");
-
-    function addMessage(message, isUser) {
-      const messageDiv = document.createElement("div");
-      messageDiv.classList.add("message");
-      messageDiv.classList.add(isUser ? "user" : "agent");
-      messageDiv.textContent = message;
-      chatMessages.appendChild(messageDiv);
-      chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-    if (sendButton) {
-      sendButton.addEventListener("click", () => {
-        if (chatInput.value.trim()) {
-          addMessage(chatInput.value, true);
-          chatInput.value = "";
-
-          // Simulate agent response
-          setTimeout(() => {
-            addMessage(
-              "Thanks for your message. An agent will respond shortly.",
-              false
-            );
-          }, 1000);
+    console.log(paymentData)
+    // return ;
+    // Disable submit button and show loading state
+    const submitButton = document.getElementById("confirmPaymentBtn");
+    submitButton.disabled = true;
+    submitButton.innerHTML =
+      'Processing... <i class="fas fa-spinner fa-spin"></i>';
+    console.log(paymentData);
+    // Send payment request
+    fetch("/pay/mpesa", {
+      method: "POST",
+      body: paymentData,
+    })
+      .then((response) => {
+        console.log(response)
+        if (!response.ok) {
+          // Throw an error for non-200 responses
+          return response.json().then((err) => {
+            throw err;
+          });
         }
+        return response.json();
+      })
+      .then((data) => {
+        // Payment successful
+        showNotification('success', 'Success', 'Payment processed successfully\n Check your phone for payment prompt');
+        closeModal("paymentModal");
+        // Reset form
+        amountInput.value = "";
+        mpesaNumberInput.value = "";
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error("Payment error:", error);
+        // alert(error.message || "Payment failed. Please try again.");
+        showNotification('error', 'Error', error.message || 'Payment failed. Please try again.');
+      })
+      .finally(() => {
+        // Re-enable submit button
+        submitButton.disabled = false;
+        submitButton.innerHTML =
+          '<i class="fas fa-money-bill"></i> Confirm Payment';
+        amountInput.value = "";
+        mpesaNumberInput.value = "";
+        closeModal("paymentModal");
+        showNotification('success', 'Success', 'Payment processed successfully');
       });
+  }
+
+  function calculateCost() {
+    const messages = document.getElementById("numMessages").value;
+    const cost = messages * currentRate;
+
+    document.getElementById("totalCost").value = `KES ${cost.toFixed(2)}`;
+  }
+
+  function submitPlanSelection() {
+    //Add your plan Selection
+    console.log("Submitting plan selection...");
+    closeModal("planModal");
+  }
+
+  // Update the onclick handlers for your buttons
+  document.addEventListener("DOMContentLoaded", function () {
+    //update payment request button
+    const paymentForm = document.querySelector("form");
+    const paymentButton = document.querySelector(".payment-btn");
+
+    if (paymentButton) {
+      paymentButton.onclick = function (e) {
+        e.preventDefault();
+        showPaymentConfirmation(); //@TODO: Setup Payment confirmation as a form
+      };
     }
-    if (chatInput) {
-      chatInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter" && chatInput.value.trim()) {
-          sendButton.click();
-        }
-      });
-    }
-  </script>
+  });
+  // Toggle Nav sidebar in menu
+  const navToggle = document.querySelector(".navmenu-toggle");
+  const sidebar = document.querySelector(".sidebar");
+  const links = document.querySelectorAll(".sidebar a");
+  const sections = document.querySelectorAll(".content-section");
+
+  navToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("active");
+    const icon = navToggle.querySelector("i");
+    icon.classList.toggle("fa-bars");
+    icon.classList.toggle("fa-times");
+  });
+
+  links.forEach((link) => {
+    link.addEventListener("click", () => {
+      //e.preventDefault(); //May need to be removed due to the server side rendered nature of this
+      const targetId = link.getAttribute("href").substring(1);
+
+      const icon = navToggle.queySlector("i");
+      icon.classList.add("fa-bars");
+      icon.classList.remove("fa-times");
+    });
+  });
+  // openModal("paymentModal");
+
+  function switchTab(tab) {
+    // Hide all tab contents
+    document.getElementById("docs-content").style.display = "none";
+    document.getElementById("chat-content").style.display = "none";
+
+    // Show selected tab content
+    document.getElementById(tab + "-content").style.display = "block";
+
+    // Update tab buttons
+    const buttons = document.querySelectorAll(".tab-button");
+    buttons.forEach((button) => button.classList.remove("active"));
+    event.target.classList.add("active");
+  }
+
+  // Chat functionality
+  const chatInput = document.querySelector(".chat-input input");
+  const chatMessages = document.querySelector(".chat-messages");
+  const sendButton = document.querySelector(".chat-input .action-button");
+
+  function addMessage(message, isUser) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+    messageDiv.classList.add(isUser ? "user" : "agent");
+    messageDiv.textContent = message;
+    chatMessages.appendChild(messageDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+  if (sendButton) {
+    sendButton.addEventListener("click", () => {
+      if (chatInput.value.trim()) {
+        addMessage(chatInput.value, true);
+        chatInput.value = "";
+
+        // Simulate agent response
+        setTimeout(() => {
+          addMessage(
+            "Thanks for your message. An agent will respond shortly.",
+            false
+          );
+        }, 1000);
+      }
+    });
+  }
+  if (chatInput) {
+    chatInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter" && chatInput.value.trim()) {
+        sendButton.click();
+      }
+    });
+  }
+</script>

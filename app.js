@@ -136,6 +136,3 @@ app.route("/dashboard").get(isAuthenticated, (req, res) => {
   res.render("dashboard.ejs", { user: req.user });
 });
 
-// app.listen(port, () => {
-//   console.log(`Listening on port: ${port}`);
-// });

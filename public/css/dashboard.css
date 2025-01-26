@@ -229,6 +229,7 @@ body {
 .activity-list,
 .notifications-list {
   padding: 1rem;
+  border-radius: 10px;
 }
 
 .activity-item,
@@ -586,7 +587,7 @@ h3,
 
 .details-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
 
@@ -682,6 +683,7 @@ h3,
   border-radius:0px;
   box-shadow: 0 2px 4px rba(0,0,0,0.1);
   overflow: hidden;
+  border-radius: 10px;
 }
 .api-key-container {
   display: flex;
@@ -1160,8 +1162,6 @@ button:hover {
   }
 
   .stats-grid,
-
-  .details-grid,
   .activity-grid,
   .profile-grid,
   .security-grid,

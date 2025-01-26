@@ -35,6 +35,7 @@ class PaymentController {
      */
     
         try {
+            console.log("Payment Request", req.body);
             
             const validateNumber = parsePhoneNumberWithError(String(phoneNumber), {
                 defaultCountry: "KE"

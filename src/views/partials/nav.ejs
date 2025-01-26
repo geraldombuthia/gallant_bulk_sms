@@ -13,8 +13,8 @@
       <a href="#contact">Contact</a>
 
       <% if (typeof user !== 'undefined' && user) {%>
-        <li><a href="/dashboard">Dashboard</a></li>
-        <li><a href="/auth/logout">Logout</a></li>
+        <a href="/auth/login" class="action-button">Login</a>
+        <a href="/auth/register" class="action-button signup-button">Signup</a>
       <% } else { %>
         <a href="/auth/login" class="action-button">Login</a>
         <a href="/auth/register" class="action-button signup-button">Signup</a>
