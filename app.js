@@ -29,15 +29,15 @@ const port = 3000;
 EventEmitter.defaultMaxListeners = 20;
 // Call syncDatabase before starting the server
 syncDatabase()
-  .then(() => {
+    .then(() => {
     // Start your server once the database is synced
-    app.listen(port, () => {
-      console.log(`Server running on http://localhost:${port}`);
+        app.listen(port, () => {
+            console.log(`Server running on http://localhost:${port}`);
+        });
+    })
+    .catch((error) => {
+        console.error("Error starting the server:", error);
     });
-  })
-  .catch((error) => {
-    console.error("Error starting the server:", error);
-  });
 
 testConnection();
 
@@ -65,20 +65,20 @@ app.set("views", path.join(__dirname, "/src/views"));
 // };
 
 app.use(
-  session({
-    secret: [
-      process.env.SESSION_SECRET_PRIMARY,
-      process.env.SESSION_SECRET_SECONDARY,
-    ],
-    resave: false,
-    saveUninitialized: false,
-    name: "sessionId",
-    cookie: {
-      maxAge: 1000 * 60 * 60 * 24, // 1 day
-      secure: process.env.NODE_ENV === "production", // only transmit over HTTPS
-      httpOnly: true, // prevents client-side JS from reading the cookie
-    },
-  })
+    session({
+        secret: [
+            process.env.SESSION_SECRET_PRIMARY,
+            process.env.SESSION_SECRET_SECONDARY,
+        ],
+        resave: false,
+        saveUninitialized: false,
+        name: "sessionId",
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24, // 1 day
+            secure: process.env.NODE_ENV === "production", // only transmit over HTTPS
+            httpOnly: true, // prevents client-side JS from reading the cookie
+        },
+    })
 );
 app.use(passport.initialize());
 app.use(passport.session());
@@ -89,26 +89,27 @@ app.use(flash()); // Enable flash messages
 //     next();
 // });
 app.use((req, res, next) => {
-  res.locals.success = req.flash("success");
-  res.locals.error = req.flash("error");
-  res.locals.info = req.flash("info");
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    res.locals.info = req.flash("info");
 
-  if (req.user) {
-    const { password, ...userWithoutPassword } = req.user;
-    res.locals.user = userWithoutPassword;
-  } else {
-    res.locals.user = { name: "Guest" };
-  }
-  next();
+    if (req.user) {
+        // eslint-disable-next-line no-unused-vars
+        const { password, ...userWithoutPassword } = req.user;
+        res.locals.user = userWithoutPassword;
+    } else {
+        res.locals.user = { name: "Guest" };
+    }
+    next();
 });
 
 const loginLimiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 15 minutes
-  max: 10, // Limit each IP to 100 requests per `window`
-  message: "Too many requests, please try again later.",
-  handler: (req, res) => {
-    res.redirect("/ratelimit");
-  },
+    windowMs: 10 * 60 * 1000, // 15 minutes
+    max: 10, // Limit each IP to 100 requests per `window`
+    message: "Too many requests, please try again later.",
+    handler: (req, res) => {
+        res.redirect("/ratelimit");
+    },
 });
 
 app.use("/auth", loginLimiter, AuthRoutes);
@@ -119,20 +120,20 @@ app.use("/dashboard", isAuthenticated, dashboardRoutes);
 
 // app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess);
 app.route("/").get((req, res) => {
-  res.render("newindex.ejs", { layout: false });
+    res.render("newindex.ejs", { layout: false });
 });
 
 app.get("/auth/too-many-attempts", (req, res) => {
-  res.render("tooManyAttempts.ejs");
+    res.render("tooManyAttempts.ejs");
 });
 
 app.route("/about").get((req, res) => {
-  res.status(200).json({ msg: "About Gallant Byte SMS" });
+    res.status(200).json({ msg: "About Gallant Byte SMS" });
 });
 app.get("/ratelimit", (req, res) => {
-  res.render("tooManyAttempts.ejs");
+    res.render("tooManyAttempts.ejs");
 });
 app.route("/dashboard").get(isAuthenticated, (req, res) => {
-  res.render("dashboard.ejs", { user: req.user });
+    res.render("dashboard.ejs", { user: req.user });
 });
 

@@ -86,7 +86,7 @@ class CreditService {
         const balance =  await provider.checkSMSBalance(userId);
 
         console.log(balance);
-        return {smsbalance};
+        return {balance};
     }
 
 }

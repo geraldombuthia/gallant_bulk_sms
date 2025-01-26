@@ -231,7 +231,7 @@ class MessageService {
                 channel,
                 error: error.message,
                 stack: error.stack
-        });
+            });
             throw new Error("Error fetching Message History ");
         }
 

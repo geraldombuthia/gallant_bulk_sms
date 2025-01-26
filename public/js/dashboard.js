@@ -1,10 +1,10 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    const links = document.querySelectorAll(".sidebar ul li a");
-    const sections = document.querySelectorAll(".content-section");
+    // const links = document.querySelectorAll(".sidebar ul li a");
+    // const sections = document.querySelectorAll(".content-section");
 
-    // Show the first section by default
-    sections[0].classList.add("active");
+    // // Show the first section by default
+    // sections[0].classList.add("active");
 
     // links.forEach((link) => {
     //     link.addEventListener("click", function (e) {
