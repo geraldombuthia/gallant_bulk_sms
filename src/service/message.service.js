@@ -59,7 +59,7 @@ class MessageService {
                     phoneNumber,
                     message,
                     senderId: (rest && rest.senderId) ? 
-                        rest.senderId : process.env.BULK_SMS_SENDER_ID, // Implement check for shortcode
+                        rest.senderId : process.env.BULK_SMS_SENDER_ID, 
                     deliveryStatus: "pending"
                 };
                 break;
@@ -89,16 +89,16 @@ class MessageService {
             //     messageRecord.toJSON() : "No record returned");
             // console.log("Message record feedback", messageRecord.dataValues);
             let billSend;
-            let usedCredit = 1; //@TODO: Implement access to credit for one sms
+            let usedCredit = 1; // @TODO: Implement access to credit for one sms
             const billingProvider = this.billing.getProvider(channel);
             const currentBalance = billingProvider.checkBalance(userId);
             if (currentBalance < usedCredit) {
-                throw new Error("Insufficient credits");
                 messageRecord.update({
                     deliveryStatus: "failed",
                     providerResponse: JSON.stringify({
                         message: "Insufficient credits"
-                })});
+                    })});
+                throw new Error("Insufficient credits");
             }
             const providerResponse = await provider.sendMessage(recordData);
 
@@ -120,7 +120,7 @@ class MessageService {
             // Update message record with provider response
             await messageRecord.update({
                 deliveryStatus: providerResponse.status,
-                providerId: providerResponse?.messageId,
+                providerId: providerResponse?.messageId, // maybe missing
                 providerResponse: JSON.stringify(responseDetails),
                 cost: providerResponse.credits_used,
                 ...(channel === "email" && {
@@ -129,16 +129,17 @@ class MessageService {
                 })
             });
 
-            // return {
-            //     message: `${channel.toUpperCase()} sent successfully`,
-            //     providerResponse,
-            //     credits_used: usedCredit,
-            //     creditBalance: billSend.creditBalance,
-            //     network: providerResponse?.network, // return relevant information
-            //     userId
-            // };
+            return {
+                ...providerResponse,
+                message: `${channel.toUpperCase()} sent successfully`,
+                providerResponse,
+                credits_used: usedCredit,
+                creditBalance: billSend.creditBalance,
+                network: providerResponse?.network, // return relevant information
+                userId
+            };
             
-            return providerResponse;
+            // return providerResponse;
         } catch (error) {
 
             if (messageRecord) {
@@ -156,7 +157,7 @@ class MessageService {
                 status: "failed",
                 statusCode: 500,
                 message: error.message,
-            }
+            };
 
             // throw new Error(`Message send failed with ${channel} channel: ${error.message}`);
         }

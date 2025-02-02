@@ -1,11 +1,12 @@
 const SMSCreditService = require("../topUps/smsCredit.provider");
 const EmailCreditService = require("../topUps/emailCredit.provider");
+const RegisterCreditService = require("../topUps/registerCredit.provider");
 class CreditHandlerFactory {
     constructor() {
         this.providers = {
             sms: new SMSCreditService(),
             email: new EmailCreditService(),
-            // register: new RegisterCreditService(),
+            register: new RegisterCreditService(),
             // donate: new DonateCreditService()
         };
     }

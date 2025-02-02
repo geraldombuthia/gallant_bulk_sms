@@ -21,7 +21,7 @@ class SMSProvider {
     async sendMessage(msgPayload) {
         console.log("SMS provider received", msgPayload);
         // sentPayload simulates a received feedback on send from gateway
-        let sentPayload = {};
+        // const sentPayload = {};
 
         try {
             // Prepare message to be sent

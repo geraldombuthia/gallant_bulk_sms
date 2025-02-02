@@ -88,6 +88,7 @@ class SMSCreditService {
             });
 
             if (!creditBalance) {
+                // @TODO: Introduce a return for the creditBalance using .get({plain: true})
                 return {
                     userId,
                     creditBalance: 0

@@ -44,13 +44,13 @@ class APIController {
                 });
             }
 
-            // if (!isValidAPIKey.registered_at) {
-            //     return res.status(401).json({
-            //         message: "User not registered to use service",
-            //     });
-            // }
+            if (!isValidAPIKey.registered_at) {
+                return res.status(401).json({
+                    message: "User not registered to use service",
+                });
+            }
 
-            //@TODO: Implement a method to check if user has enough credits
+            // @TODO: Implement a method to check if user has enough credits
             // to send a message
 
             // pass message to Message Service
@@ -65,7 +65,7 @@ class APIController {
             console.log(`Sending SMS to ${phoneNumber} with message: ${message}`);
             console.log("This is the result",result);
 
-            //@TODO: Implement a way to send a response based on the sent message
+            // @TODO: Implement a way to send a response based on the sent message
             res.status(200).json({
                 status: result.status,
                 statusCode: result.statusCode,

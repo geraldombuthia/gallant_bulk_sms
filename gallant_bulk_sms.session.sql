@@ -123,7 +123,11 @@ CREATE TABLE IF NOT EXISTS EmailCredits (
     UNIQUE KEY unique_user (userId),
     FOREIGN KEY (userId) REFERENCES users(id)
 );
+--@BLOCK
+SELECT * FROM RegisterCredits;
 
+--@BLOCK
+-- DROP TABLE IF EXISTS RegisterCredits;
 --@block
 UPDATE EmailCredits 
 SET price_per_unit = 0.05 

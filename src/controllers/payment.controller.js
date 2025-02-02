@@ -73,7 +73,20 @@ class PaymentController {
                 purchaseType, // Whether its a registration fee or product purchase
                 transaction_type, // Whether its a paybill or buy goods for safaricom use
             };
+            if (purchaseType !== "register" && req.user.registered_at !== true) {
+                // Check if user is registered
+                return res.status(400).json({
+                    message: "User not registered. Please register first",
+                });
+            }
+            // @TODO: Uncomment this when ready to implement registration
+            // if (purchaseType === "register" && Number(amount) !== 300) {
+            //       // Set the amount to 100 for registration
+            //       return res.status(400).json({
+            //             message: "Invalid amount for registration",
 
+            //       });
+            // }
             const payment = await this.paymentService.createPayment(paymentData);
 
             const paymentJSON = payment.toJSON ? payment.toJSON() : payment;

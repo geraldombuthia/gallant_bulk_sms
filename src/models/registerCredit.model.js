@@ -24,6 +24,11 @@ const RegisterCredit = sequelize.define("RegisterCredits", {
         type:DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    registration_amount:{
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0
     }
 }, {
     sequelize,

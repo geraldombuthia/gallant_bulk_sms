@@ -10,7 +10,8 @@ const {accountRefGen, serviceID} = require("../utils/accountRefGen");
  */
 class PaymentsService {
     constructor() {
-        this.providerFactory = new PaymentProviderFactory();
+        // Initialize the payment methods i.e Mpesa
+        this.providerFactory = new PaymentProviderFactory(); 
         this.finalStatuses = ["success", "failed"];
     }
 
@@ -69,7 +70,7 @@ class PaymentsService {
     }
 
     async checkPaymentStatus() {
-
+        // @TODO Implement the check payment status function
     }
 
     async handlePaymentCallback(callbackData, pay_provider) {
@@ -123,7 +124,7 @@ class PaymentsService {
                     creditsValue: existingTransaction.amount,
                     product: existingTransaction.purchaseType,
                 });
-                console.log("This is the credit Data",creditData);
+                console.log("This is the credit Data", creditData);
 
                 return savedTransaction.dataValues;
             } else {

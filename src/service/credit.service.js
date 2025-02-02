@@ -14,6 +14,7 @@ class CreditService {
     }
     pricePerEmailUnit = 0.001; // Email
     pricePerSMSUnit = 0.8; // SMS
+    registerPrice = 300; // Registration price
     /**
      * @brief Creates a transaction to be stored to 
      * keep track of the purchase order value, units
@@ -28,7 +29,11 @@ class CreditService {
                 this.pricePerEmailUnit : this.pricePerSMSUnit;
             const pricePerUnit = Number((purchaseObj.product === "email") ? 
                 this.pricePerEmailUnit : this.pricePerSMSUnit);
-       
+            
+            // if (purchaseObj.product === "register") {
+                
+            // }
+
             const transaction = new Credit({
                 userId: purchaseObj.userId,
                 paymentId: purchaseObj.paymentId,
@@ -42,15 +47,17 @@ class CreditService {
             console.log("Transaction Saved", saved);
        
             // Explicitly update price_per_unit if not set correctly
-            if (saved.price_per_unit !== 0.008) {
-                await Credit.update(
-                    { price_per_unit: pricePerUnit },
-                    { where: { id: saved.id } }
-                );
-                console.log("Explicitly updated price_per_unit");
-            }
+            // @TODO: Identify if necessary and remove otherwise
+            // if (saved.price_per_unit !== 0.008) {
+            //     await Credit.update(
+            //         { price_per_unit: pricePerUnit },
+            //         { where: { id: saved.id } }
+            //     );
+            //     console.log("Explicitly updated price_per_unit");
+            // }
        
             // Rest of the code remains the same...
+            return saved.get({plain: true});
         } catch (error) {
             console.error("Transaction Error", {
                 message: error.message,
