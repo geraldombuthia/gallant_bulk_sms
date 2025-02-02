@@ -19,6 +19,23 @@ class AuthService {
         }
     }
 
+    static async validateAPIKey(apiKey) {
+        try {
+            const user = await User.findOne({where: {
+                apikey: apiKey
+            }});
+
+            console.log("User from API Key", user.get({ plain: true }));
+            if (!user) {
+                throw new Error("Invalid API Key");
+            }
+            return user.get({ plain: true });
+        } catch(error) {
+            console.error("Error: ", error);
+            throw error;
+        }
+    }
+
 }
 
 module.exports = AuthService;

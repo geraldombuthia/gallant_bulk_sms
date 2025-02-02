@@ -74,9 +74,59 @@ const validatePayment = [
         .withMessage("Purchase Type must be a supported string"),
 ];
 
+const validateSMS = [
+    check("message", "Please enter a valid message")
+        .exists({checkFalsy: true})
+        .trim()
+        .notEmpty()
+        .escape()
+        .isString()
+        .withMessage("Message must be a string"),
+    check("phoneNumber", "Please enter a valid phone Number")
+        .exists({checkFalsy: true})
+        .trim()
+        .notEmpty()
+        .escape()
+        .isMobilePhone()
+        .withMessage("Phonenumber must be a string"),
+];
+
+const validateEmailInput = [
+    body("subject", "Please enter a valid subject")
+        .trim()
+        .notEmpty()
+        .escape()
+        .isString()
+        .withMessage("Subject must be a string"),
+    body("recipient", "Please enter a valid recipient")
+        .trim()
+        .notEmpty()
+        .escape()
+        .isEmail()
+        .withMessage("Recipient must be a string"),
+    body("sender", "Please enter a valid sender")
+        .trim()
+        .notEmpty()
+        .escape()
+        .isEmail()
+        .withMessage("Sender must be a string"),
+    body("textBody", "Please enter a valid text body")
+        .trim()
+        .notEmpty()
+        .escape()
+        .isString()
+        .withMessage("Text body must be a string"),
+    body("htmlBody", "Please enter a valid html body")
+        .trim()
+        .notEmpty()
+        .escape()
+        .isString()
+        .withMessage("Html body must be a string"),
+];
 const validationHandler = (req, res, next) => {
     const errors = validationResult(req);
     const data = matchedData(req);
+    console.log("Req body is empty",req.body);
     if (!errors.isEmpty()) {
         console.log("Validatuon errors:", errors.array());
       
@@ -93,6 +143,7 @@ const validationHandler = (req, res, next) => {
             req.flash("error", res.locals.error);
             return res.redirect("/auth/register");
         }
+        
     }
     
     // Store the validated data in res.locals for use in next middleware
@@ -104,5 +155,7 @@ module.exports = {
     validateRegister,
     validateLogin,
     validatePayment,
+    validateSMS,
+    validateEmailInput,
     validationHandler,
 };

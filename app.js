@@ -16,6 +16,7 @@ const PayRoutes = require("./src/routes/payment.routes.js");
 const CreditRoutes = require("./src/routes/credit.routes.js");
 const MessageRoutes = require("./src/routes/message.routes.js");
 const dashboardRoutes = require("./src/routes/dashboard.routes.js");
+const APIRoutes = require("./src/routes/api.routes.js");
 
 // const userAgentParser = require("./src/middleware/userAgentParser.js");
 // const extractIPAddress = require("./src/middleware/extractIPAddress.js");
@@ -117,6 +118,7 @@ app.use("/pay", PayRoutes);
 app.use("/credit", CreditRoutes);
 app.use("/send", MessageRoutes);
 app.use("/dashboard", isAuthenticated, dashboardRoutes);
+app.use("/api", APIRoutes);
 
 // app.use(skipFaviconMiddleware, userAgentParser, extractIPAddress, logDeviceAccess);
 app.route("/").get((req, res) => {

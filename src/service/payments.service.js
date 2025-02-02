@@ -163,7 +163,8 @@ class PaymentsService {
                 }
             });
 
-            return payments;
+            return payments.map(payment => payment.toJSON()); 
+            // Convert each instance to a plain object
         } catch (error) {
             throw new Error(`Error fetching payments: ${ error.message}`);
         }

@@ -1,5 +1,5 @@
-const {parsePhoneNumberWithError} = require("libphonenumber-js");
 const MessageService = require("../service/message.service");
+const formatToIntNumber = require("../utils/formatInternational");
 
 class MessageController {
     constructor() {
@@ -19,19 +19,9 @@ class MessageController {
             // Input validation methods
             this.validateSMSInput(phoneNumber, message);
 
-            const validateNumber = parsePhoneNumberWithError(String(phoneNumber), {
-                defaultCountry: "KE"
-            });
-            
-            if (!validateNumber.isValid()) {
-                throw new Error("Invalid phone number format");
-            }
+            const formatNumber = formatToIntNumber(phoneNumber);
 
-            const formatNumber = validateNumber.formatInternational()
-                .replace(/^(\+)/, "")
-                .replace(/\s+/g, "");
-
-            const userId = 1; // implement with API key
+            const userId = 1; // implement with API key 
 
             const result = await this.MessageService.sendMessage({
                 phoneNumber: formatNumber, 
@@ -163,6 +153,7 @@ class MessageController {
         if (!message) {
             throw new Error("Message is required");
         }
+        
     }
 
     validateEmailInput(emailObj) {
