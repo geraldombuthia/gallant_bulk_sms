@@ -55,6 +55,8 @@ app.use(expressLayouts);
 
 app.set("views", path.join(__dirname, "/src/views"));
 
+app.set('trust proxy', true);
+
 // const skipFaviconMiddleware = (req, res, next) => {
 //     // Skips the favicon request from browsers
 //     // It is a stand in solution

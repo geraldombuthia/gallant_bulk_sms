@@ -22,7 +22,7 @@ class PaymentController {
             purchaseType 
         } = req.body; // Contains phonenumber, provider and amount
 
-        const userId = 1; // To be confirmed
+        const userId = req.user.id; // To be confirmed
         const transaction_type = "CustomerPayBillOnline";
 
         /**

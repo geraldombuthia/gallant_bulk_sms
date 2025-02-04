@@ -21,7 +21,7 @@ class MessageController {
 
             const formatNumber = formatToIntNumber(phoneNumber);
 
-            const userId = 1; // implement with API key 
+            const userId = req.user.id; // implement with API key 
 
             const result = await this.MessageService.sendMessage({
                 phoneNumber: formatNumber, 

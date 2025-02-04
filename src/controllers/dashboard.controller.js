@@ -9,8 +9,8 @@ class DashboardController {
     async renderOverview(req, res) {
 
         try {
-            const overviewData = await this.dashboardService.getOverviewData(1); 
-            // @TODO: Replace 1 with userId
+            const overviewData = await this.dashboardService.getOverviewData(req.user.id); 
+            
             const notifications = [
                 {
                     message: "Low balance alert! Recharge now.",
